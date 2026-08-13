@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <title>VIP Level — H5</title>
+  <link rel="stylesheet" href="/h5/css/h5.css">
+  <link rel="stylesheet" href="/h5/css/pages.css">
+</head>
+<body>
+  <header class="h5-header">
+    <div class="h5-header-inner">
+      <a href="lobby.html" class="h5-logo">
+        <span class="h5-logo-mark">J</span>
+        Juan365
+      </a>
+      <div class="h5-balances">
+        <div class="h5-bal-row"><span class="h5-coin p">P</span><span id="balP">2,710.00</span></div>
+        <div class="h5-bal-row"><span class="h5-coin g">G</span><span id="balG">1,288.45</span></div>
+      </div>
+      <button class="h5-btn-icon h5-btn-refresh" id="btnRefresh" type="button" aria-label="Refresh">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+        </svg>
+      </button>
+      <button class="h5-btn-deposit" id="btnDeposit" type="button">Deposit</button>
+    </div>
+  </header>
+
+  <main class="h5-page vip-page">
+    <div class="status-card" id="statusCard">
+      <a class="vip-shield vip-shield-link" href="pet.html" title="去照看管家宠" aria-label="打开宠物窝">
+        <svg viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ffe9a8"/>
+              <stop offset="45%" stop-color="#f5c542"/>
+              <stop offset="100%" stop-color="#c9891a"/>
+            </linearGradient>
+            <linearGradient id="sg2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#fff"/>
+              <stop offset="100%" stop-color="#ffd54f"/>
+            </linearGradient>
+          </defs>
+          <path d="M50 4 L90 18 L90 52 C90 78 70 98 50 106 C30 98 10 78 10 52 L10 18 Z" fill="url(#sg)" stroke="#fff" stroke-width="3"/>
+          <circle cx="50" cy="48" r="22" fill="url(#sg2)" opacity="0.9"/>
+          <text x="50" y="54" text-anchor="middle" font-size="16" font-weight="900" fill="#ff6200" font-family="sans-serif" id="shieldText">V3</text>
+        </svg>
+      </a>
+      <div class="status-meta">
+        <div class="tier">Your tier <strong id="statusTier">VIP3s</strong></div>
+        <div class="lvl">Your level <strong id="statusLevel">VIP3</strong></div>
+        <div class="vip-progress">
+          <div class="vip-progress-bar">
+            <div class="vip-progress-fill" id="statusFill" style="width:60%"></div>
+          </div>
+          <div class="vip-progress-text" id="statusHint">还需 4,000 XP 升至 VIP4</div>
+        </div>
+        <a class="status-card-pet-link" href="pet.html">🐾 去照看管家宠 →</a>
+        <div class="vip-bound-pet" id="vipBoundPet">
+          <div id="vipBoundPetLine">已绑定管家宠加载中…</div>
+          <a href="pet.html">查看已绑定管家宠 →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-card">
+      <div class="carousel-head">
+        <h2>Juan365 VIP Level</h2>
+        <div class="cashback-rate">
+          <div><span id="rateLabel">VIP3</span> Cashback</div>
+          <div class="rate"><span id="rateVal">3%</span></div>
+        </div>
+      </div>
+      <div class="carousel-track-wrap">
+        <div class="carousel-track" id="carouselTrack"></div>
+      </div>
+      <div class="carousel-dots" id="carouselDots"></div>
+      <div class="carousel-nav">
+        <button type="button" id="carPrev" aria-label="Prev">‹</button>
+        <button type="button" id="carNext" aria-label="Next">›</button>
+      </div>
+    </div>
+
+    <div class="vip-tabs" role="tablist">
+      <button class="vip-tab active" type="button" data-tab="benefits" role="tab">Benefits</button>
+      <button class="vip-tab" type="button" data-tab="guide" role="tab">Guide</button>
+      <button class="vip-tab" type="button" data-tab="rewards" role="tab">Rewards</button>
+    </div>
+
+    <div class="tab-panel active" id="panel-benefits" role="tabpanel">
+      <div class="benefits-grid" id="benefitsGrid">
+        <div class="benefit-card" data-benefit="cashout">
+          <div class="benefit-check">✓</div>
+          <h4>Faster Cashout For VIP</h4>
+          <p>Priority Withdrawals, No Waiting</p>
+        </div>
+        <div class="benefit-card" data-benefit="upgrade">
+          <div class="benefit-check">✓</div>
+          <h4>VIP Upgrade Gift — Claim Via Support</h4>
+          <p>Claim Your Reward Bonus Balance ₱888</p>
+        </div>
+        <div class="benefit-card" data-benefit="birthday">
+          <div class="benefit-check">✓</div>
+          <h4>Your Birthday JUAN365 Gift</h4>
+          <p>Celebrate With A FREE Cake + CASH ₱388</p>
+        </div>
+        <div class="benefit-card" data-benefit="support">
+          <div class="benefit-check">✓</div>
+          <h4>Personal VIP Support</h4>
+          <p>One On One VIP SUPPORT · Contact for ₱588 Bonus</p>
+        </div>
+        <div class="benefit-card" data-benefit="monthly">
+          <div class="benefit-check">✓</div>
+          <h4>VIP 15th Bonus Credited</h4>
+          <p>Monthly bonus after 06:00 AM · Contact CS for ₱300</p>
+        </div>
+        <div class="benefit-card" data-benefit="travel">
+          <div class="benefit-check">✓</div>
+          <h4>VIP Travel Fund — Juan365 Covers</h4>
+          <p>Flights / hotels up to ₱8,000 via Support request</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="panel-guide" role="tabpanel">
+      <div class="guide-content">
+        <h4>如何获得 XP</h4>
+        <ul>
+          <li><strong>领取每日返水</strong>：大厅 Claim → +30 XP（任务 +40）</li>
+          <li><strong>每日任务</strong>：登录 / 访 VIP / 看视频</li>
+          <li><strong>Deposit</strong>：顶栏橙色按钮 → +₱100 · +25 XP</li>
+          <li><strong>Demo +XP</strong>：本页 → +500 XP</li>
+          <li><strong>照料宠物</strong>：喂食 / 玩耍 / 清洁</li>
+        </ul>
+        <p style="font-size:11px;color:#888;margin-top:8px">游戏厅 / 平台划转不在本需求范围内。</p>
+        <h4>VIP 等级表</h4>
+        <table>
+          <thead>
+            <tr><th>Level</th><th>Tier</th><th>Need XP</th><th>Rate</th><th>Max</th></tr>
+          </thead>
+          <tbody id="vipTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="panel-rewards" role="tabpanel">
+      <div class="rewards-content">
+        <h4>当前可领奖励（演示）</h4>
+        <ul>
+          <li>升级礼包 VIP3 → Support 领取 ₱888</li>
+          <li>Daily Cashback 在大厅绿色 Claim</li>
+          <li>VIP4 解锁更高返水与 Travel Fund</li>
+        </ul>
+        <h4>冲档小贴士</h4>
+        <ul>
+          <li>优先完成 Daily Tasks</li>
+          <li>先 Claim 返水，再 Deposit / Demo +XP</li>
+          <li>权益礼包点 Benefits 卡 → Support 弹窗</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="demo-bar" style="flex-direction:column">
+      <button class="btn-demo-xp" id="btnDemoXp" type="button">Demo +500 XP（冲档演示）</button>
+      <button class="btn-ghost" id="btnReset" type="button">Reset Demo</button>
+    </div>
+  </main>
+
+  <nav class="h5-tabbar" aria-label="底部导航">
+    <a class="h5-tab" href="lobby.html" data-tab="lobby"><span class="ico">🏠</span>大厅</a>
+    <a class="h5-tab" href="vip.html" data-tab="vip"><span class="ico">👑</span>VIP</a>
+    <a class="h5-tab" href="pet.html" data-tab="pet"><span class="ico">🐾</span>宠物</a>
+  </nav>
+
+  <div class="modal-overlay" id="supportModal">
+    <div class="modal">
+      <div class="levelup-burst" style="font-size:40px">🎧</div>
+      <h3>Claim Via Support</h3>
+      <p id="supportDesc">请联系 VIP 客服领取该权益礼包。</p>
+      <div class="benefit-list" id="supportDetail"></div>
+      <button class="btn-ok" id="supportOk" type="button">知道了</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="levelUpModal">
+    <div class="modal">
+      <div class="levelup-burst">🎉</div>
+      <h3 id="levelUpTitle">升级成功！</h3>
+      <p id="levelUpDesc">恭喜升至 VIP4</p>
+      <button class="btn-ok" id="levelUpOk" type="button">太棒了</button>
+    </div>
+  </div>
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <script src="/c-end/js/state.js"></script>
+  <script src="/h5/js/ui.js"></script>
+  <script src="/h5/js/shell.js"></script>
+  <script src="/h5/js/vip.js"></script>
+</body>
+</html>

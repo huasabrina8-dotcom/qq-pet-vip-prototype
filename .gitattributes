@@ -1,0 +1,16 @@
+# Normalize text to LF on GitHub / all platforms; keep images binary.
+* text=auto eol=lf
+
+*.html text
+*.css text
+*.js text
+*.md text
+*.json text
+*.svg text
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary

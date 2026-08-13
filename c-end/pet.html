@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宠物窝 — VIP管家宠 · 养成</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="c-header">
+    <a href="lobby.html" class="c-logo">
+      <span class="c-logo-mark">J</span>
+      Juan365
+    </a>
+    <button class="c-search" type="button" aria-label="Search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>
+      </svg>
+    </button>
+    <div class="c-header-spacer"></div>
+    <div class="c-balances">
+      <div class="c-bal-row">
+        <span class="c-coin p">P</span>
+        <span id="balP">2,710.00</span>
+      </div>
+      <div class="c-bal-row">
+        <span class="c-coin g">G</span>
+        <span id="balG">1,288.45</span>
+      </div>
+    </div>
+    <button class="c-btn-refresh" id="btnRefresh" type="button" aria-label="Refresh">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+      </svg>
+    </button>
+    <div class="c-avatar">👤<span class="crown">👑</span></div>
+    <button class="c-icon-btn" type="button" aria-label="Support">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+        <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+      </svg>
+    </button>
+  </header>
+
+  <div class="pet-page">
+    <div class="pet-page-nav">
+      <a class="vip-back" href="lobby.html">← 返回 Lobby</a>
+      <div class="pet-page-links">
+        <a href="vip.html">VIP Level</a>
+        <span class="sep">·</span>
+        <span class="here">宠物窝</span>
+      </div>
+    </div>
+
+    <div class="pet-care-layout">
+      <section class="pet-stage-card" aria-label="宠物舞台">
+        <div class="pet-stage-sky" data-stage="buddy" id="petStage">
+          <div class="pet-stage-deco pet-cloud c1"></div>
+          <div class="pet-stage-deco pet-cloud c2"></div>
+          <div class="pet-stage-floor"></div>
+          <div class="pet-speech-bubble" id="petSpeechBubble" hidden aria-live="polite"></div>
+          <div class="pet-stage-row">
+            <div class="pet-figure" id="petFigure">
+              <div class="pet-glow"></div>
+              <div class="pet-body" id="petBody" aria-hidden="true">
+                <svg class="pet-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <ellipse cx="100" cy="168" rx="48" ry="10" fill="rgba(0,0,0,0.08)"/>
+                  <ellipse cx="100" cy="118" rx="58" ry="50" fill="#ffb86b"/>
+                  <ellipse cx="100" cy="118" rx="48" ry="40" fill="#ffc98a"/>
+                  <circle cx="100" cy="72" r="42" fill="#ffb86b"/>
+                  <circle cx="100" cy="72" r="34" fill="#ffd4a8"/>
+                  <ellipse cx="62" cy="58" rx="14" ry="18" fill="#ffb86b"/>
+                  <ellipse cx="138" cy="58" rx="14" ry="18" fill="#ffb86b"/>
+                  <ellipse cx="62" cy="60" rx="8" ry="10" fill="#ffd4a8"/>
+                  <ellipse cx="138" cy="60" rx="8" ry="10" fill="#ffd4a8"/>
+                  <circle cx="86" cy="70" r="6" fill="#3a2a1a"/>
+                  <circle cx="114" cy="70" r="6" fill="#3a2a1a"/>
+                  <circle cx="88" cy="68" r="2" fill="#fff"/>
+                  <circle cx="116" cy="68" r="2" fill="#fff"/>
+                  <ellipse cx="100" cy="84" rx="7" ry="5" fill="#ff8a5c"/>
+                  <path d="M88 92 Q100 100 112 92" fill="none" stroke="#c45a2d" stroke-width="2.5" stroke-linecap="round"/>
+                  <circle cx="72" cy="82" r="6" fill="#ff9a7a" opacity="0.55"/>
+                  <circle cx="128" cy="82" r="6" fill="#ff9a7a" opacity="0.55"/>
+                  <text x="100" y="128" text-anchor="middle" font-size="22" id="petEmojiOverlay">🦊</text>
+                  <path class="pet-scarf" d="M70 105 Q100 118 130 105 L128 122 Q100 132 72 122 Z" fill="#ff7a00"/>
+                  <circle cx="100" cy="112" r="6" fill="#ffd54f" stroke="#fff" stroke-width="1.5"/>
+                </svg>
+              </div>
+              <div class="pet-react" id="petReact" aria-hidden="true"></div>
+            </div>
+            <button type="button" class="pet-next-form" id="petNextForm" aria-label="下一形态预览" title="持续抚养可解锁">
+              <span class="pet-next-lock" id="petNextLock">🔒</span>
+              <span class="pet-next-emoji" id="petNextEmoji">❓</span>
+              <span class="pet-next-label" id="petNextLabel">下一形态</span>
+              <span class="pet-next-name" id="petNextName">—</span>
+              <span class="pet-next-hint" id="petNextHint">再获亲密度可进化</span>
+            </button>
+          </div>
+          <div class="pet-stage-badge">
+            <span class="pet-stage-title" id="petTitle">VIP管家宠</span>
+            <span class="pet-stage-meta" id="petMeta">VIP3 · 亲密度 Lv.1</span>
+            <span class="pet-bind-badge" id="petBindBadge">已绑定 VIP3 / VIP3s</span>
+            <span class="pet-species-hint" id="petSpeciesHint">品种：待选神兽</span>
+          </div>
+        </div>
+
+        <div class="pet-needs-bar" id="petNeedsBar" aria-label="宠物需求"></div>
+
+        <div class="pet-intimacy-meter" id="intimacyMeter" aria-label="亲密度进度">
+          <div class="pet-intimacy-top">
+            <strong>亲密度</strong>
+            <span id="intimacyLabel">亲密度 Lv.1 → Lv.2（0/5）</span>
+            <button type="button" class="btn-evolve" id="btnEvolve" disabled>进化</button>
+          </div>
+          <div class="pet-intimacy-bar"><div class="pet-intimacy-fill" id="intimacyFill" style="width:0%"></div></div>
+          <div class="pet-intimacy-meta" id="intimacyMeta">距下级 0/5</div>
+          <div class="pet-evolve-progress" id="evolveProgressHint">再获亲密度可进化解锁下一形态</div>
+        </div>
+        <div class="pet-ultimate-banner" id="ultimateRewardBanner" hidden></div>
+
+        <div class="pet-stats" id="petStats">
+          <div class="pet-stat" data-stat="hunger">
+            <div class="pet-stat-label"><span>🍽 饱食</span><span class="pet-stat-val" id="statHungerVal">72</span></div>
+            <div class="pet-stat-bar"><div class="pet-stat-fill hunger" id="statHunger" style="width:72%"></div></div>
+          </div>
+          <div class="pet-stat" data-stat="mood">
+            <div class="pet-stat-label"><span>😊 心情</span><span class="pet-stat-val" id="statMoodVal">68</span></div>
+            <div class="pet-stat-bar"><div class="pet-stat-fill mood" id="statMood" style="width:68%"></div></div>
+          </div>
+          <div class="pet-stat" data-stat="clean">
+            <div class="pet-stat-label"><span>✨ 清洁</span><span class="pet-stat-val" id="statCleanVal">70</span></div>
+            <div class="pet-stat-bar"><div class="pet-stat-fill clean" id="statClean" style="width:70%"></div></div>
+          </div>
+          <div class="pet-stat" data-stat="health">
+            <div class="pet-stat-label"><span>💚 健康</span><span class="pet-stat-val" id="statHealthVal">85</span></div>
+            <div class="pet-stat-bar"><div class="pet-stat-fill health" id="statHealth" style="width:85%"></div></div>
+          </div>
+        </div>
+
+        <p class="pet-hint" id="petHint">状态会随时间缓慢下降，记得常来照看～</p>
+        <div class="pet-daily-chip" id="petDailyChip">
+          <span>今日养宠积分 <strong id="dailyPointsVal">0</strong></span>
+          <span class="sep">·</span>
+          <span>排名 <strong id="dailyRankVal">—</strong></span>
+        </div>
+        <div class="pet-protect-bar" id="careProtectBar" title="仅亲密度等级受保护；VIP 档位不降">
+          <span class="protect-ico">🛡</span>
+          <span id="careProtectLabel">等级保护剩余 --:--:--</span>
+          <span class="protect-note">亲密度 ≠ VIP</span>
+        </div>
+        <div class="nurture-cadence-card" id="nurtureCadenceCard" data-status="fresh" aria-live="polite">
+          <div class="nurture-cadence-head">
+            <strong id="nurtureCadenceTitle">24小时抚养节奏</strong>
+            <span class="nurture-cadence-kicker">提高登录粘性 · 每24小时深度抚养一次</span>
+          </div>
+          <p class="nurture-cadence-sub" id="nurtureCadenceSub">回来完成今日深度抚养，参与神兽成长</p>
+          <ul class="nurture-cadence-rows">
+            <li><span>下次建议回来</span><strong id="nurtureNextDue">--:--:--</strong></li>
+            <li><span>亲密度保护剩余</span><strong id="nurtureProtectRemain">--:--:--</strong></li>
+            <li><span>今日深度抚养</span><strong id="nurtureDeepProgress">0/3 项</strong></li>
+            <li><span>主动需求</span><strong id="nurtureNeedsActive">0</strong></li>
+          </ul>
+        </div>
+        <div class="pet-forms-gallery" id="formsGallery" aria-label="各 VIP 形态预览"></div>
+      </section>
+
+      <aside class="pet-side">
+        <nav class="pet-tabs" role="tablist" aria-label="宠物窝功能">
+          <button type="button" class="pet-tab is-active" data-tab="care" role="tab" aria-selected="true">照料</button>
+          <button type="button" class="pet-tab" data-tab="chat" role="tab" aria-selected="false">对话</button>
+          <button type="button" class="pet-tab" data-tab="friends" role="tab" aria-selected="false">好友帮养</button>
+          <button type="button" class="pet-tab" data-tab="rank" role="tab" aria-selected="false">今日排名</button>
+        </nav>
+
+        <div class="pet-tab-panel is-active" data-panel="care" role="tabpanel">
+        <div class="pet-actions-card">
+          <h2 class="pet-side-title">抚养与亲密度</h2>
+          <p class="pet-side-sub">全免费互动 · 每24小时回来抚养一次参与成长 · 想吃/想玩/想喝主动提醒 · 满足后 24h · 持续抚养逐步进化</p>
+          <div class="pet-actions pet-actions-grid">
+            <button type="button" class="pet-act" id="btnFeed" data-care="feed" data-need="eat">
+              <span class="pet-need-dot" aria-hidden="true"></span>
+              <span class="pet-act-ico">🍖</span>
+              <span class="pet-act-name">喂食</span>
+              <span class="pet-act-xp">亲密+1</span>
+            </button>
+            <button type="button" class="pet-act" id="btnPlay" data-care="play" data-need="play">
+              <span class="pet-need-dot" aria-hidden="true"></span>
+              <span class="pet-act-ico">🎾</span>
+              <span class="pet-act-name">玩耍</span>
+              <span class="pet-act-xp">亲密+1</span>
+            </button>
+            <button type="button" class="pet-act" id="btnDrink" data-care="drink" data-need="drink">
+              <span class="pet-need-dot" aria-hidden="true"></span>
+              <span class="pet-act-ico">💧</span>
+              <span class="pet-act-name">喝水</span>
+              <span class="pet-act-xp">亲密+1</span>
+            </button>
+            <button type="button" class="pet-act" id="btnClean" data-care="clean">
+              <span class="pet-act-ico">🛁</span>
+              <span class="pet-act-name">清洁</span>
+              <span class="pet-act-xp">亲密+1</span>
+            </button>
+            <button type="button" class="pet-act" id="btnPat" data-care="pat">
+              <span class="pet-act-ico">🖐</span>
+              <span class="pet-act-name">抚摸</span>
+              <span class="pet-act-xp">亲密+1</span>
+            </button>
+            <button type="button" class="pet-act" id="btnWalk" data-care="walk">
+              <span class="pet-act-ico">🚶</span>
+              <span class="pet-act-name">陪伴散步</span>
+              <span class="pet-act-xp">亲密+2</span>
+            </button>
+            <button type="button" class="pet-act" id="btnStory" data-care="story">
+              <span class="pet-act-ico">📖</span>
+              <span class="pet-act-name">讲故事</span>
+              <span class="pet-act-xp">亲密+1</span>
+            </button>
+            <button type="button" class="pet-act" id="btnSnack" data-care="snack">
+              <span class="pet-act-ico">🍪</span>
+              <span class="pet-act-name">喂零食</span>
+              <span class="pet-act-xp">亲密+1</span>
+            </button>
+            <button type="button" class="pet-act" id="btnPhoto" data-care="photo">
+              <span class="pet-act-ico">📷</span>
+              <span class="pet-act-name">合影</span>
+              <span class="pet-act-xp">亲密+2</span>
+            </button>
+          </div>
+          <div class="pet-quests" id="intimacyQuests"></div>
+        </div>
+
+        <div class="pet-inv-card">
+          <h2 class="pet-side-title">小背包</h2>
+          <p class="pet-side-sub">道具效果更强 · 每日免费补给 · <strong>无付费购买</strong></p>
+          <div class="pet-inv-list">
+            <div class="pet-inv-row" data-item="food">
+              <div class="pet-inv-ico">🐟</div>
+              <div class="pet-inv-info">
+                <div class="pet-inv-name">仙果 <span class="pet-inv-qty" id="invFood">×3</span></div>
+                <div class="pet-inv-desc">喂食加强 · 每日免费补给</div>
+              </div>
+              <div class="pet-inv-btns">
+                <button type="button" class="btn-pet-use" data-use="feed">使用</button>
+                <button type="button" class="btn-pet-free" data-free="food">免费+1</button>
+              </div>
+            </div>
+            <div class="pet-inv-row" data-item="toy">
+              <div class="pet-inv-ico">🪀</div>
+              <div class="pet-inv-info">
+                <div class="pet-inv-name">灵嬉球 <span class="pet-inv-qty" id="invToy">×2</span></div>
+                <div class="pet-inv-desc">玩耍加强 · 每日免费补给</div>
+              </div>
+              <div class="pet-inv-btns">
+                <button type="button" class="btn-pet-use" data-use="play">使用</button>
+                <button type="button" class="btn-pet-free" data-free="toy">免费+1</button>
+              </div>
+            </div>
+            <div class="pet-inv-row" data-item="soap">
+              <div class="pet-inv-ico">🧴</div>
+              <div class="pet-inv-info">
+                <div class="pet-inv-name">净灵露 <span class="pet-inv-qty" id="invSoap">×2</span></div>
+                <div class="pet-inv-desc">清洁加强 · 每日免费补给</div>
+              </div>
+              <div class="pet-inv-btns">
+                <button type="button" class="btn-pet-use" data-use="clean">使用</button>
+                <button type="button" class="btn-pet-free" data-free="soap">免费+1</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pet-vip-card">
+          <div class="pet-vip-row">
+            <div>
+              <div class="pet-vip-label">冲档进度</div>
+              <div class="pet-vip-val" id="petVipLine">VIP3 · 还需 XP</div>
+            </div>
+            <a class="btn-claim btn-claim-orange" href="vip.html">去 VIP</a>
+          </div>
+          <div class="xp-bar"><div class="xp-bar-fill" id="petVipFill" style="width:60%"></div></div>
+          <p class="pet-vip-note">宠物窝是情感养成；返水与权益仍在 VIP Level 页。完成 Daily Tasks 与 VIP 页 Demo +XP 冲档。</p>
+        </div>
+        </div><!-- /care panel -->
+
+        <div class="pet-tab-panel" data-panel="chat" role="tabpanel" hidden>
+          <div class="pet-panel-card pet-chat-card">
+            <h2 class="pet-side-title">和管家宠对话</h2>
+            <p class="pet-side-sub">规则回复演示 · 会参考状态 / VIP 形态 / 绑定 · 保留近 20 条</p>
+            <div class="pet-chat-log" id="chatLog" aria-live="polite"></div>
+            <div class="pet-chat-chips" id="chatChips"></div>
+            <form class="pet-chat-form" id="chatForm">
+              <input type="text" id="chatInput" maxlength="80" placeholder="跟管家宠说点什么…" autocomplete="off">
+              <button type="submit" class="btn-ok" id="chatSend">发送</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="pet-tab-panel" data-panel="friends" role="tabpanel" hidden>
+          <div class="pet-panel-card">
+            <h2 class="pet-side-title">好友帮养</h2>
+            <p class="pet-side-sub">正向轻社交 · 无偷无抢 · 每日可帮养 <strong id="helpQuotaLabel">0/3</strong> 次 · 每次 +15 今日积分</p>
+            <div class="pet-friends-list" id="friendsList"></div>
+          </div>
+        </div>
+
+        <div class="pet-tab-panel" data-panel="rank" role="tabpanel" hidden>
+          <div class="pet-panel-card">
+            <h2 class="pet-side-title">今日排名</h2>
+            <p class="pet-side-sub">喂食 / 玩耍 / 清洁 / 帮养好友均可获得今日积分 · 每日 0 点清零（累计分保留）</p>
+            <div class="pet-rank-me" id="rankMeBanner">
+              <span>我的排名 <strong id="rankMePos">—</strong></span>
+              <span>今日 <strong id="rankMePts">0</strong> 分</span>
+              <span>累计 <strong id="rankAllPts">0</strong></span>
+            </div>
+            <ol class="pet-rank-list" id="rankList"></ol>
+          </div>
+        </div>
+
+        <div class="demo-bar pet-demo-bar">
+          <button class="btn-ghost" id="btnDemoCare" type="button" title="演示：亲密度达标并可进化">演示达标亲密度</button>
+          <button class="btn-ghost" id="btnDemoProtect" type="button" title="将上次互动拨回 24h 前">模拟经过24小时</button>
+          <button class="btn-ghost" id="btnDemoNeeds" type="button" title="演示：需求到期提醒">演示需求提醒</button>
+          <button class="btn-ghost" id="btnDemoVip5" type="button" title="演示冲至 VIP5 打开奖励自选">演示 VIP5 终极奖励</button>
+          <button class="btn-ghost" id="btnReset" type="button">Reset Demo</button>
+          <a class="btn-ghost" href="lobby.html">← Lobby</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- First-visit species pick (cannot dismiss without choosing) -->
+  <div class="species-pick-overlay" id="speciesPickOverlay" hidden aria-hidden="true">
+    <div class="species-pick-panel" role="dialog" aria-modal="true" aria-labelledby="speciesPickTitle">
+      <div class="species-pick-head">
+        <h2 id="speciesPickTitle">选择你的 VIP管家神兽</h2>
+        <p class="species-pick-sub">菲律宾神话神兽 · 非猫狗等现实宠物 · 选定后与 VIP 一对一绑定</p>
+      </div>
+      <div class="species-pick-grid" id="speciesPickGrid"></div>
+      <div class="species-pick-actions">
+        <button type="button" class="btn-ok" id="speciesPickConfirm" disabled>确认选择</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Newbie guide overlay -->
+  <div class="guide-overlay" id="guideOverlay" hidden>
+    <div class="guide-card">
+      <div class="guide-step-dot" id="guideStepLabel">新手 1/5</div>
+      <h3 id="guideTitle">认识 VIP管家宠</h3>
+      <p id="guideDesc">欢迎来到宠物窝！我是你的 VIP管家宠，一起开始 QQ 宠物式照料吧～</p>
+      <div class="guide-actions">
+        <button type="button" class="btn-ok" id="guidePrimary">开始吧</button>
+        <button type="button" class="btn-ghost" id="guideSkip">跳过引导</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="levelUpModal">
+    <div class="modal">
+      <div class="levelup-burst">🎉</div>
+      <h3 id="levelUpTitle">升级成功！</h3>
+      <p id="levelUpDesc">恭喜升至 VIP4 / VIP4s</p>
+      <button class="btn-ok" id="levelUpOk" type="button">太棒了</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="evolveModal">
+    <div class="modal pet-evolve-modal">
+      <h3>亲密度进化</h3>
+      <div class="evolve-current" id="evolveCurrent"></div>
+      <ul class="evolve-rules" id="evolveRules"></ul>
+      <p class="evolve-pick-label">选择神兽品种（默认保留当前 · 可换种一次）</p>
+      <div class="pet-species-picks" id="evolveSpeciesPicks"></div>
+      <div class="evolve-actions">
+        <button type="button" class="btn-ok" id="evolveConfirm">确认进化</button>
+        <button type="button" class="btn-ghost" id="evolveCancel">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="ultimateRewardModal">
+    <div class="modal pet-ultimate-modal">
+      <div id="ultimateRewardHead"></div>
+      <p class="ult-pick-label">请选择 <strong>1</strong> 项养成达成奖励（非充值 · 本品种仅一次）</p>
+      <div class="ult-reward-picks" id="ultimateRewardPicks"></div>
+      <p class="ult-note" id="ultimateRewardNote">养成达成奖励，非充值。</p>
+      <div class="evolve-actions">
+        <button type="button" class="btn-ok" id="ultimateRewardConfirm">确认领取</button>
+        <button type="button" class="btn-ghost" id="ultimateRewardCancel">稍后</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="ultimateCelebrateModal">
+    <div class="modal">
+      <div class="levelup-burst">👑</div>
+      <h3 id="ultimateCelebrateTitle">终极形态奖励已发放！</h3>
+      <p id="ultimateCelebrateDesc">养成达成，非充值</p>
+      <button class="btn-ok" id="ultimateCelebrateOk" type="button">太棒了</button>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <script src="js/state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/pet.js"></script>
+</body>
+</html>

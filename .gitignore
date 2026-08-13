@@ -1,0 +1,40 @@
+# macOS / Windows
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+
+# Editors & local tooling
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.cursor/
+
+# Env & secrets (none in this prototype; keep ignored for GitHub safety)
+.env
+.env.*
+!.env.example
+
+# Python local server leftovers
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node (not used by this static prototype)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Logs & local scratch
+*.log
+*.local
+.cache/
+
+# OS package
+*.dmg
+*.iso
