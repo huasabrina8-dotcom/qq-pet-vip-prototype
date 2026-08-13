@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VIP管家宠 · 神兽形态 UI 三套对照</title>
+    <title>VIP管家宠 · 六套立绘对照（含黑金配色）</title>
   <style>
     :root {
       --bg: #f4f5f7;
@@ -12,7 +12,6 @@
       --muted: #667085;
       --line: #e6e8ec;
       --orange: #f97316;
-      --ok: #16a34a;
     }
     * { box-sizing: border-box; }
     body {
@@ -47,15 +46,28 @@
       font-size: 13px;
       font-weight: 600;
     }
-    nav a:hover, nav a.active { background: #fff7ed; border-color: #fdba74; color: #c2410c; }
-    main { max-width: 1120px; margin: 0 auto; padding: 20px 16px 64px; }
-    section { margin-bottom: 36px; }
-    h2 {
-      font-size: 16px;
-      margin: 0 0 8px;
-      padding-top: 8px;
+    nav a:hover { background: #fff7ed; border-color: #fdba74; color: #c2410c; }
+    nav a.new {
+      background: #fff7ed;
+      border-color: #f59e0b;
+      color: #92400e;
     }
+    nav a.new:hover { background: #ffedd5; color: #78350f; }
+    main { max-width: 1180px; margin: 0 auto; padding: 20px 16px 64px; }
+    section { margin-bottom: 40px; }
+    h2 { font-size: 16px; margin: 0 0 8px; padding-top: 8px; }
     .note { color: var(--muted); font-size: 13px; margin: 0 0 16px; }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .tag-old { background: #fff7ed; color: #c2410c; }
+    .tag-new { background: #fff7ed; color: #92400e; }
     figure {
       margin: 0 0 28px;
       background: var(--card);
@@ -68,7 +80,7 @@
       display: block;
       width: 100%;
       height: auto;
-      background: #eee;
+      background: #f4f5f7;
     }
     figcaption {
       padding: 12px 16px 14px;
@@ -77,112 +89,283 @@
     }
     figcaption strong { color: var(--ink); font-size: 14px; }
     .stages { margin-top: 4px; }
+    .compare {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .compare figure { margin: 0; }
+    .compare figcaption { padding: 8px 10px 10px; font-size: 12px; }
+    .beast-block h3 {
+      font-size: 15px;
+      margin: 20px 0 10px;
+    }
     footer {
       text-align: center;
       color: var(--muted);
       font-size: 12px;
       padding: 8px 16px 32px;
     }
+    @media (max-width: 720px) {
+      .compare { grid-template-columns: 1fr 1fr; }
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>VIP管家宠 · 神兽形态 UI 三套对照</h1>
-    <p class="sub">6 种菲律宾神话神兽 × 6 档形态（幼宠→银徽→管家→金甲→翼宠→冠宠）。演示开局 VIP3 = 金甲。本页为方案图，非付费、非猫狗。</p>
+    <h1>VIP管家宠 · 六套立绘对照</h1>
+    <p class="sub">六套均已入库，VIP 页与选种可随时切换：中性 / 神圣 / 可爱 / 墨金 / 玄祀 / 暮金。后三套只改神兽身上配色，卡片和页面仍是浅色厅。最终留哪几套后定。非付费、非猫狗。</p>
     <nav>
-      <a href="#neutral">中性（第一套）</a>
+      <a href="#compare">六套一眼对照</a>
+      <a href="#neutral">中性</a>
       <a href="#sacred">神圣</a>
       <a href="#cute">可爱</a>
+      <a class="new" href="#inkgold">墨金</a>
+      <a class="new" href="#obsidian">玄祀</a>
+      <a class="new" href="#duskgold">暮金</a>
     </nav>
   </header>
   <main>
+    <section id="compare">
+      <h2>六套一眼对照</h2>
+      <p class="note">同一神兽 × 六套色彩。上排三套为原风格；下排三套只换宠物配色，厅和卡片底不变。点导航可看该套全部六种神兽。</p>
+
+      <div class="beast-block">
+        <h3>彩羽神鸟 · Sarimanok</h3>
+        <div class="compare">
+          <figure>
+            <img src="神兽形态UI/sarimanok-forms-ui.png" alt="Sarimanok 中性">
+            <figcaption><strong>中性</strong> <span class="tag tag-old">库内</span></figcaption>
+          </figure>
+          <figure>
+            <img src="神兽形态UI/神圣/sarimanok-sacred-ui.png" alt="Sarimanok 神圣">
+            <figcaption><strong>神圣</strong> <span class="tag tag-old">库内</span></figcaption>
+          </figure>
+          <figure>
+            <img src="神兽形态UI/可爱/sarimanok-cute-ui.png" alt="Sarimanok 可爱">
+            <figcaption><strong>可爱</strong> <span class="tag tag-old">库内</span></figcaption>
+          </figure>
+          <figure>
+            <img src="神兽形态UI/墨金/sarimanok-inkgold-ui.png" alt="Sarimanok 墨金">
+            <figcaption><strong>墨金</strong> <span class="tag tag-new">库内 · 只改配色</span><div class="stages">中性神兽 → 墨黑古金，卡片仍浅</div></figcaption>
+          </figure>
+          <figure>
+            <img src="神兽形态UI/玄祀/sarimanok-obsidian-ui.png" alt="Sarimanok 玄祀">
+            <figcaption><strong>玄祀</strong> <span class="tag tag-new">库内 · 只改配色</span><div class="stages">神圣神兽 → 玄金，厅仍浅</div></figcaption>
+          </figure>
+          <figure>
+            <img src="神兽形态UI/暮金/sarimanok-duskgold-ui.png" alt="Sarimanok 暮金">
+            <figcaption><strong>暮金</strong> <span class="tag tag-new">库内 · 只改配色</span><div class="stages">可爱神兽 → 暮铜金，卡片仍浅</div></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="beast-block">
+        <h3>月食神龙 · Bakunawa</h3>
+        <div class="compare">
+          <figure>
+            <img src="神兽形态UI/bakunawa-forms-ui.png" alt="Bakunawa 中性">
+            <figcaption><strong>中性</strong> <span class="tag tag-old">库内</span></figcaption>
+          </figure>
+          <figure>
+            <img src="神兽形态UI/神圣/bakunawa-sacred-ui.png" alt="Bakunawa 神圣">
+            <figcaption><strong>神圣</strong> <span class="tag tag-old">库内</span></figcaption>
+          </figure>
+          <figure>
+            <img src="神兽形态UI/可爱/bakunawa-cute-ui.png" alt="Bakunawa 可爱">
+            <figcaption><strong>可爱</strong> <span class="tag tag-old">库内</span></figcaption>
+          </figure>
+          <figure>
+            <img src="神兽形态UI/墨金/bakunawa-inkgold-ui.png" alt="Bakunawa 墨金">
+            <figcaption><strong>墨金</strong> <span class="tag tag-new">库内 · 只改配色</span></figcaption>
+          </figure>
+          <figure>
+            <img src="神兽形态UI/玄祀/bakunawa-obsidian-ui.png" alt="Bakunawa 玄祀">
+            <figcaption><strong>玄祀</strong> <span class="tag tag-new">库内 · 只改配色</span></figcaption>
+          </figure>
+          <figure>
+            <img src="神兽形态UI/暮金/bakunawa-duskgold-ui.png" alt="Bakunawa 暮金">
+            <figcaption><strong>暮金</strong> <span class="tag tag-new">库内 · 只改配色</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <section id="neutral">
-      <h2>中性 · 第一套</h2>
-      <p class="note">偏产品中性立绘，介于神圣与可爱之间，适合先做对照。</p>
+      <h2>中性 · 第一套 <span class="tag tag-old">库内</span></h2>
+      <p class="note">偏产品中性立绘，介于神圣与可爱之间。</p>
       <figure>
         <img src="神兽形态UI/sarimanok-forms-ui.png" alt="彩羽神鸟 中性 六档">
         <figcaption><strong>彩羽神鸟 · Sarimanok</strong><div class="stages">幼羽彩鸟 → 银徽彩羽 → 管家彩鸟 → 金甲彩羽 → 翼彩神鸟 → 冠羽吉祥鸟</div></figcaption>
       </figure>
       <figure>
         <img src="神兽形态UI/bakunawa-forms-ui.png" alt="月食神龙 中性 六档">
-        <figcaption><strong>月食神龙 · Bakunawa</strong><div class="stages">月卵幼龙 → 银徽月蛟 → 管家月蛇 → 金甲月龙 → 翼月神龙 → 冠月食神龙</div></figcaption>
+        <figcaption><strong>月食神龙 · Bakunawa</strong></figcaption>
       </figure>
       <figure>
         <img src="神兽形态UI/diwata-forms-ui.png" alt="山林精灵 中性 六档">
-        <figcaption><strong>山林精灵 · Diwata</strong><div class="stages">幼芽精灵 → 银徽林灵 → 管家山林 → 金甲灵光 → 翼林精灵 → 冠山林精灵</div></figcaption>
+        <figcaption><strong>山林精灵 · Diwata</strong></figcaption>
       </figure>
       <figure>
         <img src="神兽形态UI/tigmamanukan-forms-ui.png" alt="吉兆灵鸟 中性 六档">
-        <figcaption><strong>吉兆灵鸟 · Tigmamanukan</strong><div class="stages">幼兆灵鸟 → 银徽吉兆 → 管家灵鸟 → 金甲兆羽 → 翼吉兆鸟 → 冠Bathala灵鸟</div></figcaption>
+        <figcaption><strong>吉兆灵鸟 · Tigmamanukan</strong></figcaption>
       </figure>
       <figure>
         <img src="神兽形态UI/sirena-forms-ui.png" alt="海之仙女 中性 六档">
-        <figcaption><strong>海之仙女 · Sirena</strong><div class="stages">幼浪海仙 → 银徽海珠 → 管家海灵 → 金甲海仙 → 翼潮仙女 → 冠海之仙女</div></figcaption>
+        <figcaption><strong>海之仙女 · Sirena</strong></figcaption>
       </figure>
       <figure>
         <img src="神兽形态UI/kapre-forms-ui.png" alt="树精守护神 中性 六档">
-        <figcaption><strong>树精守护神 · Kapre</strong><div class="stages">幼芽树精 → 银徽树灵 → 管家树精 → 金甲树卫 → 翼林树神 → 冠树精守护神</div></figcaption>
+        <figcaption><strong>树精守护神 · Kapre</strong></figcaption>
       </figure>
     </section>
 
     <section id="sacred">
-      <h2>神圣</h2>
-      <p class="note">庙宇金纹、光环、祭礼感，更贴合菲律宾神灵信仰气质。</p>
+      <h2>神圣 <span class="tag tag-old">库内</span></h2>
+      <p class="note">庙宇金纹、光环、祭礼感。</p>
       <figure>
-        <img src="神兽形态UI/神圣/sarimanok-sacred-ui.png" alt="彩羽神鸟 神圣 六档">
+        <img src="神兽形态UI/神圣/sarimanok-sacred-ui.png" alt="彩羽神鸟 神圣">
         <figcaption><strong>彩羽神鸟 · 神圣</strong></figcaption>
       </figure>
       <figure>
-        <img src="神兽形态UI/神圣/bakunawa-sacred-ui.png" alt="月食神龙 神圣 六档">
+        <img src="神兽形态UI/神圣/bakunawa-sacred-ui.png" alt="月食神龙 神圣">
         <figcaption><strong>月食神龙 · 神圣</strong></figcaption>
       </figure>
       <figure>
-        <img src="神兽形态UI/神圣/diwata-sacred-ui.png" alt="山林精灵 神圣 六档">
+        <img src="神兽形态UI/神圣/diwata-sacred-ui.png" alt="山林精灵 神圣">
         <figcaption><strong>山林精灵 · 神圣</strong></figcaption>
       </figure>
       <figure>
-        <img src="神兽形态UI/神圣/tigmamanukan-sacred-ui.png" alt="吉兆灵鸟 神圣 六档">
+        <img src="神兽形态UI/神圣/tigmamanukan-sacred-ui.png" alt="吉兆灵鸟 神圣">
         <figcaption><strong>吉兆灵鸟 · 神圣</strong></figcaption>
       </figure>
       <figure>
-        <img src="神兽形态UI/神圣/sirena-sacred-ui.png" alt="海之仙女 神圣 六档">
+        <img src="神兽形态UI/神圣/sirena-sacred-ui.png" alt="海之仙女 神圣">
         <figcaption><strong>海之仙女 · 神圣</strong></figcaption>
       </figure>
       <figure>
-        <img src="神兽形态UI/神圣/kapre-sacred-ui.png" alt="树精守护神 神圣 六档">
+        <img src="神兽形态UI/神圣/kapre-sacred-ui.png" alt="树精守护神 神圣">
         <figcaption><strong>树精守护神 · 神圣</strong></figcaption>
       </figure>
     </section>
 
     <section id="cute">
-      <h2>可爱</h2>
-      <p class="note">Q 版圆身、大眼睛，更适合每天回来抚养的粘性。</p>
+      <h2>可爱 <span class="tag tag-old">库内</span></h2>
+      <p class="note">Q 版圆身、大眼睛，抚养粘性向。</p>
       <figure>
-        <img src="神兽形态UI/可爱/sarimanok-cute-ui.png" alt="彩羽神鸟 可爱 六档">
+        <img src="神兽形态UI/可爱/sarimanok-cute-ui.png" alt="彩羽神鸟 可爱">
         <figcaption><strong>彩羽神鸟 · 可爱</strong></figcaption>
       </figure>
       <figure>
-        <img src="神兽形态UI/可爱/bakunawa-cute-ui.png" alt="月食神龙 可爱 六档">
+        <img src="神兽形态UI/可爱/bakunawa-cute-ui.png" alt="月食神龙 可爱">
         <figcaption><strong>月食神龙 · 可爱</strong></figcaption>
       </figure>
       <figure>
-        <img src="神兽形态UI/可爱/diwata-cute-ui.png" alt="山林精灵 可爱 六档">
+        <img src="神兽形态UI/可爱/diwata-cute-ui.png" alt="山林精灵 可爱">
         <figcaption><strong>山林精灵 · 可爱</strong></figcaption>
       </figure>
       <figure>
-        <img src="神兽形态UI/可爱/tigmamanukan-cute-ui.png" alt="吉兆灵鸟 可爱 六档">
+        <img src="神兽形态UI/可爱/tigmamanukan-cute-ui.png" alt="吉兆灵鸟 可爱">
         <figcaption><strong>吉兆灵鸟 · 可爱</strong></figcaption>
       </figure>
       <figure>
-        <img src="神兽形态UI/可爱/sirena-cute-ui.png" alt="海之仙女 可爱 六档">
+        <img src="神兽形态UI/可爱/sirena-cute-ui.png" alt="海之仙女 可爱">
         <figcaption><strong>海之仙女 · 可爱</strong></figcaption>
       </figure>
       <figure>
-        <img src="神兽形态UI/可爱/kapre-cute-ui.png" alt="树精守护神 可爱 六档">
+        <img src="神兽形态UI/可爱/kapre-cute-ui.png" alt="树精守护神 可爱">
         <figcaption><strong>树精守护神 · 可爱</strong></figcaption>
       </figure>
     </section>
+
+    <section id="inkgold">
+      <h2>墨金 <span class="tag tag-new">库内 · 只改配色</span></h2>
+      <p class="note">从「中性」只改神兽：墨黑羽毛 + 古金高光。页面、卡片、顶栏仍是浅色厅。</p>
+      <figure>
+        <img src="神兽形态UI/墨金/sarimanok-inkgold-ui.png" alt="彩羽神鸟 墨金">
+        <figcaption><strong>彩羽神鸟 · 墨金</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/墨金/bakunawa-inkgold-ui.png" alt="月食神龙 墨金">
+        <figcaption><strong>月食神龙 · 墨金</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/墨金/diwata-inkgold-ui.png" alt="山林精灵 墨金">
+        <figcaption><strong>山林精灵 · 墨金</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/墨金/tigmamanukan-inkgold-ui.png" alt="吉兆灵鸟 墨金">
+        <figcaption><strong>吉兆灵鸟 · 墨金</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/墨金/sirena-inkgold-ui.png" alt="海之仙女 墨金">
+        <figcaption><strong>海之仙女 · 墨金</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/墨金/kapre-inkgold-ui.png" alt="树精守护神 墨金">
+        <figcaption><strong>树精守护神 · 墨金</strong></figcaption>
+      </figure>
+    </section>
+
+    <section id="obsidian">
+      <h2>玄祀 <span class="tag tag-new">库内 · 只改配色</span></h2>
+      <p class="note">从「神圣」只改神兽：玄金甲胄与暗羽。庙宇浅底和卡片框不压暗。</p>
+      <figure>
+        <img src="神兽形态UI/玄祀/sarimanok-obsidian-ui.png" alt="彩羽神鸟 玄祀">
+        <figcaption><strong>彩羽神鸟 · 玄祀</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/玄祀/bakunawa-obsidian-ui.png" alt="月食神龙 玄祀">
+        <figcaption><strong>月食神龙 · 玄祀</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/玄祀/diwata-obsidian-ui.png" alt="山林精灵 玄祀">
+        <figcaption><strong>山林精灵 · 玄祀</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/玄祀/tigmamanukan-obsidian-ui.png" alt="吉兆灵鸟 玄祀">
+        <figcaption><strong>吉兆灵鸟 · 玄祀</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/玄祀/sirena-obsidian-ui.png" alt="海之仙女 玄祀">
+        <figcaption><strong>海之仙女 · 玄祀</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/玄祀/kapre-obsidian-ui.png" alt="树精守护神 玄祀">
+        <figcaption><strong>树精守护神 · 玄祀</strong></figcaption>
+      </figure>
+    </section>
+
+    <section id="duskgold">
+      <h2>暮金 <span class="tag tag-new">库内 · 只改配色</span></h2>
+      <p class="note">从「可爱」只改神兽：保留 Q 版外形，身上换成暮铜与暗金。粉桃厅底不动。</p>
+      <figure>
+        <img src="神兽形态UI/暮金/sarimanok-duskgold-ui.png" alt="彩羽神鸟 暮金">
+        <figcaption><strong>彩羽神鸟 · 暮金</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/暮金/bakunawa-duskgold-ui.png" alt="月食神龙 暮金">
+        <figcaption><strong>月食神龙 · 暮金</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/暮金/diwata-duskgold-ui.png" alt="山林精灵 暮金">
+        <figcaption><strong>山林精灵 · 暮金</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/暮金/tigmamanukan-duskgold-ui.png" alt="吉兆灵鸟 暮金">
+        <figcaption><strong>吉兆灵鸟 · 暮金</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/暮金/sirena-duskgold-ui.png" alt="海之仙女 暮金">
+        <figcaption><strong>海之仙女 · 暮金</strong></figcaption>
+      </figure>
+      <figure>
+        <img src="神兽形态UI/暮金/kapre-duskgold-ui.png" alt="树精守护神 暮金">
+        <figcaption><strong>树精守护神 · 暮金</strong></figcaption>
+      </figure>
+    </section>
   </main>
-  <footer>VIP管家宠 · 冲档版 · 方案图册保存在仓库 docs/ 内，关电脑后用下面「本机永久入口」仍可打开。</footer>
+  <footer>六套已写入 VIP 页与选种风格库，可随时切换。最终留哪几套后定。</footer>
 </body>
 </html>

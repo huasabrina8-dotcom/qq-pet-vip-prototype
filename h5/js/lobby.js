@@ -50,9 +50,17 @@
         statusEl.textContent = '🔔 抚养节奏将至 · 保护将尽';
         statusEl.dataset.status = st;
       } else {
-        statusEl.hidden = true;
-        statusEl.textContent = '';
-        statusEl.dataset.status = st || 'fresh';
+        const voice =
+          TTStore.getPetVoiceInfo && TTStore.getPetVoiceInfo({ skipToast: true });
+        if (voice && voice.mode === 'comfort' && voice.lobbyComfort) {
+          statusEl.hidden = false;
+          statusEl.textContent = voice.lobbyComfort;
+          statusEl.dataset.status = st || 'fresh';
+        } else {
+          statusEl.hidden = true;
+          statusEl.textContent = '';
+          statusEl.dataset.status = st || 'fresh';
+        }
       }
     }
     if (hud) {

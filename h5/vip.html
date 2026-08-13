@@ -67,6 +67,28 @@
       </div>
     </div>
 
+    <section class="art-style-card" id="artStyleCard">
+      <div class="art-style-head">
+        <h2>神兽形态</h2>
+        <p>六套立绘已入库 · 当前档可随时换风格；换神兽继承当前形态档</p>
+        <button type="button" class="btn-switch-species" id="btnSwitchSpecies">更换神兽</button>
+      </div>
+      <div class="art-style-need" id="artStyleNeed" hidden>
+        请先去宠物窝选择神兽，再切换形态风格。
+        <a href="pet.html">去选神兽 →</a>
+      </div>
+      <div class="art-style-body" id="artStyleBody">
+        <div class="art-style-tabs" id="artStyleTabs" role="tablist"></div>
+        <div class="art-style-wear" id="artWearMeta"></div>
+        <div class="art-sheet-stage">
+          <img id="artSheetImg" alt="当前风格六档形态">
+        </div>
+        <div class="art-stage-chips" id="artStageChips"></div>
+        <div class="form-nurture-summary" id="formNurtureSummary" hidden></div>
+        <p class="art-style-hint" id="artStyleHint"></p>
+      </div>
+    </section>
+
     <div class="carousel-card">
       <div class="carousel-head">
         <h2>Juan365 VIP Level</h2>
@@ -192,6 +214,18 @@
       <h3 id="levelUpTitle">升级成功！</h3>
       <p id="levelUpDesc">恭喜升至 VIP4</p>
       <button class="btn-ok" id="levelUpOk" type="button">太棒了</button>
+    </div>
+  </div>
+  <div class="modal-overlay" id="switchSpeciesModal">
+    <div class="modal pet-evolve-modal">
+      <h3>更换神兽</h3>
+      <div class="evolve-current" id="switchSpeciesCurrent"></div>
+      <p class="evolve-pick-label" id="switchSpeciesHint">新神兽将升至你当前的形态档，抚养进度保留。</p>
+      <div class="pet-species-picks" id="switchSpeciesPicks"></div>
+      <div class="evolve-actions">
+        <button type="button" class="btn-ok" id="switchSpeciesConfirm">确认更换</button>
+        <button type="button" class="btn-ghost" id="switchSpeciesCancel">取消</button>
+      </div>
     </div>
   </div>
   <div class="toast-wrap" id="toastWrap"></div>

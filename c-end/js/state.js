@@ -69,6 +69,61 @@
     photo: { label: '合影', intimacy: 2, xp: 6, icon: '📷' },
   };
 
+  function emptyStageKinds() {
+    const o = { chat: 0 };
+    Object.keys(INTIMACY_ACTIONS).forEach(function (k) {
+      o[k] = 0;
+    });
+    return o;
+  }
+
+  function normalizeStageKinds(raw) {
+    const o = emptyStageKinds();
+    if (!raw || typeof raw !== 'object') return o;
+    Object.keys(o).forEach(function (k) {
+      o[k] = Math.max(0, Number(raw[k]) || 0);
+    });
+    return o;
+  }
+
+  function inferredKinds(acts) {
+    const n = Math.max(0, Number(acts) || 0);
+    const o = emptyStageKinds();
+    if (n <= 0) return o;
+    o.feed = Math.max(2, Math.round(n * 0.32));
+    o.play = Math.max(1, Math.round(n * 0.18));
+    o.pat = Math.max(2, Math.round(n * 0.22));
+    o.drink = Math.max(1, Math.round(n * 0.1));
+    o.clean = Math.max(1, Math.round(n * 0.08));
+    o.walk = Math.max(0, Math.round(n * 0.04));
+    o.chat = Math.max(1, Math.round(n * 0.06));
+    return o;
+  }
+
+  function kindsFromRow(row) {
+    const k = normalizeStageKinds(row && row.kinds);
+    let sum = 0;
+    Object.keys(k).forEach(function (key) {
+      sum += k[key];
+    });
+    if (sum > 0) return k;
+    return inferredKinds(row && row.acts);
+  }
+
+  function actionRowsFromKinds(kinds) {
+    const order = ['feed', 'play', 'drink', 'clean', 'pat', 'walk', 'story', 'snack', 'photo', 'chat'];
+    const rows = [];
+    order.forEach(function (id) {
+      const n = (kinds && kinds[id]) || 0;
+      if (!n) return;
+      const meta =
+        id === 'chat' ? { icon: '💬', label: '对话' } : INTIMACY_ACTIONS[id];
+      if (!meta) return;
+      rows.push({ id: id, icon: meta.icon, label: meta.label, count: n });
+    });
+    return rows;
+  }
+
   /** 主动需求：满足后 24h 安静；到期后再次提醒 */
   const NEED_SATISFY_MS = 24 * 60 * 60 * 1000;
   const PET_NEED_DEFS = {
@@ -78,9 +133,10 @@
       satisfiedLabel: '饱食满足',
       action: 'feed',
       icon: '🍖',
-      bubble: '想吃东西…',
+      bubble: 'Gutom na ako… kain naman please?',
+      lambing: 'kain',
       flag: 'hungry',
-      evolveNudge: '喂饱我就能更接近下一形态哦',
+      evolveNudge: 'Kain muna, para lumaki ako ha',
     },
     play: {
       id: 'play',
@@ -88,9 +144,10 @@
       satisfiedLabel: '玩乐满足',
       action: 'play',
       icon: '🎾',
-      bubble: '想玩一会儿…',
+      bubble: 'Play tayo naman… miss na kita maglaro.',
+      lambing: 'play tayo',
       flag: 'wantPlay',
-      evolveNudge: '陪我玩一玩，离下一形态更近啦',
+      evolveNudge: 'Play tayo, malapit na next form',
     },
     drink: {
       id: 'drink',
@@ -98,9 +155,10 @@
       satisfiedLabel: '饮水满足',
       action: 'drink',
       icon: '💧',
-      bubble: '好渴，想喝水…',
+      bubble: 'Uhaw na ako, painom please?',
+      lambing: 'painom',
       flag: 'wantDrink',
-      evolveNudge: '喝饱水再继续抚养，就能进化咯',
+      evolveNudge: 'Painom muna, then we grow ha',
     },
   };
   const PET_NEED_KEYS = ['eat', 'play', 'drink'];
@@ -116,7 +174,7 @@
   const QUEST_VIP_XP = 20;
   const COMBO_KIND_NEED = 3;
   const INTIMACY_PER_LEVEL = 5;
-  /** 亲密度每升 1 级可进化一步；同种内 evoTier 升档，展示形态 = max(evoTier, VIP) */
+  /** 亲密度每 5 点升 1 Care Level；形态进阶另计抚养日+互动（档越高越久） */
   /** 终极形态（VIP5）达成奖励 · 每品种自选一次 · 非充值 */
   const ULTIMATE_REWARD_OPTIONS = [
     {
@@ -194,6 +252,7 @@
       label: '彩羽神鸟',
       labelEn: 'Sarimanok',
       tone: '啾',
+      cue: 'Uy~',
       unit: '神鸟',
       loreEn: 'Maranao lucky bird',
       loreZh: '吉祥彩羽',
@@ -203,6 +262,7 @@
       label: '月食神龙',
       labelEn: 'Bakunawa',
       tone: '嗷',
+      cue: 'Naku~',
       unit: '神龙',
       loreEn: 'Moon serpent',
       loreZh: '守护月光',
@@ -212,6 +272,7 @@
       label: '山林精灵',
       labelEn: 'Diwata',
       tone: '叮',
+      cue: 'Hehe~',
       unit: '精灵',
       loreEn: 'Nature spirit',
       loreZh: '守护山林',
@@ -221,6 +282,7 @@
       label: '吉兆灵鸟',
       labelEn: 'Tigmamanukan',
       tone: '啼',
+      cue: 'Uy~',
       unit: '灵鸟',
       loreEn: 'Sacred omen bird · Bathala',
       loreZh: 'Bathala 吉兆',
@@ -230,6 +292,7 @@
       label: '海之仙女',
       labelEn: 'Sirena',
       tone: '哼',
+      cue: 'Hmm~',
       unit: '海仙',
       loreEn: 'Sea maiden',
       loreZh: '守护海域',
@@ -239,6 +302,7 @@
       label: '树精守护神',
       labelEn: 'Kapre',
       tone: '呵',
+      cue: 'Hoy~',
       unit: '树精',
       loreEn: 'Tree giant guardian',
       loreZh: '守护巨树的山林神灵',
@@ -299,6 +363,95 @@
   /** 兼容旧引用：展示用默认形态表（未选种前） */
   const PET_FORMS_BY_VIP = PET_FORMS_BY_SPECIES.sarimanok;
 
+  /** 六套立绘入库：VIP 档可随时切换（不付费）；最终留哪几套后定 */
+  const ART_STYLES = [
+    { id: 'neutral', label: '中性', hint: '产品中性立绘' },
+    { id: 'sacred', label: '神圣', hint: '神灵祭礼气质' },
+    { id: 'cute', label: '可爱', hint: 'Q 版抚养向' },
+    { id: 'inkgold', label: '墨金', hint: '身上墨黑古金' },
+    { id: 'obsidian', label: '玄祀', hint: '身上玄金配色' },
+    { id: 'duskgold', label: '暮金', hint: '身上暮铜金' },
+  ];
+  const ART_STYLE_IDS = ART_STYLES.map(function (s) {
+    return s.id;
+  });
+  const ART_SHEET_REL = {
+    sacred: ['神圣', '{sp}-sacred-ui.png'],
+    cute: ['可爱', '{sp}-cute-ui.png'],
+    inkgold: ['墨金', '{sp}-inkgold-ui.png'],
+    obsidian: ['玄祀', '{sp}-obsidian-ui.png'],
+    duskgold: ['暮金', '{sp}-duskgold-ui.png'],
+  };
+  const FORM_STAGE_TITLES = ['幼宠', '银徽', '管家', '金甲', '翼宠', '冠宠'];
+  /**
+   * 当前形态 → 下一形态：合格抚养日（每 24h 互动最多计 1 天）+ 本档互动次数。
+   * 档越高越久，用来拉登录粘性；VIP 只作可成长上限，不跳形态。
+   */
+  const STAGE_GROWTH = [
+    { from: 0, to: 1, needDays: 1, needActs: 6 },
+    { from: 1, to: 2, needDays: 2, needActs: 12 },
+    { from: 2, to: 3, needDays: 3, needActs: 20 },
+    { from: 3, to: 4, needDays: 5, needActs: 36 },
+    { from: 4, to: 5, needDays: 7, needActs: 56 },
+  ];
+
+  function normalizeArtStyle(raw) {
+    return ART_STYLE_IDS.indexOf(raw) >= 0 ? raw : 'neutral';
+  }
+
+  function artStyleLabel(raw) {
+    const st = normalizeArtStyle(raw);
+    for (let i = 0; i < ART_STYLES.length; i++) {
+      if (ART_STYLES[i].id === st) return ART_STYLES[i].label;
+    }
+    return ART_STYLES[0].label;
+  }
+
+  function artSheetUrl(species, style) {
+    const sp = resolveSpecies(species, SPECIES_FALLBACK);
+    const st = normalizeArtStyle(style);
+    const folder = encodeURI('神兽形态UI');
+    const rel = ART_SHEET_REL[st];
+    if (rel) {
+      return '../docs/' + folder + '/' + encodeURI(rel[0]) + '/' + rel[1].replace('{sp}', sp);
+    }
+    return '../docs/' + folder + '/' + sp + '-forms-ui.png';
+  }
+
+  /** 单档立绘（从六档总览图裁出），相对 c-end/ 与 h5/ 页面 */
+  function formArtUrl(species, style, tier) {
+    const sp = resolveSpecies(species, SPECIES_FALLBACK);
+    const st = normalizeArtStyle(style);
+    const t = clampEvoTier(tier);
+    return '../docs/beast-art/' + st + '/' + sp + '-' + t + '.png';
+  }
+
+  /**
+   * 六档总览图（1536×1024，中间一排 6 张卡）裁出单档。
+   * mode: 'portrait' 只取神兽立绘；'card' 含档位标题。
+   */
+  function formArtFrame(tier, mode) {
+    const t = clampEvoTier(tier);
+    const imgW = 1536;
+    const imgH = 1024;
+    const x0 = 54;
+    const step = 245;
+    const w = 214;
+    const y = mode === 'card' ? 288 : 336;
+    const h = mode === 'card' ? 500 : 328;
+    const x = x0 + t * step;
+    const sizeX = (imgW / w) * 100;
+    const sizeY = (imgH / h) * 100;
+    const posX = imgW > w ? (x / (imgW - w)) * 100 : 0;
+    const posY = imgH > h ? (y / (imgH - h)) * 100 : 50;
+    return {
+      tier: t,
+      mode: mode === 'card' ? 'card' : 'portrait',
+      backgroundSize: sizeX.toFixed(2) + '% ' + sizeY.toFixed(2) + '%',
+      backgroundPosition: posX.toFixed(2) + '% ' + posY.toFixed(2) + '%',
+    };
+  }
+
   function emptyUltimateClaimed() {
     const o = {};
     PET_SPECIES_IDS.forEach(function (id) {
@@ -334,18 +487,161 @@
     return Math.max(0, Math.min(5, Math.floor(Number(n) || 0)));
   }
 
-  /** 展示形态档：抚养进化档与 VIP 取高（VIP 更高时同步换皮） */
-  function petDisplayTier(pet, vipOpt) {
-    const vip =
-      vipOpt != null
-        ? Math.max(0, Math.min(5, Math.floor(Number(vipOpt) || 0)))
-        : levelFromXp(state.xp);
-    const bound =
-      pet && pet.boundVipLevel != null
-        ? Math.max(0, Math.min(5, Math.floor(Number(pet.boundVipLevel) || 0)))
-        : vip;
-    const evo = clampEvoTier(pet && pet.evoTier);
-    return Math.max(evo, bound, vip);
+  /** 展示形态 = 抚养进化档；VIP 不跳形态，只限制可进化上限 */
+  function petDisplayTier(pet) {
+    return clampEvoTier(pet && pet.evoTier);
+  }
+
+  function stageGrowthNeed(evoTier) {
+    const t = clampEvoTier(evoTier);
+    return STAGE_GROWTH[t] || null;
+  }
+
+  function ensureStageProgress(pet) {
+    if (!pet) return;
+    if (pet.stageEnteredAt == null) pet.stageEnteredAt = Number(pet.adoptedAt) || Date.now();
+    pet.stageNurtureDays = Math.max(0, Number(pet.stageNurtureDays) || 0);
+    pet.stageActCount = Math.max(0, Number(pet.stageActCount) || 0);
+    pet.stageLastQualifyAt = Math.max(0, Number(pet.stageLastQualifyAt) || 0);
+    pet.stageActKinds = normalizeStageKinds(pet.stageActKinds);
+  }
+
+  function resetStageProgress(pet) {
+    if (!pet) return;
+    pet.stageEnteredAt = Date.now();
+    pet.stageNurtureDays = 0;
+    pet.stageActCount = 0;
+    pet.stageLastQualifyAt = 0;
+    pet.stageActKinds = emptyStageKinds();
+  }
+
+  function normalizeStageHistory(raw) {
+    if (!Array.isArray(raw)) return [];
+    const seen = {};
+    const out = [];
+    raw.forEach(function (row) {
+      if (!row || typeof row !== 'object') return;
+      const tier = clampEvoTier(row.tier);
+      if (seen[tier]) return;
+      seen[tier] = true;
+      out.push({
+        tier: tier,
+        toTier: clampEvoTier(row.toTier != null ? row.toTier : tier + 1),
+        days: Math.max(0, Number(row.days) || 0),
+        acts: Math.max(0, Number(row.acts) || 0),
+        enteredAt: Number(row.enteredAt) || 0,
+        evolvedAt: Number(row.evolvedAt) || 0,
+        inferred: !!row.inferred,
+        kinds: kindsFromRow(row),
+      });
+    });
+    out.sort(function (a, b) {
+      return a.tier - b.tier;
+    });
+    return out;
+  }
+
+  function historyRowFor(pet, fromTier) {
+    const list = (pet && pet.stageHistory) || [];
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].tier === fromTier) return list[i];
+    }
+    return null;
+  }
+
+  function backfillStageHistory(pet) {
+    if (!pet) return;
+    pet.stageHistory = normalizeStageHistory(pet.stageHistory);
+    if (!hasChosenSpecies(pet)) return;
+    const evo = clampEvoTier(pet.evoTier);
+    const adopted = Number(pet.adoptedAt) || Date.now();
+    let cursor = adopted;
+    for (let i = 0; i < evo; i++) {
+      const existing = historyRowFor(pet, i);
+      if (existing) {
+        cursor = existing.evolvedAt || cursor;
+        continue;
+      }
+      const need = stageGrowthNeed(i);
+      const days = need ? need.needDays : 0;
+      const acts = need ? need.needActs : 0;
+      const evolvedAt = cursor + days * CARE_PROTECT_MS;
+      pet.stageHistory.push({
+        tier: i,
+        toTier: i + 1,
+        days: days,
+        acts: acts,
+        enteredAt: cursor,
+        evolvedAt: evolvedAt,
+        inferred: true,
+        kinds: inferredKinds(acts),
+      });
+      cursor = evolvedAt;
+    }
+    pet.stageHistory = normalizeStageHistory(pet.stageHistory).filter(function (h) {
+      return h.tier < evo;
+    });
+  }
+
+  function recordStageCompletion(pet, fromTier) {
+    if (!pet) return;
+    ensureStageProgress(pet);
+    const need = stageGrowthNeed(fromTier);
+    const row = {
+      tier: clampEvoTier(fromTier),
+      toTier: clampEvoTier(fromTier + 1),
+      days: Math.max(pet.stageNurtureDays || 0, need ? need.needDays : 0),
+      acts: Math.max(pet.stageActCount || 0, need ? need.needActs : 0),
+      enteredAt: Number(pet.stageEnteredAt) || Date.now(),
+      evolvedAt: Date.now(),
+      inferred: false,
+      kinds: normalizeStageKinds(pet.stageActKinds),
+    };
+    pet.stageHistory = normalizeStageHistory(pet.stageHistory).filter(function (h) {
+      return h.tier !== row.tier;
+    });
+    pet.stageHistory.push(row);
+    pet.stageHistory = normalizeStageHistory(pet.stageHistory);
+  }
+
+  function padDatePart(n) {
+    return n < 10 ? '0' + n : String(n);
+  }
+
+  function formatShortDate(ts) {
+    const d = new Date(Number(ts) || 0);
+    if (!ts || isNaN(d.getTime())) return '';
+    return d.getFullYear() + '-' + padDatePart(d.getMonth() + 1) + '-' + padDatePart(d.getDate());
+  }
+
+  function formatWornLabel(ms) {
+    const n = Math.max(0, Number(ms) || 0);
+    if (n < 60 * 60 * 1000) return '不足 1 小时';
+    if (n < CARE_PROTECT_MS) return '不到 1 天';
+    return Math.round(n / CARE_PROTECT_MS) + ' 天';
+  }
+
+  function journeyTotals(pet) {
+    backfillStageHistory(pet);
+    ensureStageProgress(pet);
+    const hist = pet.stageHistory || [];
+    let days = 0;
+    let acts = 0;
+    hist.forEach(function (h) {
+      days += h.days;
+      acts += h.acts;
+    });
+    days += pet.stageNurtureDays || 0;
+    acts += pet.stageActCount || 0;
+    return {
+      days: days,
+      acts: acts,
+      forms: clampEvoTier(pet.evoTier) + 1,
+      careLevel: Math.max(1, pet.careLevel || 1),
+      careCount: pet.careCount || 0,
+      points: pet.allTimePoints || 0,
+      companionLabel: formatWornLabel(Date.now() - (Number(pet.adoptedAt) || Date.now())),
+    };
   }
 
   function defaultPetNeeds(allActive) {
@@ -404,8 +700,16 @@
     careLevel: 1,
     /** 上次完成「进化」时的亲密度等级；careLevel > lastEvolvedLevel 可进化并换种 */
     lastEvolvedLevel: 1,
-    /** 抚养驱动的同种形态阶（0–5）；展示档 = max(evoTier, VIP) */
+    /** 抚养驱动的同种形态阶（0–5）；展示形态 = evoTier，不随 VIP 跳档 */
     evoTier: 0,
+    /** 本档合格抚养日 / 互动次数（进阶门槛，档越高越久） */
+    stageEnteredAt: Date.now(),
+    stageNurtureDays: 0,
+    stageActCount: 0,
+    stageLastQualifyAt: 0,
+    /** 已完成档的抚养记录（幼宠→银徽…），用于已达成形态的抚养总结 */
+    stageHistory: [],
+    stageActKinds: emptyStageKinds(),
     lastCareAt: Date.now(),
     lastInteractAt: Date.now(),
     lastDecayAt: Date.now(),
@@ -422,10 +726,12 @@
     lastSoldAt: null,
     adoptedAt: Date.now(),
     petName: '待选神兽',
-    /** 品种：首次进窝必选；亲密度进化时可在 6 种菲律宾神兽间换种 */
+    /** 品种：首次进窝必选；之后可随时更换神兽并继承当前形态档 */
     species: null,
     /** 是否已完成首次选种（未选则照料/对话/进化均阻塞） */
     speciesChosen: false,
+    /** 立绘风格：六套入库，VIP 页可随时切换；最终留哪几套后定 */
+    artStyle: 'neutral',
     /** 与 VIP 管家一对一绑定（始终绑定，无出售解绑） */
     bound: true,
     boundVipLevel: 3,
@@ -449,6 +755,8 @@
     chatMessages: [],
     chatDate: todayKey(),
     chatGreetedDate: null,
+    /** 进页抚慰/撒娇 Toast 日戳 */
+    voiceToastDate: null,
     /** 本会话照料种类（用于 combo，不强制持久） */
     sessionKinds: [],
     /** 每日亲密度任务进度 */
@@ -578,8 +886,9 @@
     else if (p.speciesChosen === false) speciesChosen = false;
     else speciesChosen = !!speciesGuess; // legacy dog/cat → migrated & treated as chosen
     const speciesFinal = speciesChosen ? speciesGuess : null;
+    const evoGuess = clampEvoTier(p.evoTier != null ? p.evoTier : 0);
     const formGuess = speciesFinal
-      ? petFormForVip(p.boundVipLevel != null ? p.boundVipLevel : vipGuess, speciesFinal)
+      ? petFormForVip(evoGuess, speciesFinal)
       : { id: null, name: '待选神兽' };
     parsed.pet = {
       hunger: clampStat(p.hunger != null ? p.hunger : PET_DEFAULT.hunger),
@@ -596,7 +905,13 @@
         // 旧存档：视为已对齐当前亲密度，避免突然弹出待进化
         return careLv;
       })(),
-      evoTier: clampEvoTier(p.evoTier != null ? p.evoTier : 0),
+      evoTier: evoGuess,
+      stageEnteredAt: Number(p.stageEnteredAt) || Number(p.adoptedAt) || Date.now(),
+      stageNurtureDays: Math.max(0, Number(p.stageNurtureDays) || 0),
+      stageActCount: Math.max(0, Number(p.stageActCount) || 0),
+      stageLastQualifyAt: Math.max(0, Number(p.stageLastQualifyAt) || 0),
+      stageHistory: normalizeStageHistory(p.stageHistory),
+      stageActKinds: normalizeStageKinds(p.stageActKinds),
       lastCareAt: Number(p.lastCareAt) || Date.now(),
       lastInteractAt: Number(p.lastInteractAt) || Number(p.lastCareAt) || Date.now(),
       lastDecayAt: Number(p.lastDecayAt) || Date.now(),
@@ -621,6 +936,7 @@
       adoptedAt: Number(p.adoptedAt) || Date.now(),
       species: speciesFinal,
       speciesChosen: speciesChosen,
+      artStyle: normalizeArtStyle(p.artStyle),
       petName:
         typeof p.petName === 'string' &&
         p.petName &&
@@ -646,6 +962,7 @@
       chatMessages: normalizeChat(p.chatMessages),
       chatDate: p.chatDate || todayKey(),
       chatGreetedDate: p.chatGreetedDate || null,
+      voiceToastDate: p.voiceToastDate || null,
       sessionKinds: Array.isArray(p.sessionKinds)
         ? p.sessionKinds.filter(function (k) {
             return !!INTIMACY_ACTIONS[k];
@@ -660,6 +977,7 @@
         playedOrCleaned: !!g.playedOrCleaned,
       },
     };
+    backfillStageHistory(parsed.pet);
     if (parsed.pet.guide.finished) {
       parsed.pet.guide.active = false;
       parsed.pet.guide.step = Math.max(parsed.pet.guide.step, 5);
@@ -935,11 +1253,15 @@
         accent: '#ffd4a8',
         bindLabel: '已绑定 VIP' + vip + ' / ' + tier + ' · 待选神兽',
         needsSpeciesPick: true,
+        artStyle: normalizeArtStyle(pet.artStyle),
+        artSheetUrl: null,
+        artUrl: null,
       };
     }
     const sp = normalizeSpecies(pet.species);
     const spMeta = PET_SPECIES[sp];
     const form = petFormForVip(displayTier, sp);
+    const artStyle = normalizeArtStyle(pet.artStyle);
     return {
       title: form.name + ' · ' + spMeta.label + ' · ' + form.formTitle + careSuffix,
       emoji: form.emoji,
@@ -963,12 +1285,396 @@
       accent: form.accent,
       bindLabel: '已绑定 VIP' + vip + ' / ' + tier + ' · ' + spMeta.label,
       needsSpeciesPick: false,
+      artStyle: artStyle,
+      artSheetUrl: artSheetUrl(sp, artStyle),
+      artUrl: formArtUrl(sp, artStyle, displayTier),
     };
   }
 
+  function setArtStyle(styleId) {
+    ensurePet(state);
+    const pet = state.pet;
+    const next = normalizeArtStyle(styleId);
+    if (pet.artStyle === next) {
+      return { ok: true, style: next, unchanged: true, look: petAppearance(state) };
+    }
+    pet.artStyle = next;
+    emit({ type: 'artStyle', style: next });
+    return { ok: true, style: next, look: petAppearance(state) };
+  }
+
+  function getArtStyleSwitchInfo(stateObj) {
+    const look = petAppearance(stateObj);
+    const styleMeta =
+      ART_STYLES.filter(function (s) {
+        return s.id === look.artStyle;
+      })[0] || ART_STYLES[0];
+    const vip = look.vip;
+    const evoTier = look.evoTier;
+    const stages = FORM_STAGE_TITLES.map(function (title, i) {
+      const form = look.species ? petFormForVip(i, look.species) : null;
+      return {
+        tier: i,
+        title: title,
+        name: form ? form.name : title,
+        current: i === evoTier,
+        grown: i <= evoTier,
+        pending: i > evoTier && i <= vip,
+        vipLocked: i > vip,
+      };
+    });
+    return {
+      chosen: !look.needsSpeciesPick,
+      speciesLabel: look.speciesLabel,
+      petName: look.petName,
+      emoji: look.emoji,
+      vip: look.vip,
+      displayTier: look.displayTier,
+      artStyle: look.artStyle,
+      artStyleLabel: styleMeta.label,
+      artSheetUrl: look.artSheetUrl,
+      styles: ART_STYLES,
+      stages: stages,
+      currentStage: stages[evoTier] || stages[0],
+      evoTier: evoTier,
+    };
+  }
+
+  function getStageGrowthInfo(stateObj) {
+    const s = stateObj || state;
+    const pet = s.pet || {};
+    ensureStageProgress(pet);
+    const vip = levelFromXp(s.xp);
+    const evoTier = clampEvoTier(pet.evoTier);
+    const need = stageGrowthNeed(evoTier);
+    const haveDays = pet.stageNurtureDays || 0;
+    const haveActs = pet.stageActCount || 0;
+    const now = Date.now();
+    const lastQ = Number(pet.stageLastQualifyAt) || 0;
+    const nextQualifyAt = lastQ ? lastQ + CARE_PROTECT_MS : 0;
+    const nextQualifyRemainMs = lastQ ? Math.max(0, nextQualifyAt - now) : 0;
+    const fromTitle = FORM_STAGE_TITLES[evoTier] || '幼宠';
+    const toTitle = evoTier >= 5 ? null : FORM_STAGE_TITLES[evoTier + 1];
+    const base = {
+      chosen: hasChosenSpecies(pet),
+      evoTier: evoTier,
+      vip: vip,
+      haveDays: haveDays,
+      haveActs: haveActs,
+      fromTitle: fromTitle,
+      toTitle: toTitle,
+      nextQualifyAt: nextQualifyAt,
+      nextQualifyRemainMs: nextQualifyRemainMs,
+      nextQualifyRemainLabel: nextQualifyRemainMs > 0 ? formatProtectRemain(nextQualifyRemainMs) : '',
+    };
+    if (!hasChosenSpecies(pet)) {
+      return Object.assign(base, {
+        canEvolve: false,
+        reason: 'need_species',
+        isUltimate: false,
+        needDays: 0,
+        needActs: 0,
+        daysPct: 0,
+        actsPct: 0,
+        progressPct: 0,
+        progressHint: '请先选择 VIP管家神兽',
+        vipBlocked: false,
+      });
+    }
+    if (evoTier >= 5 || !need) {
+      return Object.assign(base, {
+        canEvolve: false,
+        reason: 'ultimate',
+        isUltimate: true,
+        needDays: 0,
+        needActs: 0,
+        daysPct: 100,
+        actsPct: 100,
+        progressPct: 100,
+        progressHint: '已达终极形态',
+        vipBlocked: false,
+      });
+    }
+    const needDays = need.needDays;
+    const needActs = need.needActs;
+    const daysReady = haveDays >= needDays;
+    const actsReady = haveActs >= needActs;
+    const vipBlocked = need.to > vip;
+    const canEvolve = daysReady && actsReady && !vipBlocked;
+    let reason = null;
+    if (vipBlocked) reason = 'need_vip';
+    else if (!canEvolve) reason = 'need_nurture';
+    const daysPct = Math.min(100, Math.round((haveDays / needDays) * 100));
+    const actsPct = Math.min(100, Math.round((haveActs / needActs) * 100));
+    const progressPct = Math.round((daysPct + actsPct) / 2);
+    const remainDays = Math.max(0, needDays - haveDays);
+    const remainActs = Math.max(0, needActs - haveActs);
+    let progressHint;
+    if (vipBlocked && daysReady && actsReady) {
+      progressHint = '抚养已满 · 升至 VIP' + need.to + ' 解锁「' + toTitle + '」';
+    } else if (canEvolve) {
+      progressHint = '可进化解锁「' + toTitle + '」';
+    } else {
+      const bits = [];
+      if (remainDays > 0) bits.push('再回来抚养 ' + remainDays + ' 天');
+      if (remainActs > 0) bits.push('再互动 ' + remainActs + ' 次');
+      progressHint = bits.join(' · ') + ' 可进化「' + toTitle + '」';
+      if (remainDays > 0 && nextQualifyRemainMs > 0) {
+        progressHint += '（下次计日 ' + formatProtectRemain(nextQualifyRemainMs) + '）';
+      }
+    }
+    return Object.assign(base, {
+      canEvolve: canEvolve,
+      reason: reason,
+      isUltimate: false,
+      needDays: needDays,
+      needActs: needActs,
+      needTo: need.to,
+      daysReady: daysReady,
+      actsReady: actsReady,
+      vipBlocked: vipBlocked,
+      remainDays: remainDays,
+      remainActs: remainActs,
+      daysPct: daysPct,
+      actsPct: actsPct,
+      progressPct: progressPct,
+      progressHint: progressHint,
+      tableHint:
+        '幼宠→银徽 1天 · 银徽→管家 2天 · 管家→金甲 3天 · 金甲→翼宠 5天 · 翼宠→冠宠 7天（每 24h 互动计 1 抚养日）',
+    });
+  }
+
   /**
-   * 一对一绑定：会员 VIP ↔ 管家宠形态
-   * 升档换形态/名称；品种仅通过亲密度进化换种
+   * 已达成形态的抚养总结：点开某一档，看养成门槛、本档穿着、累计陪伴。
+   */
+  function getFormNurtureSummary(tierOpt) {
+    ensurePet(state);
+    const pet = state.pet;
+    backfillStageHistory(pet);
+    const look = petAppearance(state);
+    const evo = look.evoTier;
+    const vip = look.vip;
+    const tier = tierOpt == null || tierOpt === '' ? evo : clampEvoTier(tierOpt);
+    const form = look.species ? petFormForVip(tier, look.species) : null;
+    const title = FORM_STAGE_TITLES[tier] || '幼宠';
+    const grown = tier <= evo;
+    const current = tier === evo;
+    const pending = tier > evo && tier <= vip;
+    const vipLocked = tier > vip;
+    const totals = journeyTotals(pet);
+    const overallLine =
+      '累计已达成 ' +
+      totals.forms +
+      ' 档 · ' +
+      totals.days +
+      ' 个合格抚养日 · ' +
+      totals.acts +
+      ' 次互动 · 亲密度 Lv.' +
+      totals.careLevel +
+      ' · 陪伴 ' +
+      totals.companionLabel;
+    const base = {
+      tier: tier,
+      title: title,
+      name: form ? form.name : title,
+      emoji: form ? form.emoji : '✨',
+      grown: grown,
+      current: current,
+      pending: pending,
+      vipLocked: vipLocked,
+      speciesLabel: look.speciesLabel || '',
+      overallLine: overallLine,
+      totals: totals,
+      stats: [],
+      kicker: '',
+      lead: '',
+      note: '',
+      accent: form ? form.accent : '#ffd4a8',
+      stage: form ? form.stage : 'baby',
+      desc: form ? form.desc : '',
+      artSheetUrl: look.artSheetUrl || '',
+      artUrl: look.species ? formArtUrl(look.species, look.artStyle, tier) : '',
+      artFrame: look.artSheetUrl ? formArtFrame(tier, 'portrait') : null,
+    };
+    if (!hasChosenSpecies(pet)) {
+      return Object.assign(base, {
+        grown: false,
+        kicker: '未选神兽',
+        lead: '请先选择菲律宾神兽，抚养总结会记在已达成的形态上。',
+        note: '首次进窝必选神兽。',
+      });
+    }
+    if (!grown) {
+      return Object.assign(base, {
+        kicker: pending ? '尚未达成 · 抚养中' : '尚未达成',
+        lead: vipLocked
+          ? '升至 VIP' + tier + ' 后，养满上一档即可进化「' + title + '」。'
+          : '继续抚养与互动即可解锁「' + title + '」；档越高所需时间越长。',
+        note: '形态靠抚养日+互动进阶，VIP 只作成长上限。',
+        isPast: true,
+        isLocked: true,
+        cta: '回到当前形态继续抚养',
+        actions: [],
+        stats: [
+          {
+            label: '状态',
+            value: pending ? '抚养中尚未进化' : vipLocked ? '需先升 VIP' : '尚未养成',
+          },
+        ],
+      });
+    }
+    const reachNeed = tier > 0 ? stageGrowthNeed(tier - 1) : null;
+    const reachHist = tier > 0 ? historyRowFor(pet, tier - 1) : null;
+    const wearHist = current ? null : historyRowFor(pet, tier);
+    const growth = getStageGrowthInfo();
+    const kinds = current
+      ? normalizeStageKinds(pet.stageActKinds)
+      : kindsFromRow(wearHist || { acts: wearHist && wearHist.acts });
+    const actions = actionRowsFromKinds(kinds);
+    const sp = look.species;
+    const tone = (PET_SPECIES[sp] && PET_SPECIES[sp].tone) || '';
+    const lookBit = formLookBit(sp, title);
+    const actionBits = actions
+      .slice(0, 4)
+      .map(function (a) {
+        return a.label + ' ' + a.count + ' 次';
+      })
+      .join('、');
+    const stats = [];
+    if (tier === 0) {
+      stats.push({ label: '起点', value: '选种后的幼宠' });
+    } else {
+      stats.push({
+        label: '养成门槛',
+        value:
+          (reachHist ? reachHist.days : reachNeed.needDays) +
+          ' 日 / ' +
+          (reachHist ? reachHist.acts : reachNeed.needActs) +
+          ' 次',
+      });
+    }
+    if (current) {
+      const wornMs = Date.now() - (Number(pet.stageEnteredAt) || Date.now());
+      stats.push({ label: '本档穿着', value: formatWornLabel(wornMs) });
+      if (growth && !growth.isUltimate) {
+        stats.push({
+          label: '本档进度',
+          value:
+            (growth.haveDays || 0) +
+            '/' +
+            growth.needDays +
+            ' 日 · ' +
+            (growth.haveActs || 0) +
+            '/' +
+            growth.needActs +
+            ' 次',
+        });
+      } else {
+        stats.push({ label: '本档', value: '已达终极形态' });
+      }
+    } else if (wearHist) {
+      stats.push({
+        label: '本档穿着',
+        value: formatWornLabel((wearHist.evolvedAt || 0) - (wearHist.enteredAt || 0)),
+      });
+      stats.push({
+        label: '本档抚养',
+        value: wearHist.days + ' 日 / ' + wearHist.acts + ' 次后进化',
+      });
+      if (wearHist.evolvedAt) {
+        stats.push({ label: '进化于', value: formatShortDate(wearHist.evolvedAt) });
+      }
+    }
+    stats.push({
+      label: '累计抚养',
+      value: totals.days + ' 日 / ' + totals.acts + ' 次',
+    });
+    stats.push({ label: '亲密度', value: 'Lv.' + totals.careLevel });
+    let lead;
+    if (current && growth && growth.isUltimate) {
+      lead =
+        '冠宠「' +
+        (form && form.name) +
+        '」是你一档一档养出来的。累计 ' +
+        totals.days +
+        ' 个合格抚养日、' +
+        totals.acts +
+        ' 次互动。Salamat。';
+    } else if (current) {
+      lead =
+        '正在穿着「' +
+        title +
+        '」· ' +
+        (form && form.name) +
+        '。本档 ' +
+        (growth.haveDays || 0) +
+        '/' +
+        (growth.needDays || 0) +
+        ' 抚养日、' +
+        (growth.haveActs || 0) +
+        '/' +
+        (growth.needActs || 0) +
+        ' 次互动。再回来深度抚养，就能靠近「' +
+        (growth.toTitle || '下一形态') +
+        '」。';
+    } else if (tier === 0) {
+      lead =
+        tone +
+        '还记得幼宠那一阵。' +
+        (actionBits ? '你' + actionBits + '。' : '') +
+        '我的' +
+        lookBit +
+        '就是你养亮的。这是你把我带出起点的成就。Salamat。';
+    } else {
+      lead =
+        tone +
+        '「' +
+        title +
+        ' · ' +
+        (form && form.name) +
+        '」那一阵，你' +
+        (actionBits || '一直回来抚养') +
+        '。我的' +
+        lookBit +
+        '是你一笔一笔养出来的。Ingat，这段成就不会丢。';
+    }
+    return Object.assign(base, {
+      kicker: current ? '当前穿着 · 已达成' : '抚养成就 · 已养成',
+      lead: lead,
+      stats: stats,
+      actions: actions,
+      lookBit: lookBit,
+      isPast: !current,
+      cta: '回到当前形态继续抚养',
+      accent: form ? form.accent : '#ffd4a8',
+      stage: form ? form.stage : 'baby',
+      desc: form ? form.desc : '',
+      artSheetUrl: look.artSheetUrl || '',
+      note: current
+        ? '形态靠抚养进阶；更换神兽会继承这一档，抚养总结一起留下。'
+        : '这是你在「' + title + '」时期的抚养记录。当前形态还在长，点下方可回去继续养。',
+    });
+  }
+
+  function creditStageProgress(actGain) {
+    ensurePet(state);
+    const pet = state.pet;
+    if (!hasChosenSpecies(pet)) return getStageGrowthInfo();
+    ensureStageProgress(pet);
+    const now = Date.now();
+    const acts = Math.max(0, Math.floor(Number(actGain) || 0));
+    if (acts > 0) pet.stageActCount += acts;
+    const lastQ = Number(pet.stageLastQualifyAt) || 0;
+    if (acts > 0 && (!lastQ || now - lastQ >= CARE_PROTECT_MS)) {
+      pet.stageNurtureDays += 1;
+      pet.stageLastQualifyAt = now;
+    }
+    return getStageGrowthInfo();
+  }
+
+  /**
+   * 一对一绑定：会员 VIP ↔ 管家宠
+   * VIP 只更新绑定档位与可进化上限；形态由抚养进阶（evoTier）决定
    */
   function applyVipPetSync(pet, xp, opts) {
     opts = opts || {};
@@ -996,7 +1702,7 @@
         vip: vip,
         tier: tier,
         evoTier: pet.evoTier,
-        displayTier: Math.max(pet.evoTier, vip),
+        displayTier: petDisplayTier(pet),
         species: null,
         form: null,
         prevForm: prevForm,
@@ -1007,12 +1713,12 @@
     const sp = normalizeSpecies(pet.species);
     pet.species = sp;
     pet.speciesChosen = true;
-    const displayTier = Math.max(pet.evoTier, vip);
+    const displayTier = petDisplayTier(pet);
     const form = petFormForVip(displayTier, sp);
     pet.formId = form.id;
     pet.formName = form.name;
     pet.petName = form.name;
-    const changed = prevForm !== form.id || prevVip !== vip;
+    const changed = prevForm !== form.id;
     return {
       changed: changed,
       sold: false,
@@ -1038,7 +1744,7 @@
     const pet = state.pet || {};
     const sp = normalizeSpecies(speciesOpt) || (hasChosenSpecies(pet) ? normalizeSpecies(pet.species) : null);
     if (!sp) return [];
-    const displayTier = petDisplayTier(pet, vip);
+    const displayTier = petDisplayTier(pet);
     const unlockedCeil = Math.max(vip, clampEvoTier(pet.evoTier));
     return [0, 1, 2, 3, 4, 5].map(function (lv) {
       const form = petFormForVip(lv, sp);
@@ -1048,6 +1754,7 @@
         species: sp,
         form: clone(form),
         unlocked: unlockedCeil >= lv,
+        grown: displayTier >= lv,
         current: pet.species === sp && displayTier === lv,
       };
     });
@@ -1236,11 +1943,14 @@
     return m;
   }
 
-  function getSpeciesCatalog() {
-    const vip = levelFromXp(state.xp);
+  function getSpeciesCatalog(styleOpt) {
+    const artStyle = normalizeArtStyle(
+      styleOpt != null ? styleOpt : state.pet && state.pet.artStyle
+    );
     return PET_SPECIES_IDS.map(function (sp) {
       const meta = PET_SPECIES[sp];
-      const preview = petFormForVip(vip, sp);
+      const evo = petDisplayTier(state.pet);
+      const inheritForm = petFormForVip(evo, sp);
       const starter = petFormForVip(0, sp);
       const ultimate = petUltimateForm(sp);
       return {
@@ -1252,13 +1962,17 @@
         loreEn: meta.loreEn,
         loreZh: meta.loreZh,
         pickable: true,
-        preview: clone(preview),
+        preview: clone(inheritForm),
         starter: clone(starter),
-        /** 当前 VIP 形态预览 */
-        currentPreview: clone(preview),
-        /** 终极形态 VIP5 */
+        currentPreview: clone(inheritForm),
+        inheritForm: clone(inheritForm),
+        inheritTier: evo,
+        inheritTitle: FORM_STAGE_TITLES[evo] || '幼宠',
         ultimate: ultimate,
         ultimateLabel: ultimate.labelLine,
+        starterArtUrl: formArtUrl(sp, artStyle, 0),
+        inheritArtUrl: formArtUrl(sp, artStyle, evo),
+        ultimateArtUrl: formArtUrl(sp, artStyle, 5),
       };
     });
   }
@@ -1277,19 +1991,17 @@
     if (!sp) return { ok: false, reason: 'invalid_species' };
     pet.species = sp;
     pet.speciesChosen = true;
+    resetStageProgress(pet);
     const sync = applyVipPetSync(pet, state.xp, {});
     const form = sync.form;
     const meta = PET_SPECIES[sp];
-    const tone = meta.tone;
     const greet =
-      tone +
-      '～你好！我是「' +
+      (meta.cue || 'Uy~') +
+      ' Ako si 「' +
       (form && form.name) +
       '」· ' +
-      meta.label +
-      '（' +
       meta.labelEn +
-      '），已与你 VIP 一对一绑定～一起冲档吧！';
+      '. Bound na tayo sa VIP. Alagaan mo ako ha?';
     pushChatSystem(greet);
     emit({ type: 'chooseStarterSpecies', species: sp, form: form });
     return {
@@ -1313,9 +2025,117 @@
     };
   }
 
+  function getSpeciesSwitchInfo() {
+    ensurePet(state);
+    const pet = state.pet;
+    const evoTier = petDisplayTier(pet);
+    const formTitle = FORM_STAGE_TITLES[evoTier] || '幼宠';
+    const catalog = getSpeciesCatalog();
+    if (!hasChosenSpecies(pet)) {
+      return {
+        chosen: false,
+        canSwitch: false,
+        reason: 'need_species',
+        evoTier: evoTier,
+        formTitle: formTitle,
+        currentSpecies: null,
+        currentForm: null,
+        options: catalog,
+      };
+    }
+    const currentSp = normalizeSpecies(pet.species);
+    const currentForm = petFormForVip(evoTier, currentSp);
+    const options = catalog.map(function (s) {
+      return Object.assign({}, s, {
+        keep: s.id === currentSp,
+        evolvePreview: s.inheritForm || s.preview,
+      });
+    });
+    return {
+      chosen: true,
+      canSwitch: true,
+      evoTier: evoTier,
+      formTitle: formTitle,
+      currentSpecies: currentSp,
+      currentSpeciesLabel: PET_SPECIES[currentSp].label,
+      currentForm: clone(currentForm),
+      options: options,
+      hint:
+        '随时可换菲律宾神兽。新神兽直接升至你当前的「' +
+        formTitle +
+        '」形态，抚养进度保留。不付费、不解绑。',
+    };
+  }
+
   /**
-   * 亲密度进化：careLevel > lastEvolvedLevel 时可进化；
-   * 确认后同种 evoTier +1（形态步进），并可在 6 种菲律宾神兽间换种；展示 = max(evoTier, VIP)。
+   * 随时换种：新神兽继承当前 evoTier（对应形态档），抚养日/互动进度保留。
+   */
+  function switchPetSpecies(speciesId) {
+    ensurePet(state);
+    applyDecay();
+    const pet = state.pet;
+    if (!hasChosenSpecies(pet)) {
+      return { ok: false, reason: 'need_species' };
+    }
+    const nextSp = normalizeSpecies(speciesId);
+    if (!nextSp) return { ok: false, reason: 'invalid_species' };
+    const prevSp = normalizeSpecies(pet.species);
+    const evoTier = clampEvoTier(pet.evoTier);
+    const formTitle = FORM_STAGE_TITLES[evoTier] || '幼宠';
+    if (nextSp === prevSp) {
+      return {
+        ok: true,
+        unchanged: true,
+        species: nextSp,
+        evoTier: evoTier,
+        look: petAppearance(state),
+      };
+    }
+    pet.species = nextSp;
+    const sync = applyVipPetSync(pet, state.xp, {});
+    const form = sync.form;
+    const tone = PET_SPECIES[nextSp].tone;
+    const chatLine =
+      tone +
+      '换种成功～从「' +
+      PET_SPECIES[prevSp].label +
+      '」换成「' +
+      PET_SPECIES[nextSp].label +
+      '」，已同步到你原来的「' +
+      formTitle +
+      '」形态「' +
+      (form && form.name) +
+      '」！抚养进度还在。';
+    pushChatSystem(chatLine);
+    const ultimatePick = notifyUltimateReady();
+    emit({ type: 'switchSpecies', from: prevSp, to: nextSp, evoTier: evoTier });
+    return {
+      ok: true,
+      from: prevSp,
+      fromLabel: PET_SPECIES[prevSp].label,
+      to: nextSp,
+      toLabel: PET_SPECIES[nextSp].label,
+      evoTier: evoTier,
+      formTitle: formTitle,
+      form: form,
+      look: petAppearance(state),
+      ultimatePick: ultimatePick,
+      feedback:
+        '已换成「' +
+        PET_SPECIES[nextSp].label +
+        '」· ' +
+        (form && form.emoji) +
+        ' ' +
+        (form && form.name) +
+        '（' +
+        formTitle +
+        '）',
+    };
+  }
+
+  /**
+   * 抚养进阶：本档抚养日+互动达标后可进化；
+   * 确认后同种 evoTier +1，并可换菲律宾神兽；VIP 只作可进化上限。
    */
   function getEvolveInfo() {
     ensurePet(state);
@@ -1324,6 +2144,7 @@
     const vip = levelFromXp(state.xp);
     const careLevel = Math.max(1, pet.careLevel || 1);
     const lastEv = Math.max(1, Number(pet.lastEvolvedLevel) || 1);
+    const growth = getStageGrowthInfo();
     if (!hasChosenSpecies(pet)) {
       return {
         canEvolve: false,
@@ -1332,11 +2153,12 @@
         lastEvolvedLevel: lastEv,
         options: getSpeciesCatalog(),
         rules: EVOLVE_RULES_COPY.slice(),
+        growth: growth,
       };
     }
     const currentSp = normalizeSpecies(pet.species);
     const evoTier = clampEvoTier(pet.evoTier);
-    const displayTier = petDisplayTier(pet, vip);
+    const displayTier = petDisplayTier(pet);
     const currentForm = petFormForVip(displayTier, currentSp);
     const nextFormTier = Math.min(5, displayTier + 1);
     const nextFormPreview = petFormForVip(nextFormTier, currentSp);
@@ -1363,19 +2185,20 @@
       options: options,
       rules: EVOLVE_RULES_COPY.slice(),
       isUltimate: displayTier >= 5,
+      growth: growth,
     };
-    const canEvolve = careLevel > lastEv;
     return Object.assign(base, {
-      canEvolve: canEvolve,
-      reason: canEvolve ? null : 'need_care_level',
+      canEvolve: !!growth.canEvolve,
+      reason: growth.reason,
     });
   }
 
   const EVOLVE_RULES_COPY = [
-    '亲密度每升 1 级可进行一次「进化」',
-    '每次进化：同种形态升一阶（抚养驱动）+ 可选换菲律宾神兽品种一次（默认保留）',
-    '展示形态 = max(抚养阶, VIP)；VIP 更高时自动换皮同步',
-    '舞台始终预览「下一形态」；达终极（冠宠）可自选养成奖励（非充值）',
+    '每个形态需经过抚养日 + 互动才进入下一阶段；档越高所需时间越长',
+    '合格抚养日：每 24 小时互动最多计 1 天（幼宠 1 天 → 冠宠前 7 天）',
+    'VIP 只限制可成长上限，不会因升 VIP 直接换形态',
+    '每次进化：同种形态升一阶；换种请用「更换神兽」（随时，新神兽继承当前形态档）',
+    '达终极（冠宠）可自选养成奖励（非充值）',
   ];
 
   /**
@@ -1393,14 +2216,15 @@
       return { ok: false, reason: info.reason || 'blocked', info: info };
     }
     const prevSpecies = normalizeSpecies(pet.species);
-    const prevDisplay = petDisplayTier(pet, levelFromXp(state.xp));
+    const prevDisplay = petDisplayTier(pet);
     let nextSp = normalizeSpecies(opts.species);
     if (!nextSp) nextSp = prevSpecies;
     const switched = nextSp !== prevSpecies;
     pet.species = nextSp;
     pet.lastEvolvedLevel = Math.max(1, pet.careLevel || 1);
-    // 抚养步进：同种形态升一阶（至少超过当前展示档）
-    pet.evoTier = clampEvoTier(Math.max(clampEvoTier(pet.evoTier), prevDisplay) + 1);
+    recordStageCompletion(pet, prevDisplay);
+    pet.evoTier = clampEvoTier(prevDisplay + 1);
+    resetStageProgress(pet);
     const sync = applyVipPetSync(pet, state.xp, {});
     const form = sync.form;
     const tone = PET_SPECIES[nextSp].tone;
@@ -1580,6 +2404,7 @@
         action: def.action,
         icon: def.icon,
         bubble: def.bubble,
+        lambing: def.lambing || '',
         evolveNudge: def.evolveNudge,
         flag: def.flag,
         satisfied: satisfied,
@@ -1630,19 +2455,20 @@
 
   /**
    * 下一形态预览（刺激持续抚养）
-   * 进度：距可进化所需亲密度；已可进化则提示点进化。
+   * 进度：本档抚养日 + 互动；档越高所需时间越长。
    */
   function getNextFormTeaser() {
     ensurePet(state);
     const pet = state.pet;
     const vip = levelFromXp(state.xp);
+    const growth = getStageGrowthInfo();
     if (!hasChosenSpecies(pet)) {
       return {
         bound: true,
         isUltimate: false,
         currentForm: null,
         nextForm: null,
-        displayTier: petDisplayTier(pet, vip),
+        displayTier: petDisplayTier(pet),
         evoTier: clampEvoTier(pet.evoTier),
         evolveReady: false,
         intimacyNeeded: 0,
@@ -1651,15 +2477,12 @@
         tip: '首次进入宠物窝需选择一种菲律宾神兽。',
         celebrate: false,
         needSpecies: true,
+        growth: growth,
       };
     }
     const sp = normalizeSpecies(pet.species);
-    const displayTier = petDisplayTier(pet, vip);
+    const displayTier = petDisplayTier(pet);
     const currentForm = petFormForVip(displayTier, sp);
-    const intimacy = getIntimacyInfo();
-    const lastEv = Math.max(1, Number(pet.lastEvolvedLevel) || 1);
-    const careLevel = Math.max(1, pet.careLevel || 1);
-    const evolveReady = careLevel > lastEv;
 
     if (displayTier >= 5) {
       return {
@@ -1669,49 +2492,42 @@
         nextForm: null,
         displayTier: displayTier,
         evoTier: clampEvoTier(pet.evoTier),
-        evolveReady: evolveReady,
+        artSheetUrl: artSheetUrl(sp, pet.artStyle),
+        artUrl: formArtUrl(sp, pet.artStyle, displayTier),
+        evolveReady: false,
         intimacyNeeded: 0,
         progressPct: 100,
         progressHint: '已达终极形态',
         tip: '冠宠达成！可自选养成奖励（非充值）。继续照料仍涨亲密度与 VIP XP。',
         celebrate: true,
+        growth: growth,
       };
     }
 
     const nextTier = displayTier + 1;
     const nextForm = petFormForVip(nextTier, sp);
-    let intimacyNeeded = 0;
-    if (!evolveReady) {
-      const targetLevel = Math.min(10, lastEv + 1);
-      const targetCount = (targetLevel - 1) * INTIMACY_PER_LEVEL;
-      intimacyNeeded = Math.max(0, targetCount - (pet.careCount || 0));
-    }
-    const barPct = evolveReady ? 100 : intimacy.maxed ? 100 : intimacy.pct || 0;
-    let progressHint;
-    if (evolveReady) {
-      progressHint = '可进化解锁「' + nextForm.name + '」';
-    } else if (intimacyNeeded > 0) {
-      progressHint = '再获 ' + intimacyNeeded + ' 亲密度可进化';
-    } else {
-      progressHint = '继续抚养解锁下一形态';
-    }
     return {
       bound: true,
       isUltimate: false,
       currentForm: clone(currentForm),
       nextForm: clone(nextForm),
       nextTier: nextTier,
+      artSheetUrl: artSheetUrl(sp, pet.artStyle),
+      nextArtUrl: formArtUrl(sp, pet.artStyle, nextTier),
       displayTier: displayTier,
       evoTier: clampEvoTier(pet.evoTier),
-      evolveReady: evolveReady,
-      intimacyNeeded: intimacyNeeded,
-      progressPct: barPct,
-      progressHint: progressHint,
+      evolveReady: !!growth.canEvolve,
+      intimacyNeeded: 0,
+      progressPct: growth.progressPct || 0,
+      progressHint: growth.progressHint,
       tip:
-        '持续满足想吃/想玩/想喝并照料，攒亲密度后点「进化」解锁「' +
-        nextForm.name +
-        '」。也可保留或换其他菲律宾神兽。',
+        '每个形态都要养够时间：本档需 ' +
+        growth.needDays +
+        ' 个抚养日（每24h互动计1天）和 ' +
+        growth.needActs +
+        ' 次互动。档越高越久。VIP 只限制上限，不跳形态。',
       celebrate: false,
+      growth: growth,
     };
   }
 
@@ -1929,6 +2745,7 @@
     applyDecay();
     const pet = state.pet;
     pet.lastInteractAt = Date.now() - CARE_PROTECT_MS - 1000;
+    pet.stageLastQualifyAt = Date.now() - CARE_PROTECT_MS - 1000;
     const result = applyCareLevelDecay();
     emit({ type: 'demoCareProtect', result: result });
     return { ok: true, result: result };
@@ -1972,15 +2789,16 @@
     pet.careLevel = careLevelFromCount(pet.careCount);
     if (pet.lastEvolvedLevel == null) pet.lastEvolvedLevel = before;
     touchPetInteraction('care');
+    creditStageProgress(1);
     const after = pet.careLevel;
-    const lastEv = Math.max(1, Number(pet.lastEvolvedLevel) || 1);
+    const growth = getStageGrowthInfo();
     return {
       careLeveled: after > before,
       from: before,
       to: after,
       intimacyGain: gain,
       doubled: doubled,
-      evolveReady: after > lastEv,
+      evolveReady: !!growth.canEvolve,
     };
   }
 
@@ -1997,6 +2815,11 @@
     const di = state.pet.dailyIntimacy;
     if (!di.counts[kind]) di.counts[kind] = 0;
     di.counts[kind] += 1;
+    const pet = state.pet;
+    ensureStageProgress(pet);
+    if (!pet.stageActKinds) pet.stageActKinds = emptyStageKinds();
+    if (pet.stageActKinds[kind] == null) pet.stageActKinds[kind] = 0;
+    pet.stageActKinds[kind] += 1;
   }
 
   function getIntimacyInfo() {
@@ -2016,7 +2839,7 @@
       pct: pct,
       nextLevel: careLevel >= 10 ? 10 : careLevel + 1,
       maxed: careLevel >= 10,
-      evolveReady: careLevel > lastEv,
+      evolveReady: !!getStageGrowthInfo().canEvolve,
       lastEvolvedLevel: lastEv,
       label:
         careLevel >= 10
@@ -2423,8 +3246,258 @@
     }
   }
 
-  function pushChatSystem(text) {
-    pushChat('pet', text);
+  function pickDaily(arr, salt) {
+    if (!arr || !arr.length) return '';
+    const key = String(todayKey()) + '|' + String(salt || '');
+    let h = 0;
+    for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
+    return arr[h % arr.length];
+  }
+
+  function pickDailySet(arr, salt, n) {
+    if (!arr || !arr.length) return [];
+    const key = String(todayKey()) + '|' + String(salt || '');
+    let h = 0;
+    for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
+    const out = [];
+    const count = Math.min(n || 3, arr.length);
+    for (let i = 0; i < count; i++) out.push(arr[(h + i) % arr.length]);
+    return out;
+  }
+
+  /** 菲律宾神兽口吻：撒娇走日常 lambing / Taglish（sige na, please naman, miss na kita）；抚慰走 Ingat、Bathala、suwerte */
+  const SPECIES_VOICE = {
+    sarimanok: {
+      look: {
+        幼宠: 'soft baby feathers at maliit na crest',
+        银徽: 'bagong-liwanag na silver marks',
+        管家: 'bowtie at neatly kept feathers',
+        金甲: 'golden armor feathers',
+        翼宠: 'mahahabang rainbow wings',
+        冠宠: 'open crown plumage',
+      },
+      nurtureLook: '{tone} Sige na please, haplos naman yung {look} ko~ Para glowing, parang lucky bird.',
+      nurtureGrow: 'Gusto ko nang lumaki, hanggang {next}. Bisitahin mo ako araw-araw ha? Konting alaga lang. {tone}',
+      nurtureLove: '{tone} Miss na kita eh. Super clingy ako today—kain, haplos, kausap. Huwag mo naman akong iwan ha.',
+      lobbyComfort: 'Ingat · konting suwerte from the feathers',
+      comfort: [
+        'Uy, nandito ka na! {tone} Ayos na yung {look} ko. Ingat—konting suwerte for you today.',
+        'Salamat you came home. Walang pressure mag-alaga now; sit lang. Feathers ko, beside you.',
+        'Ingat ha. Hindi ako nangungutang—company lang. Bathala + colorful feathers = good day.',
+        '{tone} Nandito ka, maliwanag ang bahay. Salamat. Take it easy.',
+      ],
+    },
+    bakunawa: {
+      look: {
+        幼宠: 'fine scales sa moon-egg',
+        银徽: 'silver moon-serpent marks',
+        管家: 'coiled moonlight body',
+        金甲: 'golden moon scales',
+        翼宠: 'star-river wings',
+        冠宠: 'crowned moon halo',
+      },
+      nurtureLook: '{tone} Medyo dim na yung {look} ko… stay with me sandali, moonlight tayo. Please naman?',
+      nurtureGrow: 'Alagaan mo pa ako, para malapit na sa {next}. Huwag mo akong iwan ha—malungkot ang buwan pag mag-isa. {tone}',
+      nurtureLove: '{tone} Magko-coil lang ako sa tabi mo. Hindi nakakatakot—lambing lang. Haplos sa scales, kain, play. Miss na kita.',
+      lobbyComfort: 'Ingat · nandito pa ang buwan, nandito rin ako',
+      comfort: [
+        'Nandito pa ang buwan, nandito rin ako. 「{name}」keeps the light until you uuwi.',
+        '{tone} Kalmado ang dagat tonight. No rush to nurture—I just want your heart a bit brighter. Ingat.',
+        'Tinitingnan ang buwan, naaalala ang kwento. You came; uminit yung {look} ko. Ingat.',
+        'Salamat. Puwede akong maging malaking dragon, but with you I\'m soft. Sit with me lang.',
+      ],
+    },
+    diwata: {
+      look: {
+        幼宠: 'sprout at dew',
+        银徽: 'silver leaf marks',
+        管家: 'vine sash ng forest steward',
+        金甲: 'golden forest glow',
+        翼宠: 'butterfly-like forest wings',
+        冠宠: 'crowned flower garland',
+      },
+      nurtureLook: '{tone} Yung {look} ko medyo wilted… konting alaga please, babalik ang glow. Sige na.',
+      nurtureGrow: 'Slow-slow lang ang Diwata. Sige na, alagaan mo pa ako hanggang {next}. {tone}',
+      nurtureLove: '{tone} Halika sa gubat. Kain, play, painom please naman. Miss na kita—promise I\'ll be good.',
+      lobbyComfort: 'Ingat · may proteksyon sa gubat',
+      comfort: [
+        'Binabantayan ng Diwata ang bundok, at yung umuuwi. Nandito ka—may bulong ang dahon. Ingat.',
+        'Hindi kailangan mag-force care. Mag-alay sandali sa gubat; I\'ll send you a breeze. Ingat.',
+        '{tone} Salamat. Kind heart? May lugar ka sa gubat.',
+        'Kalmado yung {look} ko today. Kausap tayo lang, enough na.',
+      ],
+    },
+    tigmamanukan: {
+      look: {
+        幼宠: 'omen baby feathers',
+        银徽: 'silver omen marks',
+        管家: 'guide feathers',
+        金甲: 'golden omen plumage',
+        翼宠: 'Bathala wing-shadow',
+        冠宠: 'crowned Bathala feathers',
+      },
+      nurtureLook: '{tone} Paki-ayos naman yung {look} ko? Kahit ibon ni Bathala, kailangan ng lambing para maka-guide.',
+      nurtureGrow: 'Tulungan mo akong lumaki pa, hanggang {next}. Bisita araw-araw ha? {tone}',
+      nurtureLove: '{tone} Tinitingnan nila ako bago magbyahe—tinitingnan kita. Haplos, kain, please. Miss na kita.',
+      lobbyComfort: 'Ingat sa byahe · tama ang direksyon ngayon',
+      comfort: [
+        'Tama ang direksyon ngayon. Ang omen ni Bathala ay proteksyon, hindi pangtakot. Ingat sa byahe.',
+        '{tone} Pagpasok mo, good sign na. No rush to nurture—blessing lang.',
+        'Salamat. Ibon sa balikat mo: aayos ang araw. Ingat.',
+        'May ilaw pa yung {look} ko. Pagod ka? Rest. Nandito lang ako.',
+      ],
+    },
+    sirena: {
+      look: {
+        幼宠: 'bubble-soft baby tide',
+        银徽: 'silver shell-glow',
+        管家: 'tide-gauze ng sea steward',
+        金甲: 'golden tide marks',
+        翼宠: 'wave-wings',
+        冠宠: 'crowned pearl tiara',
+      },
+      nurtureLook: '{tone} Dry na yung {look} ko… painom naman, suklay-suklay please.',
+      nurtureGrow: 'Kailangan ng tide para lumaki. Alagaan mo pa ako, malapit na {next}. Sige na please. {tone}',
+      nurtureLove: '{tone} Waiting sa shore. Hindi kita hihilahin sa tubig—play, merienda, kausap. Miss na kita ha.',
+      lobbyComfort: 'Ingat · nasa baybay ako, kalmado ang dagat',
+      comfort: [
+        'Kalmado ang dagat today. Ang kanta ng Sirena ay para sa safe na uuwi, hindi para hilahin ka. Ingat.',
+        '{tone} Ingat. Nasa baybay ako. No need to nurture now—listen to the waves lang.',
+        'Salamat you came to see the sea. Tinago ko yung pearl-glow for you.',
+        'May ilaw yung {look} ko. Nandito ka, so steady ang tide. Ingat.',
+      ],
+    },
+    kapre: {
+      look: {
+        幼宠: 'tiny bark marks',
+        银徽: 'silver vine emblem',
+        管家: 'leaf cloak ng tree steward',
+        金甲: 'golden bark armor',
+        翼宠: 'opening canopy',
+        冠宠: 'crowned tree-crown',
+      },
+      nurtureLook: '{tone} Yung {look} ko medyo dry… painom, haplos sa puno please naman.',
+      nurtureGrow: 'Mabagal lumaki ang puno, pero matagal magbantay. Stay with me hanggang {next} ha. {tone}',
+      nurtureLove: '{tone} Nakaupo sa ilalim ng puno, waiting. Kain, kausap, lambing. Huwag mo naman akong iwan ha.',
+      lobbyComfort: 'Ingat · nandito pa ang puno sa harap ng bahay',
+      comfort: [
+        'Binabantayan ng Kapre ang balete, at ang bahay. Umuwi ka—malamig na ulit ang shade. Ingat.',
+        'Hindi kailangan mag-task now. Sit under the tree. Ingat. I\'m watching.',
+        '{tone} Salamat. Nandito pa ang puno sa harap ng bahay—hindi ka nag-iisa.',
+        'Kalmado yung {look} ko. Respect sa puno; respect din sa pag-uuwi mo.',
+      ],
+    },
+  };
+
+  function fillVoice(tpl, vars) {
+    return String(tpl || '').replace(/\{(\w+)\}/g, function (_, k) {
+      return vars[k] != null ? vars[k] : '';
+    });
+  }
+
+  function formLookBit(sp, formTitle) {
+    const voice = SPECIES_VOICE[sp] || SPECIES_VOICE.sarimanok;
+    return (voice && voice.look && voice.look[formTitle]) || 'maliit na anyo';
+  }
+
+  /**
+   * 进页互动口吻：需要抚养 → 外形/成长/感情撒娇；不需要 → 菲律宾信仰习惯的鼓励与抚慰。
+   */
+  function getPetVoiceInfo(opts) {
+    opts = opts || {};
+    ensurePet(state);
+    const pet = state.pet;
+    if (!hasChosenSpecies(pet)) {
+      return {
+        mode: 'need_species',
+        bubbles: ['Pili ka muna ng Philippine mythical beast ha, bago tayo mag-lambing~'],
+        enterToast: null,
+        greeting: null,
+        chips: ['Sige, pili na', 'Haplos later'],
+        hint: 'Pili ka muna ng VIP管家神兽, then we can mag-alaga~',
+        lookBit: '',
+        lobbyComfort: null,
+      };
+    }
+    const look = petAppearance(state);
+    const sp = look.species;
+    const meta = PET_SPECIES[sp] || PET_SPECIES.sarimanok;
+    const voice = SPECIES_VOICE[sp] || SPECIES_VOICE.sarimanok;
+    const formTitle = (look.form && look.form.formTitle) || FORM_STAGE_TITLES[look.displayTier] || '幼宠';
+    const lookBit = (voice.look && voice.look[formTitle]) || 'maliit na anyo';
+    const growth = getStageGrowthInfo();
+    const nextTitle = (growth && growth.toTitle) || 'next form';
+    const needs = getPetNeedsInfo({ skipToast: true, skipEvolveNudge: true });
+    const cadence = getNurtureCadenceInfo();
+    const avg = ((pet.hunger || 0) + (pet.mood || 0) + (pet.clean || 0)) / 3;
+    const needNurture =
+      !!(needs && needs.anyActive) ||
+      avg < 50 ||
+      cadence.status === 'due' ||
+      cadence.status === 'overdue' ||
+      cadence.status === 'due_soon';
+    const vars = {
+      tone: meta.cue || 'Uy~',
+      name: look.petName || meta.label,
+      look: lookBit,
+      next: nextTitle,
+      form: formTitle,
+      unit: meta.unit,
+    };
+    const chipsNurture = ['Haplos naman', 'Kain na', 'Play tayo', 'Miss na kita', 'Cute ba ako?', 'Sige na please'];
+    const chipsComfort = ['Ingat', 'Salamat', 'I\'m good', 'Kausap tayo', 'Haplos', 'Uuwi ka'];
+    if (needNurture) {
+      const bubbles = [
+        fillVoice(voice.nurtureLook, vars),
+        fillVoice(voice.nurtureGrow, vars),
+        fillVoice(voice.nurtureLove, vars),
+      ];
+      if (needs && needs.active && needs.active[0]) {
+        bubbles.push(
+          (meta.cue || 'Uy~') +
+            ' Please naman—' +
+            (needs.active[0].lambing || needs.active[0].label) +
+            '. Konting lambing muna ha, para glowing yung ' +
+            lookBit +
+            '.'
+        );
+      }
+      const pendingToast = pet.voiceToastDate !== todayKey();
+      return {
+        mode: 'nurture',
+        formTitle: formTitle,
+        lookBit: lookBit,
+        bubbles: bubbles,
+        enterToast: pendingToast ? pickDaily(bubbles, sp + '|nurtureToast') : null,
+        greeting: pickDaily(bubbles, sp + '|greetN') + ' Ako si 「' + vars.name + '」· ' + formTitle + '.',
+        chips: chipsNurture,
+        hint: fillVoice(voice.nurtureLove, vars),
+        lobbyComfort: null,
+      };
+    }
+    const comfortPool = (voice.comfort || []).map(function (t) {
+      return fillVoice(t, vars);
+    });
+    const bubbles = pickDailySet(comfortPool, sp + '|comfortBub', 3);
+    const pendingToast = pet.voiceToastDate !== todayKey();
+    return {
+      mode: 'comfort',
+      formTitle: formTitle,
+      lookBit: lookBit,
+      bubbles: bubbles,
+      enterToast: pendingToast ? pickDaily(comfortPool, sp + '|comfortToast') : null,
+      greeting: pickDaily(comfortPool, sp + '|greetC'),
+      chips: chipsComfort,
+      hint: pickDaily(comfortPool, sp + '|hint'),
+      lobbyComfort: voice.lobbyComfort || 'Ingat · 神兽在窝里等你',
+    };
+  }
+
+  function markVoiceToastShown() {
+    ensurePet(state);
+    state.pet.voiceToastDate = todayKey();
+    save(state);
+    return { ok: true };
   }
 
   function buildPetReply(userText) {
@@ -2437,45 +3510,82 @@
     const vip = look.vip;
     const formTitle = (look.form && look.form.formTitle) || '管家';
     if (!hasChosenSpecies(pet)) {
-      return '请先选择你的 VIP管家神兽，再来和我聊天呀～';
+      return 'Pili ka muna ng VIP管家神兽 ha, then we can mag-lambing~';
     }
     const sp = normalizeSpecies(pet.species);
-    const tone = PET_SPECIES[sp].tone;
+    const cue = PET_SPECIES[sp].cue || 'Uy~';
     const unit = PET_SPECIES[sp].unit;
 
-    if (/你好|嗨|哈喽|hello|hi/.test(t)) {
-      return tone + '～你好！我是「' + name + '」· ' + PET_SPECIES[sp].label + formTitle + '，已绑定 VIP' + vip + '～';
+    if (/你好|嗨|哈喽|hello|\bhi\b|\buy\b|nandito/.test(t)) {
+      const v = getPetVoiceInfo({ skipToast: true });
+      return (v && v.greeting) || cue + ' Uy! Nandito ka~ Ako si 「' + name + '」· ' + formTitle + '.';
+    }
+    if (/好看|外形|羽毛|样子|漂亮|帅|可爱|cute|ganda/.test(t)) {
+      const v = getPetVoiceInfo({ skipToast: true });
+      return (
+        cue +
+        ' Tingnan mo yung ' +
+        (v.lookBit || 'look') +
+        ' ko~ Cute ba ako? Ako si 「' +
+        name +
+        '」· ' +
+        formTitle +
+        '. Haplos, kain—para mas glowing.'
+      );
+    }
+    if (/长大|成长|进化|下一|形态|lumaki|grow/.test(t) && !/换种|品种/.test(t)) {
+      const g = getStageGrowthInfo();
+      if (g && g.isUltimate) {
+        return cue + ' Crowned na ako—「' + name + '」. Alagaan mo pa rin ako ha. Lambing forever.';
+      }
+      return (
+        cue +
+        ' Gusto ko nang lumaki, hanggang 「' +
+        ((g && g.toTitle) || 'next form') +
+        '」. Bisitahin mo ako, play at kain… huwag mo naman akong iwan ha.'
+      );
+    }
+    if (/想你|爱你|陪|撒娇|喜欢|miss|lambing|mahal|sige na/.test(t)) {
+      return cue + ' Miss na kita eh. 「' + name + '」 clingy today—haplos, kausap, kain. Huwag mo naman akong iwan ha.';
+    }
+    if (/保佑|祝福|ingat|bathala|suwerte|salamat|好运/.test(t)) {
+      const v = getPetVoiceInfo({ skipToast: true });
+      return (v && v.mode === 'comfort' ? v.greeting : null) || cue + ' Ingat ha. Nandito lang ako. Sana maganda ang araw mo.';
     }
     if (/狗|猫|汪|喵|dog|cat/.test(t)) {
-      return '这里只有菲律宾神话神兽哦，没有猫狗这类现实宠物～我是「' + name + '」· ' + PET_SPECIES[sp].label + '！';
+      return 'Philippine mythical beasts lang ha, walang pusa o aso. Ako si 「' + name + '」· ' + PET_SPECIES[sp].labelEn + '!';
     }
     if (/品种|种类|换种|进化|神兽|神话/.test(t)) {
       return (
-        '我是菲律宾神兽·' +
+        'Ako si ' +
         unit +
         '「' +
         name +
-        '」呀～亲密度升级可「进化」换其他神兽；终极形态是「' +
+        '」~ Puwede kang mag-switch ng Philippine mythical beast anytime; mag-inherit yung current form. Ultimate is 「' +
         petUltimateForm(sp).name +
-        '」，达成有养成奖励哦（非充值）！'
+        '」, may gift pag na-reach (hindi recharge)!'
       );
     }
-    if (/饿|吃|食|肚子/.test(t)) {
-      if (pet.hunger < 40) return tone + '…好饿！饱食才 ' + pet.hunger + '，快喂我一口嘛！';
-      if (pet.hunger < 70) return '有点想吃仙果，不过还能撑～（饱食 ' + pet.hunger + '）' + tone;
-      return '吃得好饱！谢谢你照顾我～（饱食 ' + pet.hunger + '）' + tone + '~';
+    if (/饿|吃|食|肚子|喂一口|喂我|kain|gutom/.test(t)) {
+      if (pet.hunger < 40) return cue + ' Gutom na ako! Hunger ' + pet.hunger + '—kain na please!';
+      if (pet.hunger < 70) return 'Medyo gutom pa… kaya pa, but kain later ha? (hunger ' + pet.hunger + ') ' + cue;
+      return 'Busog na! Salamat. (hunger ' + pet.hunger + ') ' + cue;
     }
-    if (/心情|开心|难过|情绪/.test(t)) {
-      if (pet.mood < 40) return '有点闷闷的…陪我玩一会儿好不好？（心情 ' + pet.mood + '）';
-      if (pet.mood < 70) return '还不错啦，再玩一下会更开心～';
-      return tone + '！超级开心！和你在一起最好啦 💕';
+    if (/玩|陪玩|play|laro/.test(t)) {
+      if (pet.mood < 40) return 'Medyo lungkot… play tayo please? (mood ' + pet.mood + ')';
+      return cue + ' Play tayo! Mood ' + pet.mood + '~ Haplos at kain, mas glowing ako.';
     }
-    if (/脏|清洁|洗澡|净灵露|香波/.test(t)) {
-      if (pet.clean < 40) return '毛毛乱糟糟…求清洁！（清洁 ' + pet.clean + '）';
-      return '亮晶晶！今天也香喷喷～' + tone;
+    if (/心情|开心|难过|情绪|saya|lungkot/.test(t)) {
+      if (pet.mood < 40) return 'Medyo lungkot… play tayo please? (mood ' + pet.mood + ')';
+      if (pet.mood < 70) return 'Okay naman—konting play pa, mas masaya.';
+      return cue + ' Super saya with you 💕';
     }
-    if (/摸|抱抱|rua|贴贴/.test(t)) {
-      return tone + '嗯嗯～被摸摸好幸福。亲密度 Lv.' + pet.careLevel + '，继续加油！';
+    if (/脏|清洁|洗澡|净灵露|香波|linis|hugas|suklay/.test(t)) {
+      if (pet.clean < 40) return 'Medyo magulo pa… linis / suklay naman please? (clean ' + pet.clean + ')';
+      return 'Ayos na, glowing! ' + cue;
+    }
+    if (/摸|抱抱|rua|贴贴|haplos|pat/.test(t)) {
+      return cue + ' Mmm haplos… ang sarap. Intimacy Lv.' + pet.careLevel + '. More lambing please.';
     }
     if (/vip|冲档|升级|等级/.test(t)) {
       return (
@@ -2483,7 +3593,9 @@
         vip +
         ' 绑定的「' +
         name +
-        '」。去 VIP 页做任务赚 XP，升档我会换新形态哦！'
+        '」· ' +
+        formTitle +
+        '。去 VIP 页赚 XP；我的外形要靠你抚养才会进下一档哦。'
       );
     }
     if (/谁|什么宠|形态|名字/.test(t)) {
@@ -2494,11 +3606,11 @@
         formTitle +
         '）· 一对一绑定 ' +
         look.tier +
-        '。不同 VIP 等级有不同管家宠形态～'
+        '。外形、成长、感情都要你养～'
       );
     }
     if (/卖|出售|解绑/.test(t)) {
-      return '管家宠会一直陪着你，不能出售也不能解绑哦。品种可在亲密度「进化」时换菲律宾神兽～';
+      return '管家宠会一直陪着你，不能出售也不能解绑哦。想换菲律宾神兽就点「更换神兽」，会继承我现在的形态档。';
     }
     if (/排名|积分/.test(t)) {
       return (
@@ -2511,18 +3623,16 @@
       return '帮好友养宠是正向轻社交，无偷无抢。每天有帮养次数哦～';
     }
 
-    const recentCare = Date.now() - (pet.lastCareAt || 0) < 5 * 60 * 1000;
-    if (recentCare) {
-      return '刚才被你照料得好舒服…再聊几句？我是「' + name + '」呀～';
+    const voice = getPetVoiceInfo({ skipToast: true });
+    if (voice && voice.mode === 'nurture') {
+      return voice.hint || voice.bubbles[0];
     }
-    const avg = (pet.hunger + pet.mood + pet.clean) / 3;
-    if (avg < 45) {
-      return '状态有点低…喂食/玩耍/清洁一下，我立刻活过来！';
+    if (voice && voice.mode === 'comfort') {
+      return pickDaily(voice.bubbles, sp + '|chatFall') || voice.greeting;
     }
     const fallbacks = [
-      '嗯嗯，我在听！「' + name + '」陪着你冲 VIP' + vip + '～',
-      '今天也要元气满满！要点照料还是去看排名？',
-      '和你聊天好开心。试试快捷语：饿不饿 / 去冲VIP / 摸摸',
+      'Nandito lang ako, listening. 「' + name + '」 is with you~',
+      'Try: Haplos naman / Cute ba ako? / Ingat',
     ];
     return fallbacks[Math.floor(Math.random() * fallbacks.length)];
   }
@@ -2569,41 +3679,15 @@
       return { ok: true, skipped: true, messages: clone(pet.chatMessages) };
     }
     const look = petAppearance(state);
-    let line;
-    const avg = (pet.hunger + pet.mood + pet.clean) / 3;
-    if (avg < 40) {
-      line =
-        '主人…「' + look.petName + '」有点难受（状态偏低），快来照料我一下嘛。';
-    } else if (pet.hunger < 45) {
-      line = '「' + look.petName + '」肚子咕咕叫…喂一口好不好？';
-    } else {
-      const cadence = getNurtureCadenceInfo();
-      if (cadence.status === 'due' || cadence.status === 'overdue') {
-        line =
-          '欢迎回来！「' +
-          look.petName +
-          '」等你深度抚养啦～每 24 小时回来一次，一起参与成长！';
-      } else if (cadence.status === 'due_soon') {
-        line =
-          '欢迎回来！亲密度保护快到期了，完成今日深度抚养就能续护～';
-      } else {
-        line =
-          '欢迎回来！我是已绑定 ' +
-          look.tier +
-          ' 的「' +
-          look.petName +
-          '」· 今日积分 ' +
-          (pet.dailyPoints || 0) +
-          '～记得每 24 小时回来抚养一次哦';
-      }
-    }
+    const voice = getPetVoiceInfo({ skipToast: true });
+    const line = (voice && voice.greeting) || '欢迎回来！「' + look.petName + '」在等你。';
     pushChat('pet', line);
     pet.chatGreetedDate = today;
     emit({ type: 'petChatGreet' });
     return { ok: true, greeting: line, messages: clone(pet.chatMessages) };
   }
 
-  const CHAT_QUICK_CHIPS = ['你好', '饿不饿', '去冲VIP', '摸摸', '你是谁', '看排名'];
+  const CHAT_QUICK_CHIPS = ['Haplos naman', 'Kain na', 'Cute ba ako?', 'Ingat', 'Miss na kita', 'Sige na please'];
 
   /** 演示：临时提升亲密度（不改 VIP） */
   function demoBoostCareLevel(toLevel) {
@@ -2615,6 +3699,61 @@
     touchPetInteraction('demo');
     emit({ type: 'demoCareBoost', careLevel: target });
     return { ok: true, careLevel: target };
+  }
+
+  /** 演示：填满本档抚养日+互动，使其可进化（不改 VIP） */
+  function demoCompleteStageGrowth() {
+    applyDecay();
+    const pet = state.pet;
+    if (!hasChosenSpecies(pet)) return { ok: false, reason: 'need_species' };
+    const growth = getStageGrowthInfo();
+    if (growth.isUltimate) return { ok: false, reason: 'ultimate', growth: growth };
+    ensureStageProgress(pet);
+    pet.stageNurtureDays = Math.max(pet.stageNurtureDays, growth.needDays || 0);
+    pet.stageActCount = Math.max(pet.stageActCount, growth.needActs || 0);
+    pet.stageLastQualifyAt = Date.now();
+    if ((pet.careLevel || 1) < 3) {
+      pet.careLevel = 3;
+      pet.careCount = Math.max(pet.careCount, 10);
+    }
+    const next = getStageGrowthInfo();
+    emit({ type: 'demoStageGrowth', growth: next });
+    return { ok: true, growth: next, canEvolve: !!next.canEvolve };
+  }
+
+  /** 演示：直接养成到指定形态档（默认金甲），便于点前面的档看回顾页 */
+  function demoGrowToTier(tier) {
+    applyDecay();
+    const pet = state.pet;
+    if (!hasChosenSpecies(pet)) return { ok: false, reason: 'need_species' };
+    const target = clampEvoTier(tier == null ? 3 : tier);
+    const needXp = (VIP_LEVELS[target] && VIP_LEVELS[target].needXp) || 0;
+    const gap = needXp - (state.xp || 0);
+    if (gap > 0) addXp(gap + 10);
+    pet.evoTier = target;
+    backfillStageHistory(pet);
+    resetStageProgress(pet);
+    if ((pet.careLevel || 1) < 3) {
+      pet.careLevel = 3;
+      pet.careCount = Math.max(pet.careCount, 10);
+    }
+    const sync = applyVipPetSync(pet, state.xp, {});
+    emit({ type: 'demoGrowToTier', evoTier: target });
+    return { ok: true, evoTier: target, look: petAppearance(state), form: sync.form };
+  }
+
+  /** 演示：冲至 VIP5 且形态到冠宠，便于看终极奖励 */
+  function demoReachUltimateForm() {
+    applyDecay();
+    const pet = state.pet;
+    const need = 50000 - (state.xp || 0);
+    if (need > 0) addXp(need + 10);
+    pet.evoTier = 5;
+    backfillStageHistory(pet);
+    resetStageProgress(pet);
+    const sync = applyVipPetSync(pet, state.xp, {});
+    emit({ type: 'demoUltimateForm', vip: 5 });
+    return { ok: true, look: petAppearance(state), form: sync.form };
   }
 
   function petGuideAdvanceIf(expectedStep, nextStep) {
@@ -2679,6 +3818,8 @@
     PET_FORMS_BY_SPECIES,
     PET_SPECIES,
     PET_SPECIES_IDS,
+    ART_STYLES,
+    STAGE_GROWTH,
     CHAT_QUICK_CHIPS,
     INV_DAILY_FREE,
     INTIMACY_ACTIONS,
@@ -2840,7 +3981,8 @@
       refreshPetSocialDaily(state.pet);
       syncPetToVip({ silent: true });
       const rank = getDailyRankboard();
-      const needsInfo = getPetNeedsInfo();
+      const needsInfo = getPetNeedsInfo({ skipToast: true });
+      const voiceInfo = getPetVoiceInfo({ skipToast: true });
       const nextForm = getNextFormTeaser();
       const friends = (state.pet.friends || []).map(function (f) {
         const form = petFormForVip(f.vip, f.species);
@@ -2871,7 +4013,7 @@
         needsSpeciesPick: !hasChosenSpecies(state.pet),
         speciesCatalog: getSpeciesCatalog(),
         speciesRule:
-          '一员一宠始终绑定；首次进窝必选菲律宾神兽；亲密度「进化」时可换种（展示终极形态）。VIP 升档同种换皮。无出售/无付费换种。',
+          '一员一宠始终绑定；首次进窝必选菲律宾神兽；可随时更换神兽并继承当前形态档；形态靠抚养日+互动进阶。VIP 只作成长上限。无出售/无付费换种。',
         careProtect: getCareProtectInfo(),
         nurtureCadence: getNurtureCadenceInfo(),
         careDemoteToast: (function () {
@@ -2882,7 +4024,10 @@
         intimacy: getIntimacyInfo(),
         intimacyQuests: getDailyIntimacyQuests(),
         evolve: getEvolveInfo(),
+        stageGrowth: getStageGrowthInfo(),
+        formNurture: getFormNurtureSummary(),
         needs: needsInfo,
+        voice: voiceInfo,
         nextForm: nextForm,
         ultimateReward: getUltimateRewardInfo(),
         ultimatePick: (function () {
@@ -2904,7 +4049,7 @@
         }),
         chat: {
           messages: clone(state.pet.chatMessages || []),
-          chips: CHAT_QUICK_CHIPS.slice(),
+          chips: (voiceInfo && voiceInfo.chips && voiceInfo.chips.slice()) || CHAT_QUICK_CHIPS.slice(),
         },
         pointsRules: clone(DAILY_POINTS),
       };
@@ -2914,6 +4059,8 @@
     helpFriendCare,
     evolvePet,
     chooseStarterSpecies,
+    switchPetSpecies,
+    getSpeciesSwitchInfo,
     getEvolveInfo,
     getIntimacyInfo,
     getDailyIntimacyQuests,
@@ -2922,8 +4069,15 @@
     claimUltimateReward,
     petUltimateForm,
     getPetNeedsInfo,
+    getPetVoiceInfo,
+    markVoiceToastShown,
     getNextFormTeaser,
+    getStageGrowthInfo,
+    getFormNurtureSummary,
     demoBoostCareLevel,
+    demoCompleteStageGrowth,
+    demoGrowToTier,
+    demoReachUltimateForm,
     demoSkipCareProtect,
     demoExpirePetNeeds,
     demoSatisfyAllNeeds,
@@ -2939,6 +4093,13 @@
     petChatSend,
     petChatGreeting,
     petAppearance,
+    setArtStyle,
+    getArtStyleSwitchInfo,
+    artSheetUrl,
+    formArtFrame,
+    formArtUrl,
+    normalizeArtStyle,
+    artStyleLabel,
     normalizeSpecies,
     hasChosenSpecies,
     PET_NEED_DEFS,
