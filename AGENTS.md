@@ -2,9 +2,10 @@
 
 ## First read (required)
 
-1. [`docs/宠物VIP庄园-需求关键词手账.md`](./docs/宠物VIP庄园-需求关键词手账.md) — product decisions & hard locks  
-2. [`docs/VIP管家宠-冲档版-需求说明.md`](./docs/VIP管家宠-冲档版-需求说明.md) — full rules  
-3. Shared state: `c-end/js/state.js` (`localStorage` → `vip_butler_pet_v3`)
+1. [`docs/萌宠乐园-开发测试宣讲需求.md`](./docs/萌宠乐园-开发测试宣讲需求.md) — **给开发 / 测试宣讲与验收**（含 **玩家手册**）  
+2. [`docs/宠物VIP庄园-需求关键词手账.md`](./docs/宠物VIP庄园-需求关键词手账.md) — product decisions & hard locks  
+3. [`docs/VIP管家宠-冲档版-需求说明.md`](./docs/VIP管家宠-冲档版-需求说明.md) — full rules  
+4. Shared state: `c-end/js/state.js` (`localStorage` → `vip_butler_pet_v3`)
 
 Do **not** re-propose rejected ideas. This repo is **only** the **萌宠乐园** C-end prototype (no Admin 会员余额 backend). **抽奖需求** 是同网站的另一项目，不要做到本仓库。
 

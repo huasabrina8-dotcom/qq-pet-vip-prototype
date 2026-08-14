@@ -181,12 +181,14 @@
     });
 
     document.querySelectorAll('.btn-task[data-action="visitVip"]').forEach((btn) => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
         const res = TTStore.completeVisitVipTask();
-        if (res.ok) {
-          toast('访问 VIP +' + res.xpGain + ' XP', 'success');
+        if (!res.ok) {
+          toast('今日已完成');
+          return;
         }
-        window.location.href = 'vip.html';
+        toast('查看冲档 +' + res.xpGain + ' XP', 'success');
+        handleLeveled(res, e);
       });
     });
 

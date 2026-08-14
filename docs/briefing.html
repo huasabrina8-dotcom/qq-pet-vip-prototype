@@ -110,19 +110,6 @@
       border-radius: 4px;
       background: #fff;
     }
-    .proto {
-      display: grid;
-      grid-template-columns: 64px 1fr 1fr 1fr;
-      gap: 8px;
-      font-size: 13px;
-      margin: 10px 0;
-    }
-    .proto div {
-      background: var(--soft);
-      border-radius: 10px;
-      padding: 8px 10px;
-    }
-    .proto a { color: var(--orange-deep); font-weight: 700; word-break: break-all; }
     .kicker {
       display: inline-block;
       background: var(--soft);
@@ -134,7 +121,6 @@
       margin-bottom: 8px;
     }
     @media (max-width: 640px) {
-      .proto { grid-template-columns: 1fr; }
       table { font-size: 12px; }
     }
   </style>
@@ -148,14 +134,15 @@
       <a href="#s2">目的</a>
       <a href="#s3">不做</a>
       <a href="#s4">架构</a>
-      <a href="#s5">主线</a>
-      <a href="#s6">神兽</a>
-      <a href="#s7">宠物窝</a>
-      <a href="#s8">VIP</a>
-      <a href="#s9">界面</a>
-      <a href="#s10">开发</a>
-      <a href="#s11">验收</a>
-      <a href="#s12">演示</a>
+      <a href="#s5">玩家手册</a>
+      <a href="#s6">主线</a>
+      <a href="#s7">神兽</a>
+      <a href="#s8">宠物窝</a>
+      <a href="#s9">VIP</a>
+      <a href="#s10">界面</a>
+      <a href="#s11">开发</a>
+      <a href="#s12">验收</a>
+      <a href="#s13">演示</a>
     </nav>
   </header>
   <main>
@@ -165,31 +152,14 @@
         <tr><th>项目名称</th><td><strong>萌宠乐园</strong></td></tr>
         <tr><th>端</th><td>PC 和 H5</td></tr>
         <tr><th>语言</th><td>页面与神兽口吻全中文；菲语 / 英语后补</td></tr>
-        <tr><th>视觉</th><td>Juan365 白底亮厅。禁止暗黑霓虹赌场风</td></tr>
         <tr><th>PC 原型</th><td class="links"><a href="https://huasabrina8-dotcom.github.io/qq-pet-vip-prototype/c-end/lobby.html">https://huasabrina8-dotcom.github.io/qq-pet-vip-prototype/c-end/lobby.html</a></td></tr>
         <tr><th>H5 原型</th><td class="links"><a href="https://huasabrina8-dotcom.github.io/qq-pet-vip-prototype/h5/lobby.html">https://huasabrina8-dotcom.github.io/qq-pet-vip-prototype/h5/lobby.html</a></td></tr>
       </table>
-      <p>本地预览原型：</p>
-      <div class="proto">
-        <div><strong>端</strong></div>
-        <div><strong>大厅</strong></div>
-        <div><strong>VIP</strong></div>
-        <div><strong>宠物窝</strong></div>
-        <div>PC</div>
-        <div><a href="/c-end/lobby.html">/c-end/lobby.html</a></div>
-        <div><a href="/c-end/vip.html">/c-end/vip.html</a></div>
-        <div><a href="/c-end/pet.html">/c-end/pet.html</a></div>
-        <div>H5</div>
-        <div><a href="/h5/lobby.html">/h5/lobby.html</a></div>
-        <div><a href="/h5/vip.html">/h5/vip.html</a></div>
-        <div><a href="/h5/pet.html">/h5/pet.html</a></div>
-      </div>
     </section>
 
     <section id="s1">
       <h2>1. 一句话</h2>
       <p>萌宠乐园是挂在菲盘式 VIP 冲档上的<strong>情感养成</strong>：用户大约每 24 小时回来深度抚养一只菲律宾神话神兽，用照料推动形态成长，从而提高登录粘性。</p>
-      <p>它<strong>不是</strong>游戏厅、不是庄园种田、不是卖宠物、不是抽奖。</p>
     </section>
 
     <section id="s2">
@@ -219,7 +189,6 @@
         <tr><td>抽奖</td><td>同站另一项目</td></tr>
         <tr><td>暗黑霓虹赌场风</td><td>必须白橙亮厅</td></tr>
       </table>
-      <p>大厅顶栏「充值」只做 VIP / 钱包演示，<strong>不驱动</strong>养宠。</p>
     </section>
 
     <section id="s4">
@@ -246,7 +215,56 @@ VIP 等级页
     </section>
 
     <section id="s5">
-      <h2>5. 宣讲主线（建议 8 分钟）</h2>
+      <h2>5. 玩家手册</h2>
+      <p>以下用玩家口吻。开发 / 测试按此核对入口、按钮和说明文案。</p>
+      <h3>这是什么</h3>
+      <p>萌宠乐园是你的神兽小窝。领养一只菲律宾神话神兽，大约每 <strong>24 小时</strong>回来照料一轮，它才会慢慢长大。VIP 决定最高能养到哪一档，<strong>升 VIP 不会立刻换装</strong>。照料全部免费，不能买卖宠物。</p>
+      <h3>从哪进</h3>
+      <table>
+        <tr><th>入口</th><th>你能做什么</th></tr>
+        <tr><td>大厅</td><td>看钱包、领每日返水、做每日任务；点「去照看」进宠物窝</td></tr>
+        <tr><td>VIP</td><td>看等级、XP、返水；也可去宠物窝、更换神兽</td></tr>
+        <tr><td>宠物窝</td><td>选神兽、每日照料、看成长、点进化、看今日排名</td></tr>
+      </table>
+      <p>手机底栏：<strong>大厅｜VIP｜宠物</strong>。电脑从大厅侧栏或「宠物窝」进入。</p>
+      <h3>第一次来</h3>
+      <p>第一次进宠物窝必须选一只本命神兽，不能跳过。六选一：彩羽神鸟 · 月食神龙 · 山林精灵 · 吉兆灵鸟 · 海之仙女 · 树精守护神。选完从幼宠开始养。之后可随时换，新神兽继承已经养成的形态。</p>
+      <h3>每天怎么养</h3>
+      <ol>
+        <li>进宠物窝，点 <strong>饱食 / 喝水 / 清洁</strong>。想吃、想玩、想喝时，对应照料一次即可。</li>
+        <li>完成今日深度抚养：抚摸 ×3、对话 ×1、喂食 ×2，完成后可领成长奖励。</li>
+        <li>同一天可以多照料几次；大约 24 小时后再来一轮深度抚养。</li>
+        <li>背包每天有免费补给，没有购买。本日对应照料完成后，「使用」显示「本日已达标」不可点。</li>
+      </ol>
+      <p>超过大约 24 小时没来，亲密度可能下降，大厅会提醒「去照看」。<strong>VIP 等级不会掉。</strong></p>
+      <h3>神兽怎么长大</h3>
+      <p>幼宠 → 银徽 → 管家 → 金甲 → 翼宠 → 冠宠。每一档要养够抚养日 + 照料次数；进度满了且 VIP 够时，点 <strong>进化</strong>。</p>
+      <table>
+        <tr><th>你的 VIP</th><th>最高能养到</th></tr>
+        <tr><td>VIP1</td><td>银徽</td></tr>
+        <tr><td>VIP2</td><td>管家</td></tr>
+        <tr><td>VIP3</td><td>金甲</td></tr>
+        <tr><td>VIP4</td><td>翼宠</td></tr>
+        <tr><td>VIP5</td><td>冠宠</td></tr>
+      </table>
+      <p>舞台旁能看到下一形态。图鉴里已养成的档可以回顾；还没养到的档只能看说明，不能假穿。养满了但 VIP 不够，进化会提示去冲档。</p>
+      <h3>换神兽</h3>
+      <p>随时可换，不收费。换了还是原来那一档，进度还在。不能卖掉，也不能解绑。一人始终一只。</p>
+      <h3>大厅每日任务</h3>
+      <p>每天各做一次，可增加 VIP XP：登录 +50 · 领返水 +40 · 访 VIP +40 · 看视频 +60</p>
+      <h3>常见问题</h3>
+      <table>
+        <tr><th>问</th><th>答</th></tr>
+        <tr><td>升了 VIP，神兽怎么还没变？</td><td>正常。形态只跟照料和进化走，不跟 VIP 跳档。</td></tr>
+        <tr><td>为什么进化是灰的？</td><td>本档抚养日或照料次数还没满，或 VIP 还不够下一档。</td></tr>
+        <tr><td>一天只能点一次吗？</td><td>不是。同一次来可以多照料；深度抚养大约每 24 小时一轮。</td></tr>
+        <tr><td>几天没来会掉 VIP 吗？</td><td>不会。最多亲密度下降，回来继续养即可。</td></tr>
+        <tr><td>宠物窝要充值才能养吗？</td><td>不要。照料和背包补给都免费。</td></tr>
+      </table>
+    </section>
+
+    <section id="s6">
+      <h2>6. 宣讲主线（建议 8 分钟）</h2>
       <ol>
         <li><strong>为什么做</strong>：粘性。不是再做一个充值玩法。</li>
         <li><strong>每天回来干什么</strong>：深度抚养一轮（摸、说、喂），神兽才会长。</li>
@@ -258,9 +276,9 @@ VIP 等级页
       </ol>
     </section>
 
-    <section id="s6">
-      <h2>6. 神兽与形态</h2>
-      <h3>6.1 六种本命神兽（仅此目录）</h3>
+    <section id="s7">
+      <h2>7. 神兽与形态</h2>
+      <h3>7.1 六种本命神兽（仅此目录）</h3>
       <table>
         <tr><th>id</th><th>中文名</th><th>口吻</th></tr>
         <tr><td>sarimanok</td><td>彩羽神鸟</td><td>啾</td></tr>
@@ -275,7 +293,7 @@ VIP 等级页
         <li>之后可随时更换；新神兽升到原来的形态档，抚养进度保留。</li>
         <li>选种 / 换种要能看到当前档和终极形态预览。</li>
       </ul>
-      <h3>6.2 同种六档（展示形态 = evoTier）</h3>
+      <h3>7.2 同种六档（展示形态 = evoTier）</h3>
       <table>
         <tr><th>档</th><th>形态</th><th>进下一档</th><th>VIP 上限</th></tr>
         <tr><td>0</td><td>幼宠</td><td>1 天 / 6 次</td><td>—</td></tr>
@@ -291,12 +309,10 @@ VIP 等级页
         <li>VIP 只是天花板：养满了但 VIP 不够，不能进化。</li>
         <li>演示开局 VIP3，选种后从幼宠养起，上限可到金甲。</li>
       </ul>
-      <h3>6.3 立绘风格</h3>
-      <p>中性 / 神圣 / 可爱 / 墨金 / 玄祀 / 暮金。VIP 页可按当前穿着档随时换，不付费。最终留哪几套后定。</p>
     </section>
 
-    <section id="s7">
-      <h2>7. 宠物窝规则（摘要）</h2>
+    <section id="s8">
+      <h2>8. 宠物窝规则（摘要）</h2>
       <ul>
         <li><strong>绑定</strong>：始终绑定 VIP。无出售、无解绑。换神兽 ≠ 解绑。</li>
         <li><strong>当日抚养</strong>：饱食 / 喝水 / 清洁 + 四条状态（0–100）。更多互动全免费。</li>
@@ -305,14 +321,12 @@ VIP 等级页
         <li><strong>进化</strong>：本档抚养日 + 互动都满、且 VIP 够上限才可点；点完形态 +1。</li>
         <li><strong>下一形态</strong>：舞台旁始终预览；冠宠后显示已达终极。</li>
         <li><strong>图鉴</strong>：已养成档看回顾，未养成档看解锁说明，不能假穿。</li>
-        <li><strong>背包</strong>：每日免费补给。没有购买按钮。</li>
-        <li><strong>终极奖励</strong>：每品种一次五选一（₱88 / ₱188 / 亲密度礼包 / 今日积分 / 双倍亲密度），非充值。</li>
-        <li><strong>口吻</strong>：需要抚养时中文撒娇；不需要时正向抚慰，不凶。</li>
+        <li><strong>背包</strong>：每日免费补给。没有购买按钮。本日对应照料达成后，「使用」不可点，提示本日已达标。</li>
       </ul>
     </section>
 
-    <section id="s8">
-      <h2>8. VIP 与每日任务</h2>
+    <section id="s9">
+      <h2>9. VIP 与每日任务</h2>
       <table>
         <tr><th>Level</th><th>Tier</th><th>累计 XP</th><th>返水</th></tr>
         <tr><td>VIP0</td><td>VIP0s</td><td>0</td><td>0%</td></tr>
@@ -322,19 +336,18 @@ VIP 等级页
         <tr><td>VIP4</td><td>VIP4s</td><td>15,000</td><td>4%</td></tr>
         <tr><td>VIP5</td><td>VIP5s</td><td>50,000</td><td>5%</td></tr>
       </table>
-      <p>演示开局：VIP3 / XP 11,000（约 60% 向 VIP4）。</p>
-      <p>每日任务（自然日各一次）：登录 +50 · 领返水 +40 · 访 VIP +40 · 看视频 +60 · 照料宠物 +35。</p>
+      <p>登录 +50 · 领返水 +40 · 访 VIP +40 · 看视频 +60</p>
     </section>
 
-    <section id="s9">
-      <h2>9. 定稿界面</h2>
+    <section id="s10">
+      <h2>10. 定稿界面</h2>
       <p><strong>PC 宠物窝：</strong>左舞台与抚养进度，右图鉴 + 照料 / 排名。不要出现已绑定橙章、装饰云、身份区重复积分条。</p>
       <p><strong>H5：</strong>舞台铺满；下一形态贴右上；三颗大抚养按钮；养成进度合成一张卡。底栏大厅｜VIP｜宠物。</p>
       <p>对话、帮养规则仍在，当前定稿页签只露出照料与排名。测试主路径以露出界面为准。</p>
     </section>
 
-    <section id="s10">
-      <h2>10. 开发落地要点</h2>
+    <section id="s11">
+      <h2>11. 开发落地要点</h2>
       <table>
         <tr><th>双端规则</th><td>同一套；原型共享 state.js / vip_butler_pet_v3</td></tr>
         <tr><th>展示形态</th><td>只读 evoTier，禁止 VIP 一升就换装</td></tr>
@@ -345,8 +358,8 @@ VIP 等级页
       </table>
     </section>
 
-    <section id="s11">
-      <h2>11. 测试验收清单</h2>
+    <section id="s12">
+      <h2>12. 测试验收清单</h2>
       <h3>A. 红线</h3>
       <ul class="check">
         <li>找不到游戏厅、转入转出、一键回收</li>
@@ -381,8 +394,8 @@ VIP 等级页
       </ul>
     </section>
 
-    <section id="s12">
-      <h2>12. 演示脚本</h2>
+    <section id="s13">
+      <h2>13. 演示脚本</h2>
       <ol>
         <li>重置演示 → 进宠物窝 → 选彩羽神鸟 → 看舞台与下一形态「银徽」。</li>
         <li>点饱食 / 喝水 / 清洁。</li>

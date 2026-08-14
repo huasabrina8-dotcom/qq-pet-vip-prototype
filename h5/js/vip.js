@@ -40,7 +40,6 @@
     const state = TTStore.get();
     renderHeader(state);
     renderStatus(state);
-    renderArtStyle(state);
     renderCarousel(state);
     renderTable();
   }
@@ -500,8 +499,6 @@
     bindCommon({ depositGivesXp: true });
     initTabs();
     initSupportModal();
-    initArtStyle();
-    initSwitchSpecies();
     carIndex = Math.max(0, TTStore.levelFromXp(TTStore.get().xp) - 1);
 
     // auto-complete「访问 VIP Level」daily task when landing here

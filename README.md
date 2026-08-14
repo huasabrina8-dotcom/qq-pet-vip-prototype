@@ -31,7 +31,8 @@ python3 -m http.server 8765
 
 ## Agent / product handoff
 
-**Read first:** [`docs/宠物VIP庄园-需求关键词手账.md`](./docs/宠物VIP庄园-需求关键词手账.md)  
+**给开发 / 测试宣讲：** [`docs/萌宠乐园-开发测试宣讲需求.md`](./docs/萌宠乐园-开发测试宣讲需求.md)  
+**Read first (agents):** [`docs/宠物VIP庄园-需求关键词手账.md`](./docs/宠物VIP庄园-需求关键词手账.md)  
 Full rules: [`docs/VIP管家宠-冲档版-需求说明.md`](./docs/VIP管家宠-冲档版-需求说明.md)  
 New Cursor agents: see [`AGENTS.md`](./AGENTS.md).
 

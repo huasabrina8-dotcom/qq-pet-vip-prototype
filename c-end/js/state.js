@@ -2876,6 +2876,29 @@
     };
   }
 
+  /** 背包「使用」对应的本日照料：有亲密度任务用任务次数，否则做满 1 次即达标 */
+  function bagCareNeed(kind) {
+    for (let i = 0; i < DAILY_INTIMACY_QUESTS.length; i++) {
+      if (DAILY_INTIMACY_QUESTS[i].kind === kind) return DAILY_INTIMACY_QUESTS[i].need;
+    }
+    return 1;
+  }
+
+  function isBagCareLocked(kind) {
+    ensurePet(state);
+    refreshPetSocialDaily(state.pet);
+    const done = (state.pet.dailyIntimacy && state.pet.dailyIntimacy.counts[kind]) || 0;
+    return done >= bagCareNeed(kind);
+  }
+
+  function getBagCareLocks() {
+    return {
+      feed: isBagCareLocked('feed'),
+      play: isBagCareLocked('play'),
+      clean: isBagCareLocked('clean'),
+    };
+  }
+
   function claimDailyIntimacyQuest() {
     applyDecay();
     const info = getDailyIntimacyQuests();
@@ -2990,6 +3013,9 @@
     const invKey = kind === 'feed' ? 'food' : kind === 'play' ? 'toy' : kind === 'clean' ? 'soap' : null;
     if (useItem) {
       if (!invKey) return { ok: false, reason: 'no_item_for_kind' };
+      if (isBagCareLocked(kind)) {
+        return { ok: false, reason: 'daily_done', kind: kind };
+      }
       if ((pet.inventory[invKey] || 0) <= 0) {
         return { ok: false, reason: 'no_item', item: invKey };
       }
@@ -4023,6 +4049,7 @@
         })(),
         intimacy: getIntimacyInfo(),
         intimacyQuests: getDailyIntimacyQuests(),
+        bagCareLocks: getBagCareLocks(),
         evolve: getEvolveInfo(),
         stageGrowth: getStageGrowthInfo(),
         formNurture: getFormNurtureSummary(),
@@ -4064,6 +4091,7 @@
     getEvolveInfo,
     getIntimacyInfo,
     getDailyIntimacyQuests,
+    getBagCareLocks,
     claimDailyIntimacyQuest,
     getUltimateRewardInfo,
     claimUltimateReward,

@@ -545,14 +545,8 @@
       .map(function (f) {
         const grown = f.grown != null ? f.grown : f.unlocked && f.current;
         const sel = f.vip === viewTier ? ' is-selected' : '';
-        const lockCls = grown ? '' : ' is-locked';
-        const tag = grown
-          ? f.current
-            ? ' · 当前'
-            : ' · 已达成'
-          : f.unlocked
-            ? ' · 抚养中'
-            : ' · 未养成';
+        const lockCls = f.current ? '' : ' is-locked';
+        const tag = f.current ? ' · 当前' : ' · 待升';
         return (
           '<button type="button" class="pet-form-chip' +
           (f.current ? ' is-current' : '') +
@@ -1440,7 +1434,16 @@
     document.querySelectorAll('.btn-pet-use').forEach((btn) => {
       const kind = btn.dataset.use;
       const key = kind === 'feed' ? 'food' : kind === 'play' ? 'toy' : 'soap';
-      btn.disabled = !!snap.needsSpeciesPick || (pet.inventory[key] || 0) <= 0;
+      const locked = !!(snap.bagCareLocks && snap.bagCareLocks[kind]);
+      btn.disabled = !!snap.needsSpeciesPick || locked || (pet.inventory[key] || 0) <= 0;
+      btn.textContent = locked ? '本日已达标' : '使用';
+      btn.title = locked ? '本日已达标' : '';
+      const row = btn.closest('.pet-inv-row');
+      const desc = row && row.querySelector('.pet-inv-desc');
+      if (desc) {
+        if (!desc.dataset.idle) desc.dataset.idle = desc.textContent;
+        desc.textContent = locked ? '本日已达标' : desc.dataset.idle;
+      }
     });
 
     const prog = TTStore.progressToNext(state.xp);
@@ -1520,6 +1523,7 @@
     if (!res.ok) {
       if (res.reason === 'need_species') toast('请先选择你的 VIP管家神兽');
       else if (res.reason === 'no_item') toast('背包里没有该道具了');
+      else if (res.reason === 'daily_done') toast('本日已达标');
       else toast('操作失败');
       return;
     }
