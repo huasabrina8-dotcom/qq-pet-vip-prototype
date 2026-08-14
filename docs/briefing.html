@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>萌宠乐园 — 开发 / 测试宣讲需求</title>
+  <style>
+    :root {
+      --bg: #f3f5f8;
+      --card: #fff;
+      --ink: #1a1a1a;
+      --muted: #667085;
+      --line: #e8e8e8;
+      --orange: #ff7a00;
+      --orange-deep: #ff6200;
+      --soft: #fff4eb;
+      --green: #16a34a;
+      --red: #b45309;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Hiragino Sans GB", "Segoe UI", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      font-size: 15px;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 20px 12px;
+    }
+    header h1 { margin: 0 0 4px; font-size: 20px; color: var(--orange-deep); }
+    header .sub { margin: 0; font-size: 13px; color: var(--muted); }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    nav a {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      text-decoration: none;
+      background: #f4f5f7;
+      border-radius: 999px;
+      padding: 5px 10px;
+    }
+    nav a:hover { background: var(--soft); color: var(--orange-deep); }
+    main { max-width: 880px; margin: 0 auto; padding: 20px 16px 80px; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 18px 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    }
+    h2 { margin: 0 0 12px; font-size: 17px; color: var(--orange-deep); }
+    h3 { margin: 16px 0 8px; font-size: 15px; }
+    p { margin: 0 0 10px; }
+    ul, ol { margin: 0 0 10px; padding-left: 1.3em; }
+    li { margin: 4px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 8px 0 12px;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th { background: #f7f8fa; font-size: 12px; color: var(--muted); }
+    .links a { color: var(--orange-deep); font-weight: 700; }
+    .out { background: #fff8f0; }
+    .out th { background: #ffedd5; color: #9a3412; }
+    pre {
+      background: #f7f8fa;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .check { list-style: none; padding-left: 0; }
+    .check li {
+      padding: 6px 0 6px 28px;
+      position: relative;
+      border-bottom: 1px dashed #eee;
+    }
+    .check li::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 10px;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #fdba74;
+      border-radius: 4px;
+      background: #fff;
+    }
+    .proto {
+      display: grid;
+      grid-template-columns: 64px 1fr 1fr 1fr;
+      gap: 8px;
+      font-size: 13px;
+      margin: 10px 0;
+    }
+    .proto div {
+      background: var(--soft);
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
+    .proto a { color: var(--orange-deep); font-weight: 700; word-break: break-all; }
+    .kicker {
+      display: inline-block;
+      background: var(--soft);
+      color: var(--orange-deep);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+    @media (max-width: 640px) {
+      .proto { grid-template-columns: 1fr; }
+      table { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>萌宠乐园</h1>
+    <p class="sub">宣讲需求 · 定稿原型 2026-08-14</p>
+    <nav>
+      <a href="#s1">一句话</a>
+      <a href="#s2">目的</a>
+      <a href="#s3">不做</a>
+      <a href="#s4">架构</a>
+      <a href="#s5">主线</a>
+      <a href="#s6">神兽</a>
+      <a href="#s7">宠物窝</a>
+      <a href="#s8">VIP</a>
+      <a href="#s9">界面</a>
+      <a href="#s10">开发</a>
+      <a href="#s11">验收</a>
+      <a href="#s12">演示</a>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <span class="kicker">封面</span>
+      <table>
+        <tr><th>项目名称</th><td><strong>萌宠乐园</strong></td></tr>
+        <tr><th>端</th><td>PC 和 H5</td></tr>
+        <tr><th>语言</th><td>页面与神兽口吻全中文；菲语 / 英语后补</td></tr>
+        <tr><th>视觉</th><td>Juan365 白底亮厅。禁止暗黑霓虹赌场风</td></tr>
+        <tr><th>PC 原型</th><td class="links"><a href="https://huasabrina8-dotcom.github.io/qq-pet-vip-prototype/c-end/lobby.html">https://huasabrina8-dotcom.github.io/qq-pet-vip-prototype/c-end/lobby.html</a></td></tr>
+        <tr><th>H5 原型</th><td class="links"><a href="https://huasabrina8-dotcom.github.io/qq-pet-vip-prototype/h5/lobby.html">https://huasabrina8-dotcom.github.io/qq-pet-vip-prototype/h5/lobby.html</a></td></tr>
+      </table>
+      <p>本地预览原型：</p>
+      <div class="proto">
+        <div><strong>端</strong></div>
+        <div><strong>大厅</strong></div>
+        <div><strong>VIP</strong></div>
+        <div><strong>宠物窝</strong></div>
+        <div>PC</div>
+        <div><a href="/c-end/lobby.html">/c-end/lobby.html</a></div>
+        <div><a href="/c-end/vip.html">/c-end/vip.html</a></div>
+        <div><a href="/c-end/pet.html">/c-end/pet.html</a></div>
+        <div>H5</div>
+        <div><a href="/h5/lobby.html">/h5/lobby.html</a></div>
+        <div><a href="/h5/vip.html">/h5/vip.html</a></div>
+        <div><a href="/h5/pet.html">/h5/pet.html</a></div>
+      </div>
+    </section>
+
+    <section id="s1">
+      <h2>1. 一句话</h2>
+      <p>萌宠乐园是挂在菲盘式 VIP 冲档上的<strong>情感养成</strong>：用户大约每 24 小时回来深度抚养一只菲律宾神话神兽，用照料推动形态成长，从而提高登录粘性。</p>
+      <p>它<strong>不是</strong>游戏厅、不是庄园种田、不是卖宠物、不是抽奖。</p>
+    </section>
+
+    <section id="s2">
+      <h2>2. 产品目的（Locked）</h2>
+      <table>
+        <tr><th>目的</th><td>提高登录粘性，让用户更频繁进站</td></tr>
+        <tr><th>手段</th><td>约每 <strong>24 小时</strong>回来做一轮<strong>深度抚养</strong>，参与神兽成长</td></tr>
+        <tr><th>深度抚养</th><td>抚摸 ×3 + 对话 ×1 + 喂食 ×2，完成后可领成长奖励</td></tr>
+        <tr><th>时间轴</th><td>滚动 24h，从上次抚养互动起算</td></tr>
+        <tr><th>同一次访问</th><td><strong>允许</strong>多次互动；禁止做成「24 小时只能点一次」</td></tr>
+        <tr><th>缺席</th><td>亲密度可能降级（提醒回来）；<strong>不降 VIP</strong></td></tr>
+      </table>
+    </section>
+
+    <section id="s3">
+      <h2>3. 明确不做（测试不要按这些出 bug）</h2>
+      <p>下列全部 Out of Scope，出现即视为做错需求。</p>
+      <table class="out">
+        <tr><th>不做</th><th>说明</th></tr>
+        <tr><td>游戏厅 / 厅网格</td><td>不把 XP 绑到「喂厅」</td></tr>
+        <tr><td>转入 / 转出 / 一键回收</td><td>不做资金划转玩法</td></tr>
+        <tr><td>宠内付费墙</td><td>宠物窝无充值、无内购、无付费道具</td></tr>
+        <tr><td>终极奖励当充值</td><td>冠宠奖励是发给用户的五选一礼物</td></tr>
+        <tr><td>VIP庄园 / 种田</td><td>已砍掉</td></tr>
+        <tr><td>出售宠物 / 解绑</td><td>已砍掉；一员一宠始终绑定</td></tr>
+        <tr><td>猫、狗等现实宠物</td><td>只有菲律宾神话神兽</td></tr>
+        <tr><td>抽奖</td><td>同站另一项目</td></tr>
+        <tr><td>暗黑霓虹赌场风</td><td>必须白橙亮厅</td></tr>
+      </table>
+      <p>大厅顶栏「充值」只做 VIP / 钱包演示，<strong>不驱动</strong>养宠。</p>
+    </section>
+
+    <section id="s4">
+      <h2>4. 信息架构</h2>
+      <pre>大厅 Lobby
+  ├─ 钱包 P / G、充值演示、每日返水领取
+  ├─ 宠 HUD（VIP 进度 +「去照看」）→ 宠物窝
+  ├─ 每日任务
+  └─ 入口 → VIP 等级页
+
+VIP 等级页
+  ├─ 档位 / 等级 / XP / 返水
+  ├─ 权益 · 指南 · 奖励
+  ├─ 神兽形态图鉴 + 六套立绘风格
+  └─ 更换神兽 / 去宠物窝
+
+宠物窝
+  ├─ 首次：必选本命神兽（不可跳过）
+  ├─ 舞台 + 下一形态 + 神兽说话
+  ├─ 当日抚养：饱食 / 喝水 / 清洁
+  ├─ 养成进度：抚养日、互动、进化、24h 节奏
+  ├─ 形态图鉴 / 照料 / 今日排名</pre>
+      <p>H5 底栏固定三 Tab：<strong>大厅 | VIP | 宠物</strong>。</p>
+    </section>
+
+    <section id="s5">
+      <h2>5. 宣讲主线（建议 8 分钟）</h2>
+      <ol>
+        <li><strong>为什么做</strong>：粘性。不是再做一个充值玩法。</li>
+        <li><strong>每天回来干什么</strong>：深度抚养一轮（摸、说、喂），神兽才会长。</li>
+        <li><strong>长什么样</strong>：六种菲律宾神兽，同种六档；靠养，不靠升 VIP 瞬间变身。</li>
+        <li><strong>VIP 干什么</strong>：冲档卖点页 + 成长上限。VIP3 最多养到金甲。</li>
+        <li><strong>换神兽</strong>：随时可换，继承当前形态档，不解绑、不收费。</li>
+        <li><strong>养到头</strong>：冠宠后发五选一礼物（非充值）。</li>
+        <li><strong>双端</strong>：PC 与 H5 同一套规则；H5 按手机重排。</li>
+      </ol>
+    </section>
+
+    <section id="s6">
+      <h2>6. 神兽与形态</h2>
+      <h3>6.1 六种本命神兽（仅此目录）</h3>
+      <table>
+        <tr><th>id</th><th>中文名</th><th>口吻</th></tr>
+        <tr><td>sarimanok</td><td>彩羽神鸟</td><td>啾</td></tr>
+        <tr><td>bakunawa</td><td>月食神龙</td><td>嗷</td></tr>
+        <tr><td>diwata</td><td>山林精灵</td><td>叮</td></tr>
+        <tr><td>tigmamanukan</td><td>吉兆灵鸟</td><td>啼</td></tr>
+        <tr><td>sirena</td><td>海之仙女</td><td>哼</td></tr>
+        <tr><td>kapre</td><td>树精守护神</td><td>呵</td></tr>
+      </table>
+      <ul>
+        <li>首次进宠物窝必须选一种，不可关闭、不可跳过。</li>
+        <li>之后可随时更换；新神兽升到原来的形态档，抚养进度保留。</li>
+        <li>选种 / 换种要能看到当前档和终极形态预览。</li>
+      </ul>
+      <h3>6.2 同种六档（展示形态 = evoTier）</h3>
+      <table>
+        <tr><th>档</th><th>形态</th><th>进下一档</th><th>VIP 上限</th></tr>
+        <tr><td>0</td><td>幼宠</td><td>1 天 / 6 次</td><td>—</td></tr>
+        <tr><td>1</td><td>银徽</td><td>2 天 / 12 次</td><td>需 VIP1</td></tr>
+        <tr><td>2</td><td>管家</td><td>3 天 / 20 次</td><td>需 VIP2</td></tr>
+        <tr><td>3</td><td>金甲</td><td>5 天 / 36 次</td><td>需 VIP3</td></tr>
+        <tr><td>4</td><td>翼宠</td><td>7 天 / 56 次</td><td>需 VIP4</td></tr>
+        <tr><td>5</td><td>冠宠（终极）</td><td>—</td><td>需 VIP5</td></tr>
+      </table>
+      <ul>
+        <li>每 24 小时有互动，最多计 1 个合格抚养日。</li>
+        <li>展示形态只跟抚养进化走，不跟 VIP 跳档。</li>
+        <li>VIP 只是天花板：养满了但 VIP 不够，不能进化。</li>
+        <li>演示开局 VIP3，选种后从幼宠养起，上限可到金甲。</li>
+      </ul>
+      <h3>6.3 立绘风格</h3>
+      <p>中性 / 神圣 / 可爱 / 墨金 / 玄祀 / 暮金。VIP 页可按当前穿着档随时换，不付费。最终留哪几套后定。</p>
+    </section>
+
+    <section id="s7">
+      <h2>7. 宠物窝规则（摘要）</h2>
+      <ul>
+        <li><strong>绑定</strong>：始终绑定 VIP。无出售、无解绑。换神兽 ≠ 解绑。</li>
+        <li><strong>当日抚养</strong>：饱食 / 喝水 / 清洁 + 四条状态（0–100）。更多互动全免费。</li>
+        <li><strong>主动需求</strong>：想吃 / 想玩 / 想喝；满足后安静 24h。</li>
+        <li><strong>亲密度 vs VIP</strong>：24h 无互动可能降亲密度，不降 VIP。</li>
+        <li><strong>进化</strong>：本档抚养日 + 互动都满、且 VIP 够上限才可点；点完形态 +1。</li>
+        <li><strong>下一形态</strong>：舞台旁始终预览；冠宠后显示已达终极。</li>
+        <li><strong>图鉴</strong>：已养成档看回顾，未养成档看解锁说明，不能假穿。</li>
+        <li><strong>背包</strong>：每日免费补给。没有购买按钮。</li>
+        <li><strong>终极奖励</strong>：每品种一次五选一（₱88 / ₱188 / 亲密度礼包 / 今日积分 / 双倍亲密度），非充值。</li>
+        <li><strong>口吻</strong>：需要抚养时中文撒娇；不需要时正向抚慰，不凶。</li>
+      </ul>
+    </section>
+
+    <section id="s8">
+      <h2>8. VIP 与每日任务</h2>
+      <table>
+        <tr><th>Level</th><th>Tier</th><th>累计 XP</th><th>返水</th></tr>
+        <tr><td>VIP0</td><td>VIP0s</td><td>0</td><td>0%</td></tr>
+        <tr><td>VIP1</td><td>VIP1s</td><td>200</td><td>1%</td></tr>
+        <tr><td>VIP2</td><td>VIP2s</td><td>1,000</td><td>2%</td></tr>
+        <tr><td>VIP3</td><td>VIP3s</td><td>5,000</td><td>3%</td></tr>
+        <tr><td>VIP4</td><td>VIP4s</td><td>15,000</td><td>4%</td></tr>
+        <tr><td>VIP5</td><td>VIP5s</td><td>50,000</td><td>5%</td></tr>
+      </table>
+      <p>演示开局：VIP3 / XP 11,000（约 60% 向 VIP4）。</p>
+      <p>每日任务（自然日各一次）：登录 +50 · 领返水 +40 · 访 VIP +40 · 看视频 +60 · 照料宠物 +35。</p>
+    </section>
+
+    <section id="s9">
+      <h2>9. 定稿界面</h2>
+      <p><strong>PC 宠物窝：</strong>左舞台与抚养进度，右图鉴 + 照料 / 排名。不要出现已绑定橙章、装饰云、身份区重复积分条。</p>
+      <p><strong>H5：</strong>舞台铺满；下一形态贴右上；三颗大抚养按钮；养成进度合成一张卡。底栏大厅｜VIP｜宠物。</p>
+      <p>对话、帮养规则仍在，当前定稿页签只露出照料与排名。测试主路径以露出界面为准。</p>
+    </section>
+
+    <section id="s10">
+      <h2>10. 开发落地要点</h2>
+      <table>
+        <tr><th>双端规则</th><td>同一套；原型共享 state.js / vip_butler_pet_v3</td></tr>
+        <tr><th>展示形态</th><td>只读 evoTier，禁止 VIP 一升就换装</td></tr>
+        <tr><th>换种</th><td>继承当前形态档；不重置绑定</td></tr>
+        <tr><th>进化门槛</th><td>抚养日 且 互动次数 且 VIP ≥ 目标档</td></tr>
+        <tr><th>合格抚养日</th><td>滚动 24h 内有互动才 +1 日</td></tr>
+        <tr><th>付费隔离</th><td>宠物窝不得出现购买 / IAP</td></tr>
+      </table>
+    </section>
+
+    <section id="s11">
+      <h2>11. 测试验收清单</h2>
+      <h3>A. 红线</h3>
+      <ul class="check">
+        <li>找不到游戏厅、转入转出、一键回收</li>
+        <li>找不到庄园 / 种田 / 出售宠物</li>
+        <li>宠物窝没有付费购买</li>
+        <li>只有六种神话神兽，没有猫狗</li>
+        <li>抽奖玩法不出现</li>
+      </ul>
+      <h3>B. 选种与换种</h3>
+      <ul class="check">
+        <li>第一次进窝强制选种，关不掉</li>
+        <li>换种后形态档不变</li>
+        <li>换种不收费、不解绑</li>
+      </ul>
+      <h3>C. 抚养与进化</h3>
+      <ul class="check">
+        <li>未满进度时进化灰色</li>
+        <li>本档抚养完成后可进化，形态 +1</li>
+        <li>VIP3 不能进翼宠；升 VIP 不会立刻换装</li>
+      </ul>
+      <h3>D. 24h 与 VIP 任务</h3>
+      <ul class="check">
+        <li>模拟经过 24 小时后亲密度可降，VIP 不变</li>
+        <li>同一次访问可连续照料多次</li>
+        <li>领返水、充值演示不改变宠物形态</li>
+      </ul>
+      <h3>E. 终极奖励与双端</h3>
+      <ul class="check">
+        <li>五选一文案含「非充值」；同品种不能领两次</li>
+        <li>PC / H5 同域共享进度</li>
+        <li>对外项目名是萌宠乐园</li>
+      </ul>
+    </section>
+
+    <section id="s12">
+      <h2>12. 演示脚本</h2>
+      <ol>
+        <li>重置演示 → 进宠物窝 → 选彩羽神鸟 → 看舞台与下一形态「银徽」。</li>
+        <li>点饱食 / 喝水 / 清洁。</li>
+        <li>「本档抚养完成」→ 进化 → 形态变为银徽。</li>
+        <li>更换神兽为月食神龙 → 仍是银徽档。</li>
+        <li>大厅领返水、做一条每日任务。</li>
+        <li>VIP 页切换立绘风格，确认不换档。</li>
+        <li>「演示 VIP5 终极奖励」→ 五选一是礼物不是充值。</li>
+        <li>H5 用 390 宽走同一遍。</li>
+      </ol>
+      <p class="sub" style="color:var(--muted);font-size:13px">冲突时以用户最新明示 + 本宣讲稿 Locked 条款为准。Markdown 底稿：docs/萌宠乐园-开发测试宣讲需求.md</p>
+    </section>
+  </main>
+</body>
+</html>
