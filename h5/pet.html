@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="format-detection" content="telephone=no">
-  <title>宠物窝 — H5</title>
-  <link rel="stylesheet" href="/h5/css/h5.css">
-  <link rel="stylesheet" href="/h5/css/pages.css">
+  <title>宠物窝 — 萌宠乐园 H5</title>
+  <link rel="stylesheet" href="/h5/css/h5.css?v=20260814g">
+  <link rel="stylesheet" href="/h5/css/pages.css?v=20260814g">
 </head>
-<body>
+<body class="is-pet-nest">
   <header class="h5-header">
     <div class="h5-header-inner">
       <a href="lobby.html" class="h5-logo">
@@ -20,7 +20,7 @@
         <div class="h5-bal-row"><span class="h5-coin p">P</span><span id="balP">2,710.00</span></div>
         <div class="h5-bal-row"><span class="h5-coin g">G</span><span id="balG">1,288.45</span></div>
       </div>
-      <button class="h5-btn-icon h5-btn-refresh" id="btnRefresh" type="button" aria-label="Refresh">
+      <button class="h5-btn-icon h5-btn-refresh" id="btnRefresh" type="button" aria-label="刷新">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
           <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
@@ -31,17 +31,23 @@
 
   <main class="h5-page pet-page">
     <section class="pet-stage-card" aria-label="宠物舞台">
+      <div class="pet-hero-card">
       <div class="pet-stage-sky" data-stage="buddy" id="petStage">
-        <div class="pet-cloud c1"></div>
-        <div class="pet-cloud c2"></div>
         <div class="pet-stage-floor"></div>
         <div class="pet-speech-bubble" id="petSpeechBubble" hidden aria-live="polite"></div>
         <div class="pet-stage-row">
+          <div class="pet-stage-hero">
             <div class="pet-figure" id="petFigure">
             <div class="pet-glow"></div>
             <div class="pet-art" id="petArt" hidden role="img"></div>
             <div class="pet-emoji-fallback" id="petEmojiFallback" aria-hidden="true">✨</div>
             <div class="pet-react" id="petReact" aria-hidden="true"></div>
+          </div>
+            <div class="pet-switch-wrap" id="petSwitchWrap">
+              <button type="button" class="btn-switch-species btn-switch-on-stage" id="btnSwitchSpecies">更换神兽</button>
+              <button type="button" class="btn-switch-help" id="btnSwitchSpeciesHelp" aria-label="更换说明" aria-expanded="false">?</button>
+              <div class="switch-help-pop" id="switchSpeciesHelpPop" hidden role="tooltip">可随时更换，新神兽继承当前形态档</div>
+            </div>
           </div>
           <button type="button" class="pet-next-form" id="petNextForm" aria-label="下一形态预览" title="持续抚养可解锁">
             <span class="pet-next-lock" id="petNextLock">🔒</span>
@@ -52,91 +58,95 @@
             <span class="pet-next-hint" id="petNextHint">抚养满本档可进化</span>
           </button>
         </div>
-        <div class="pet-stage-badge">
+      </div>
+      <div class="pet-id-card pet-stage-badge">
+        <div class="pet-id-top">
           <span class="pet-stage-title" id="petTitle">VIP管家神兽</span>
-          <span class="pet-stage-meta" id="petMeta">VIP3 · 亲密度 Lv.1</span>
-          <span class="pet-bind-badge" id="petBindBadge">已绑定 VIP3 / VIP3s</span>
-          <div class="pet-species-row">
-            <span class="pet-species-hint" id="petSpeciesHint">品种：待选神兽</span>
-            <button type="button" class="btn-switch-species" id="btnSwitchSpecies">更换神兽</button>
+        </div>
+        <span class="pet-stage-meta" id="petMeta">幼宠 · 亲密度 Lv.1</span>
+        <div class="pet-species-row">
+          <span class="pet-species-hint" id="petSpeciesHint">本命神兽：待选神兽</span>
+        </div>
+      </div>
+      </div>
+
+      <div class="pet-panel pet-panel-nurture">
+        <div class="pet-panel-hd">当日抚养</div>
+        <div class="pet-nurture-bar" id="petNurtureBar" aria-label="当日抚养">
+          <div class="pet-nurture-bar-row">
+            <button type="button" class="pet-nurture-btn" data-care="feed" data-need="eat">
+              <span class="pet-nurture-ico">🍽</span>
+              <strong>饱食</strong>
+            </button>
+            <button type="button" class="pet-nurture-btn" data-care="drink" data-need="drink">
+              <span class="pet-nurture-ico">💧</span>
+              <strong>喝水</strong>
+            </button>
+            <button type="button" class="pet-nurture-btn" data-care="clean">
+              <span class="pet-nurture-ico">✨</span>
+              <strong>清洁</strong>
+            </button>
           </div>
         </div>
+        <div class="pet-stats" id="petStats">
+          <div class="pet-stat" data-stat="hunger">
+            <div class="pet-stat-label"><span>🍽 饱食</span><span class="pet-stat-val" id="statHungerVal">72</span></div>
+            <div class="pet-stat-bar"><div class="pet-stat-fill hunger" id="statHunger" style="width:72%"></div></div>
+          </div>
+          <div class="pet-stat" data-stat="mood">
+            <div class="pet-stat-label"><span>😊 心情</span><span class="pet-stat-val" id="statMoodVal">68</span></div>
+            <div class="pet-stat-bar"><div class="pet-stat-fill mood" id="statMood" style="width:68%"></div></div>
+          </div>
+          <div class="pet-stat" data-stat="clean">
+            <div class="pet-stat-label"><span>✨ 清洁</span><span class="pet-stat-val" id="statCleanVal">70</span></div>
+            <div class="pet-stat-bar"><div class="pet-stat-fill clean" id="statClean" style="width:70%"></div></div>
+          </div>
+          <div class="pet-stat" data-stat="health">
+            <div class="pet-stat-label"><span>💚 健康</span><span class="pet-stat-val" id="statHealthVal">85</span></div>
+            <div class="pet-stat-bar"><div class="pet-stat-fill health" id="statHealth" style="width:85%"></div></div>
+          </div>
+        </div>
+        <p class="pet-hint" id="petHint">状态会随时间缓慢下降，记得常来照看～</p>
       </div>
 
-      <div class="pet-needs-bar" id="petNeedsBar" aria-label="宠物需求"></div>
-
-      <div class="pet-stage-growth" id="stageGrowthMeter" aria-label="形态成长">
-        <div class="pet-stage-growth-top">
-          <strong>形态成长</strong>
-          <span id="stageGrowthLabel">幼宠 → 银徽</span>
+      <div class="pet-panel pet-panel-grow">
+        <div class="pet-panel-hd">养成进度</div>
+        <div class="pet-stage-growth" id="stageGrowthMeter" aria-label="形态成长">
+          <div class="pet-stage-growth-top">
+            <span id="stageGrowthLabel">幼宠 → 银徽</span>
+            <button type="button" class="btn-evolve" id="btnEvolve" disabled>进化</button>
+          </div>
+          <div class="pet-stage-growth-row">
+            <span>抚养日 <b id="stageGrowthDays">0/1</b></span>
+            <div class="pet-stage-growth-bar"><div class="pet-stage-growth-fill" id="stageGrowthDaysFill" style="width:0%"></div></div>
+          </div>
+          <div class="pet-stage-growth-row">
+            <span>互动 <b id="stageGrowthActs">0/6</b></span>
+            <div class="pet-stage-growth-bar"><div class="pet-stage-growth-fill acts" id="stageGrowthActsFill" style="width:0%"></div></div>
+          </div>
+          <p class="pet-stage-growth-hint" id="stageGrowthHint">每个形态需养够时间；档越高越久。</p>
         </div>
-        <div class="pet-stage-growth-row">
-          <span>抚养日 <b id="stageGrowthDays">0/1</b></span>
-          <div class="pet-stage-growth-bar"><div class="pet-stage-growth-fill" id="stageGrowthDaysFill" style="width:0%"></div></div>
+        <div class="pet-ultimate-banner" id="ultimateRewardBanner" hidden></div>
+        <div class="nurture-cadence-card" id="nurtureCadenceCard" data-status="fresh" aria-live="polite">
+          <div class="nurture-cadence-head">
+            <strong id="nurtureCadenceTitle">24小时抚养节奏</strong>
+          </div>
+          <p class="nurture-cadence-sub" id="nurtureCadenceSub">回来完成今日深度抚养，参与神兽成长</p>
+          <ul class="nurture-cadence-rows">
+            <li><span>下次回来</span><strong id="nurtureNextDue">--:--:--</strong></li>
+            <li><span>保护剩余</span><strong id="nurtureProtectRemain">--:--:--</strong></li>
+            <li><span>今日抚养</span><strong id="nurtureDeepProgress">0/3 项</strong></li>
+          </ul>
         </div>
-        <div class="pet-stage-growth-row">
-          <span>互动 <b id="stageGrowthActs">0/6</b></span>
-          <div class="pet-stage-growth-bar"><div class="pet-stage-growth-fill acts" id="stageGrowthActsFill" style="width:0%"></div></div>
+        <div class="pet-protect-bar" id="careProtectBar" hidden title="仅亲密度等级受保护；VIP 档位不降">
+          <span class="protect-ico">🛡</span>
+          <span id="careProtectLabel">等级保护剩余 --:--:--</span>
+          <span class="protect-note">亲密度≠VIP</span>
         </div>
-        <p class="pet-stage-growth-hint" id="stageGrowthHint">每个形态需养够时间；档越高越久。</p>
-      </div>
-
-      <div class="pet-intimacy-meter" id="intimacyMeter">
-        <div class="pet-intimacy-top">
-          <strong>亲密度</strong>
-          <span id="intimacyLabel">亲密度 Lv.1</span>
-          <button type="button" class="btn-evolve" id="btnEvolve" disabled>进化</button>
-        </div>
-        <div class="pet-intimacy-bar"><div class="pet-intimacy-fill" id="intimacyFill" style="width:0%"></div></div>
-        <div class="pet-intimacy-meta" id="intimacyMeta">距下级 0/5</div>
-        <div class="pet-evolve-progress" id="evolveProgressHint">抚养满本档可进化解锁下一形态</div>
-      </div>
-      <div class="pet-ultimate-banner" id="ultimateRewardBanner" hidden></div>
-
-      <div class="pet-stats" id="petStats">
-        <div class="pet-stat" data-stat="hunger">
-          <div class="pet-stat-label"><span>🍽 饱食</span><span class="pet-stat-val" id="statHungerVal">72</span></div>
-          <div class="pet-stat-bar"><div class="pet-stat-fill hunger" id="statHunger" style="width:72%"></div></div>
-        </div>
-        <div class="pet-stat" data-stat="mood">
-          <div class="pet-stat-label"><span>😊 心情</span><span class="pet-stat-val" id="statMoodVal">68</span></div>
-          <div class="pet-stat-bar"><div class="pet-stat-fill mood" id="statMood" style="width:68%"></div></div>
-        </div>
-        <div class="pet-stat" data-stat="clean">
-          <div class="pet-stat-label"><span>✨ 清洁</span><span class="pet-stat-val" id="statCleanVal">70</span></div>
-          <div class="pet-stat-bar"><div class="pet-stat-fill clean" id="statClean" style="width:70%"></div></div>
-        </div>
-        <div class="pet-stat" data-stat="health">
-          <div class="pet-stat-label"><span>💚 健康</span><span class="pet-stat-val" id="statHealthVal">85</span></div>
-          <div class="pet-stat-bar"><div class="pet-stat-fill health" id="statHealth" style="width:85%"></div></div>
-        </div>
-      </div>
-      <p class="pet-hint" id="petHint">状态会随时间缓慢下降，记得常来照看～</p>
-      <div class="pet-daily-chip" id="petDailyChip">
-        <span>今日积分 <strong id="dailyPointsVal">0</strong></span>
-        <span class="sep">·</span>
-        <span>排名 <strong id="dailyRankVal">—</strong></span>
-      </div>
-      <div class="pet-protect-bar" id="careProtectBar">
-        <span class="protect-ico">🛡</span>
-        <span id="careProtectLabel">等级保护剩余 --:--:--</span>
-        <span class="protect-note">亲密度≠VIP</span>
-      </div>
-      <div class="nurture-cadence-card" id="nurtureCadenceCard" data-status="fresh" aria-live="polite">
-        <div class="nurture-cadence-head">
-          <strong id="nurtureCadenceTitle">24小时抚养节奏</strong>
-          <span class="nurture-cadence-kicker">提高登录粘性 · 每24小时深度抚养一次</span>
-        </div>
-        <p class="nurture-cadence-sub" id="nurtureCadenceSub">回来完成今日深度抚养，参与神兽成长</p>
-        <ul class="nurture-cadence-rows">
-          <li><span>下次建议回来</span><strong id="nurtureNextDue">--:--:--</strong></li>
-          <li><span>亲密度保护剩余</span><strong id="nurtureProtectRemain">--:--:--</strong></li>
-          <li><span>今日深度抚养</span><strong id="nurtureDeepProgress">0/3 项</strong></li>
-          <li><span>主动需求</span><strong id="nurtureNeedsActive">0</strong></li>
-        </ul>
       </div>
     </section>
 
+    <div class="pet-dock">
     <div class="form-switcher">
       <p class="form-switcher-hint" id="formSwitcherHint">点形态切换下面的照料页</p>
       <div class="pet-forms-gallery" id="formsGallery"></div>
@@ -146,13 +156,14 @@
       <button type="button" class="pet-tab is-active" data-tab="care" role="tab">照料</button>
       <button type="button" class="pet-tab" data-tab="rank" role="tab">排名</button>
     </nav>
+    </div>
 
     <div class="form-review-page care-memoir" id="careMemoir" hidden></div>
 
     <div class="pet-tab-panel is-active" data-panel="care" role="tabpanel">
       <div class="h5-section pet-actions-card">
-        <div class="h5-section-title" id="carePanelTitle">抚养与亲密度</div>
-        <p class="h5-muted" id="carePanelSub" style="margin-bottom:10px">全免费 · 每24小时回来抚养一次参与成长 · 想吃/想玩/想喝主动提醒 · 满足后 24h · 持续抚养进化</p>
+        <div class="h5-section-title" id="carePanelTitle">更多互动</div>
+        <p class="h5-muted" id="carePanelSub" style="margin-bottom:10px">抚摸、散步、合影等免费互动，计入成长</p>
         <div class="pet-actions pet-actions-grid" id="careActionGrid">
           <button type="button" class="pet-act" id="btnFeed" data-care="feed" data-need="eat">
             <span class="pet-need-dot" aria-hidden="true"></span>
@@ -236,15 +247,18 @@
           <a class="btn-claim btn-claim-orange" href="vip.html" style="min-height:36px;padding:0 14px">去 VIP</a>
         </div>
         <div class="xp-bar"><div class="xp-bar-fill" id="petVipFill" style="width:60%"></div></div>
-        <p class="pet-vip-note">一员一宠始终绑定；可随时更换神兽，新神兽继承当前形态档。</p>
-        <div class="demo-bar pet-demo-bar">
-          <button class="btn-ghost" id="btnDemoCare" type="button">演示本档抚养完成</button>
-          <button class="btn-ghost" id="btnDemoGold" type="button">演示养成到金甲</button>
-          <button class="btn-ghost" id="btnDemoProtect" type="button">模拟经过24小时</button>
-          <button class="btn-ghost" id="btnDemoNeeds" type="button">演示需求提醒</button>
-          <button class="btn-ghost" id="btnDemoVip5" type="button">演示 VIP5 终极奖励</button>
-          <button class="btn-ghost" id="btnReset" type="button">Reset Demo</button>
-        </div>
+        <p class="pet-vip-note">返水与权益在 VIP 等级页。</p>
+        <details class="pet-demo-fold">
+          <summary>演示工具</summary>
+          <div class="demo-bar pet-demo-bar">
+            <button class="btn-ghost" id="btnDemoCare" type="button">本档抚养完成</button>
+            <button class="btn-ghost" id="btnDemoGold" type="button">养成到金甲</button>
+            <button class="btn-ghost" id="btnDemoProtect" type="button">经过24小时</button>
+            <button class="btn-ghost" id="btnDemoNeeds" type="button">需求提醒</button>
+            <button class="btn-ghost" id="btnDemoVip5" type="button">VIP5 终极奖励</button>
+            <button class="btn-ghost" id="btnReset" type="button">重置演示</button>
+          </div>
+        </details>
       </div>
     </div>
 
@@ -277,7 +291,16 @@
           <span>今日 <strong id="rankMePts">0</strong></span>
           <span>累计 <strong id="rankAllPts">0</strong></span>
         </div>
-        <ol class="pet-rank-list" id="rankList"></ol>
+        <table class="pet-rank-table">
+          <thead>
+            <tr>
+              <th>排名</th>
+              <th>用户名</th>
+              <th>宠物名称</th>
+            </tr>
+          </thead>
+          <tbody id="rankList"></tbody>
+        </table>
       </div>
     </div>
   </main>
@@ -375,9 +398,9 @@
 
   <div class="toast-wrap" id="toastWrap"></div>
 
-  <script src="/c-end/js/state.js"></script>
-  <script src="/h5/js/ui.js"></script>
-  <script src="/h5/js/shell.js"></script>
-  <script src="/h5/js/pet.js"></script>
+  <script src="/c-end/js/state.js?v=20260814g"></script>
+  <script src="/h5/js/ui.js?v=20260814g"></script>
+  <script src="/h5/js/shell.js?v=20260814g"></script>
+  <script src="/h5/js/pet.js?v=20260814g"></script>
 </body>
 </html>

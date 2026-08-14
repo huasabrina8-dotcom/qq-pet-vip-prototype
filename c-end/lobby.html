@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juan365 — VIP管家宠 · Lobby</title>
+  <title>Juan365 — 萌宠乐园 · 大厅</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
       <span class="c-logo-mark">J</span>
       Juan365
     </a>
-    <button class="c-search" type="button" aria-label="Search" title="Search">
+    <button class="c-search" type="button" aria-label="搜索" title="搜索">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>
       </svg>
@@ -28,15 +28,15 @@
         <span id="balG">1,288.45</span>
       </div>
     </div>
-    <button class="c-btn-refresh" id="btnRefresh" type="button" aria-label="Refresh" title="Refresh">
+    <button class="c-btn-refresh" id="btnRefresh" type="button" aria-label="刷新" title="刷新">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
         <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
       </svg>
     </button>
-    <button class="c-btn-deposit" id="btnDeposit" type="button">Deposit</button>
-    <div class="c-avatar" title="Profile">👤<span class="crown">👑</span></div>
-    <button class="c-icon-btn" type="button" aria-label="Support" title="Support">
+    <button class="c-btn-deposit" id="btnDeposit" type="button">充值</button>
+    <div class="c-avatar" title="个人资料">👤<span class="crown">👑</span></div>
+    <button class="c-icon-btn" type="button" aria-label="客服" title="客服">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
         <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
@@ -62,25 +62,25 @@
       <div class="side-card cashback">
         <div class="cb-row">
           <div>
-            <div class="cb-label">Daily Cashback</div>
+            <div class="cb-label">每日返水</div>
             <div class="cb-amount" id="cbAmount">₱55.54</div>
           </div>
-          <button class="btn-claim" id="btnClaimCb" type="button">Claim</button>
+          <button class="btn-claim" id="btnClaimCb" type="button">领取</button>
         </div>
         <div class="cb-row">
           <div>
-            <div class="cb-label">Weekly Cashback</div>
+            <div class="cb-label">每周返水</div>
             <div class="cb-amount mystery">???</div>
           </div>
-          <div class="cb-timer" id="weeklyTimer">79h 23m 09s</div>
+          <div class="cb-timer" id="weeklyTimer">79时 23分 09秒</div>
         </div>
       </div>
 
       <!-- Bonus Mission → VIP -->
       <a class="mission-card" href="vip.html" id="missionCard">
         <div class="mission-title">
-          <span>Bonus Mission / VIP</span>
-          <span class="link">VIP Level →</span>
+          <span>冲档任务 / VIP</span>
+          <span class="link">VIP等级 →</span>
         </div>
         <div class="mission-pct" id="missionPct">60%</div>
         <div class="xp-bar"><div class="xp-bar-fill" id="missionFill" style="width:60%"></div></div>
@@ -89,76 +89,76 @@
 
       <div class="side-card">
         <div class="quick-links">
-          <div class="ql"><div class="ql-ico">🌧</div>Money Rain</div>
-          <div class="ql"><div class="ql-ico">🤝</div>Affiliate</div>
-          <div class="ql"><div class="ql-ico">🎡</div>Lucky Spin</div>
+          <div class="ql"><div class="ql-ico">🌧</div>红包雨</div>
+          <div class="ql"><div class="ql-ico">🤝</div>推广</div>
+          <div class="ql"><div class="ql-ico">🎡</div>幸运转盘</div>
         </div>
         <div class="promo-row">
-          <input type="text" placeholder="Promo Code" aria-label="Promo Code">
-          <button class="btn-claim btn-claim-orange" type="button">Claim</button>
+          <input type="text" placeholder="优惠码" aria-label="优惠码">
+          <button class="btn-claim btn-claim-orange" type="button">领取</button>
         </div>
       </div>
 
       <!-- Daily Tasks -->
       <div class="tasks-card">
-        <div class="tasks-head"><span class="chest">🎁</span> Daily Tasks</div>
+        <div class="tasks-head"><span class="chest">🎁</span> 每日任务</div>
         <div class="task-item" data-task="login">
           <div class="task-desc">每日登录签到</div>
           <span class="task-xp">+50 XP</span>
-          <button class="btn-task" type="button" data-action="login">Go</button>
+          <button class="btn-task" type="button" data-action="login">去完成</button>
         </div>
         <div class="task-item" data-task="claimCashback">
           <div class="task-desc">领取每日返水</div>
           <span class="task-xp">+40 XP</span>
-          <button class="btn-task" type="button" disabled data-action="claimCashback">Go</button>
+          <button class="btn-task" type="button" disabled data-action="claimCashback">去完成</button>
         </div>
         <div class="task-item" data-task="visitVip">
-          <div class="task-desc">访问 VIP Level 页</div>
+          <div class="task-desc">访问 VIP 等级页</div>
           <span class="task-xp">+40 XP</span>
-          <button class="btn-task" type="button" data-action="visitVip">Go</button>
+          <button class="btn-task" type="button" data-action="visitVip">去完成</button>
         </div>
         <div class="task-item" data-task="watchVideo">
           <div class="task-desc">观看推广视频</div>
           <span class="task-xp">+60 XP</span>
-          <button class="btn-task" type="button" data-action="watchVideo">Go</button>
+          <button class="btn-task" type="button" data-action="watchVideo">去完成</button>
         </div>
         <div class="task-item" data-task="carePet">
           <div class="task-desc">照料宠物一次</div>
           <span class="task-xp">+35 XP</span>
-          <button class="btn-task" type="button" data-action="carePet">Go</button>
+          <button class="btn-task" type="button" data-action="carePet">去完成</button>
         </div>
       </div>
 
       <nav class="side-nav">
-        <a class="nav-item active" href="lobby.html"><span class="ico">🏠</span> Home</a>
+        <a class="nav-item active" href="lobby.html"><span class="ico">🏠</span> 大厅</a>
         <a class="nav-item" href="pet.html"><span class="ico">🐾</span> 宠物窝</a>
-        <a class="nav-item" href="vip.html"><span class="ico">👑</span> VIP Level</a>
-        <a class="nav-item" href="#promo"><span class="ico">🎲</span> Casino</a>
-        <a class="nav-item" href="#promo"><span class="ico">🍒</span> Slot</a>
+        <a class="nav-item" href="vip.html"><span class="ico">👑</span> VIP等级</a>
+        <a class="nav-item" href="#promo"><span class="ico">🎲</span> 娱乐场</a>
+        <a class="nav-item" href="#promo"><span class="ico">🍒</span> 电子</a>
       </nav>
     </aside>
 
     <main class="c-main">
       <div class="hero-banner">
-        <div class="hero-kicker">NEWCOMERS BONUS</div>
-        <div class="hero-title">₱36.5 SIGN-UP BONUS</div>
-        <div class="hero-sub">VIP管家宠陪你冲档 — 每日任务 · 领返水 · 赚 XP 升级返水</div>
+        <div class="hero-kicker">新人礼包</div>
+        <div class="hero-title">₱36.5 注册礼</div>
+        <div class="hero-sub">萌宠乐园陪你冲档 — 每日任务 · 领返水 · 赚 XP 升级返水</div>
         <div class="hero-coins">🪙</div>
       </div>
 
       <div class="feature-row" id="promo">
         <div class="feat-card video" id="featWatch" role="button" tabindex="0" title="点击完成观看任务">
-          <div class="feat-label">Featured</div>
-          <div class="feat-title">Watch & Earn</div>
-          <div class="feat-bar">00:40 Get XP by watching the video · tap to complete</div>
+          <div class="feat-label">精选</div>
+          <div class="feat-title">观看赚钱</div>
+          <div class="feat-bar">00:40 看完视频可获 XP · 点按完成</div>
         </div>
         <div class="feat-card brand">
-          <div class="feat-label">Brand</div>
+          <div class="feat-label">品牌</div>
           <div class="feat-title">Juan 365</div>
         </div>
         <div class="feat-card color">
-          <div class="feat-label">Hot</div>
-          <div class="feat-title">COLOR GAME</div>
+          <div class="feat-label">热门</div>
+          <div class="feat-title">色彩游戏</div>
         </div>
       </div>
 
@@ -166,26 +166,26 @@
         <div class="section-head">
           <h2 class="section-title">👑 VIP 冲档中心</h2>
           <div class="section-actions">
-            <button class="btn-ghost" id="btnReset" type="button" title="重置演示数据">Reset Demo</button>
-            <a class="btn-vip-cta" href="vip.html">打开 VIP Level →</a>
+            <button class="btn-ghost" id="btnReset" type="button" title="重置演示数据">重置演示</button>
+            <a class="btn-vip-cta" href="vip.html">打开 VIP 等级 →</a>
           </div>
         </div>
         <div class="rush-copy">
-          <p>完成侧栏 Daily Tasks、照看<strong>宠物窝</strong>、领取 Cashback、点 Header <strong>Deposit</strong>，或前往 VIP 页点 <strong>Demo +500 XP</strong> 快速体验升级。</p>
-          <p class="rush-note">宠物窝是情感养成；VIP Level 是冲档卖点页。本原型不含游戏厅 / 平台划转。</p>
+          <p>完成侧栏每日任务、照看<strong>宠物窝</strong>、领取返水、点顶栏<strong>充值</strong>，或前往 VIP 页点<strong>演示 +500 XP</strong> 快速体验升级。</p>
+          <p class="rush-note">宠物窝是情感养成；VIP 等级是冲档卖点页。本原型不含游戏厅 / 平台划转。</p>
         </div>
       </section>
     </main>
   </div>
 
   <div class="float-rail">
-    <button class="float-btn" type="button">🌧<span class="tip">Money Rain</span></button>
-    <button class="float-btn" type="button">🎁<span class="tip">₱36.5 Bonus</span></button>
+    <button class="float-btn" type="button">🌧<span class="tip">红包雨</span></button>
+    <button class="float-btn" type="button">🎁<span class="tip">₱36.5 礼金</span></button>
     <a class="float-btn" href="pet.html">🐾<span class="tip">宠物窝</span></a>
-    <a class="float-btn" href="vip.html">👑<span class="tip">VIP Level</span></a>
+    <a class="float-btn" href="vip.html">👑<span class="tip">VIP等级</span></a>
   </div>
 
-  <div class="c-marquee"><span>XG—RESPONSIBLE GAMING · Please play responsibly · VIP管家宠 · 冲档版演示原型 · Not a real gambling site ·</span></div>
+  <div class="c-marquee"><span>XG—负责任游戏 · 请理性娱乐 · 萌宠乐园演示原型 · 非真实博彩站点 ·</span></div>
 
   <!-- Level-up -->
   <div class="modal-overlay" id="levelUpModal">

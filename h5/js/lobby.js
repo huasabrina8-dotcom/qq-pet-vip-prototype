@@ -1,5 +1,5 @@
 /**
- * Lobby page interactions (VIP管家宠 · 冲档版 — no game halls)
+ * Lobby page interactions (萌宠乐园 — no game halls)
  */
 (function () {
   'use strict';
@@ -78,7 +78,7 @@
     if (fill) fill.style.width = prog.pct.toFixed(1) + '%';
     if (hint) {
       if (!prog.next) {
-        hint.textContent = 'Maximum VIP Level reached. Enjoy your rewards!';
+        hint.textContent = '已达最高 VIP 等级。尽情享受权益！';
       } else {
         hint.textContent =
           '再获 ' +
@@ -102,7 +102,7 @@
     }
     if (btn) {
       btn.disabled = state.cashbackClaimed || state.dailyCashback <= 0;
-      btn.textContent = state.cashbackClaimed ? 'Claimed' : 'Claim';
+      btn.textContent = state.cashbackClaimed ? '已领取' : '领取';
     }
   }
 
@@ -115,16 +115,16 @@
       btn.classList.toggle('done', !!done);
       if (done) {
         btn.disabled = true;
-        btn.textContent = 'Done';
+        btn.textContent = '已完成';
         return;
       }
       if (key === 'claimCashback') {
         // completed via Claim button; show Go as hint
         btn.disabled = true;
-        btn.textContent = 'Go';
+        btn.textContent = '去完成';
       } else {
         btn.disabled = false;
-        btn.textContent = 'Go';
+        btn.textContent = '去完成';
       }
     });
   }
@@ -143,7 +143,7 @@
       const m = Math.floor((left % 3600000) / 60000);
       const s = Math.floor((left % 60000) / 1000);
       el.textContent =
-        h + 'h ' + String(m).padStart(2, '0') + 'm ' + String(s).padStart(2, '0') + 's';
+        h + '时 ' + String(m).padStart(2, '0') + '分 ' + String(s).padStart(2, '0') + '秒';
     }
     tick();
     setInterval(tick, 1000);
@@ -162,7 +162,7 @@
         toast('今日返水已领取');
         return;
       }
-      let msg = 'Cashback Claimed +₱' + TTStore.formatMoney(res.amount);
+      let msg = '已领取返水 +₱' + TTStore.formatMoney(res.amount);
       if (res.xpGain) msg += ' · +' + res.xpGain + ' XP';
       toast(msg, 'success');
       handleLeveled(res, e);

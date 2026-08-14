@@ -1,7 +1,9 @@
-# VIP管家宠 · 冲档版（QQ Pet）
+# 萌宠乐园
 
 Standalone clickable prototype: **PC (`c-end/`)** + **H5 (`h5/`)**.  
-Juan365-style Lobby · VIP Level · 管家宠. Shared progress: `localStorage` key `vip_butler_pet_v3`.
+Juan365-style Lobby · VIP Level · 宠物窝. Shared progress: `localStorage` key `vip_butler_pet_v3`.
+
+**项目名称：萌宠乐园**（与同网站其他需求如「抽奖需求」区分；抽奖不要做到本仓库）。
 
 **Out of scope:** game halls, platform transfer in/out, one-click recall. Pet care has **no** Deposit/IAP paywalls. **VIP庄园 cancelled.**
 

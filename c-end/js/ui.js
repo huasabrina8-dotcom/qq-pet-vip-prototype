@@ -37,7 +37,7 @@
     $('#levelUpTitle').textContent = '升级成功！VIP' + leveled.to;
     let desc =
       '恭喜升至 VIP' + leveled.to + ' / ' + to.tier +
-      ' · 返水 ' + to.cashback + '% · Max ₱' + TTStore.formatMoney(to.maxCashback);
+      ' · 返水 ' + to.cashback + '% · 上限 ₱' + TTStore.formatMoney(to.maxCashback);
     if (leveled.form && leveled.form.name) {
       desc +=
         ' · 管家宠进化为「' +
@@ -86,7 +86,7 @@
         if (options.depositGivesXp && TTStore.demoDeposit) {
           const res = TTStore.demoDeposit(100);
           toast(
-            'Deposit 演示 +₱' +
+            '充值演示 +₱' +
               TTStore.formatMoney(res.amount) +
               ' · +' +
               res.xpGain +
@@ -96,7 +96,7 @@
           handleLeveled(res, e);
           return;
         }
-        toast('Deposit 演示：请前往充值页（原型未接入）');
+        toast('充值演示：请前往充值页（原型未接入）');
       });
     }
     const reset = $('#btnReset');

@@ -11,27 +11,27 @@
 
   const BENEFIT_COPY = {
     cashout: {
-      title: 'Faster Cashout For VIP',
-      detail: 'Priority Withdrawals, No Waiting — VIP 通道优先出款。',
+      title: 'VIP 优先出款',
+      detail: '优先提现，无需排队 — VIP 通道优先出款。',
     },
     upgrade: {
-      title: 'VIP Upgrade Gift',
-      detail: '升级礼包 Bonus Balance ₱888，请联系 VIP 客服 Claim Via Support。',
+      title: 'VIP 升级礼包',
+      detail: '升级礼包奖励余额 ₱888，请联系 VIP 客服领取。',
     },
     birthday: {
-      title: 'Birthday JUAN365 Gift',
-      detail: '生日礼：免费蛋糕寄送 + CASH ₱388，需向客服登记生日信息。',
+      title: 'Juan365 生日礼',
+      detail: '生日礼：免费蛋糕寄送 + 现金 ₱388，需向客服登记生日信息。',
     },
     support: {
-      title: 'Personal VIP Support',
-      detail: '一对一 VIP 客服。添加专属顾问可获 ₱588 Bonus Balance。',
+      title: '专属 VIP 客服',
+      detail: '一对一 VIP 客服。添加专属顾问可获 ₱588 奖励余额。',
     },
     monthly: {
-      title: 'VIP 15th Bonus',
+      title: '每月 15 日礼金',
       detail: '每月 15 日 06:00 后可联系客服领取月度礼 ₱300。',
     },
     travel: {
-      title: 'VIP Travel Fund',
+      title: 'VIP 差旅基金',
       detail: '差旅基金最高 ₱8,000（机票/酒店），一次性申请，需客服审核。',
     },
   };
@@ -269,7 +269,7 @@
     const shield = document.getElementById('shieldText');
     if (shield) shield.textContent = 'V' + cur.level;
     if (!prog.next) {
-      $('#statusHint').textContent = 'Maximum SVIP Level reached. Enjoy your rewards!';
+      $('#statusHint').textContent = '已达最高 VIP 等级。尽情享受权益！';
     } else {
       $('#statusHint').textContent =
         '还需 ' + TTStore.formatXp(prog.remaining) + ' XP 升至 VIP' + prog.next.level +
@@ -320,9 +320,9 @@
         i +
         '" class="' +
         (i === carIndex ? 'active' : '') +
-        '" aria-label="Slide ' +
+        '" aria-label="第 ' +
         i +
-        '"></button>'
+        ' 档"></button>'
     ).join('');
 
     // default carousel focus near current level
@@ -382,8 +382,8 @@
     document.querySelectorAll('.benefit-card').forEach((card) => {
       card.addEventListener('click', () => {
         const key = card.dataset.benefit;
-        const copy = BENEFIT_COPY[key] || { title: 'Benefit', detail: '' };
-        $('#supportDesc').textContent = copy.title + ' — Claim Via Support';
+        const copy = BENEFIT_COPY[key] || { title: '权益', detail: '' };
+        $('#supportDesc').textContent = copy.title + ' — 联系客服领取';
         $('#supportDetail').textContent = copy.detail;
         modal.classList.add('open');
       });
@@ -532,7 +532,7 @@
 
     $('#btnDemoXp').addEventListener('click', (e) => {
       const res = TTStore.demoAddXp(500);
-      toast('Demo +' + res.xpGain + ' XP', 'success');
+      toast('演示 +' + res.xpGain + ' XP', 'success');
       handleLeveled(res, e);
     });
   }

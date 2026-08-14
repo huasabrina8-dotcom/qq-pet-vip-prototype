@@ -42,7 +42,7 @@
     {
       label: '新手 5/5',
       title: '进化 · 对话 · 好友',
-      desc: '亲密度升级可「进化」并换菲律宾神兽品种；对话也涨亲密度。建议每 24 小时回来深度抚养一次参与成长～去 VIP 页 / Daily Tasks 赚 XP 冲终极形态！',
+      desc: '亲密度升级可「进化」并换菲律宾神兽品种；对话也涨亲密度。建议每 24 小时回来深度抚养一次参与成长～去 VIP 页 / 每日任务赚 XP 冲终极形态！',
       primary: '开始照看',
       action: 'finish',
       highlight: null,
@@ -73,9 +73,9 @@
   let ultimateModalShownFor = null;
   let needsToastShown = false;
   let selectedFormTier = null;
-  const CARE_TITLE_DEFAULT = '抚养与亲密度';
+  const CARE_TITLE_DEFAULT = '更多互动';
   const CARE_SUB_DEFAULT =
-    '全免费互动 · 每24小时回来抚养一次参与成长 · 想吃/想玩/想喝主动提醒 · 满足后 24h · 持续抚养逐步进化';
+    '抚摸、散步、合影等免费互动，计入成长';
 
   function memoirHtml(s) {
     const accent = s.accent || '#ffd4a8';
@@ -228,7 +228,6 @@
     const nextDue = $('#nurtureNextDue');
     const protectRemain = $('#nurtureProtectRemain');
     const deep = $('#nurtureDeepProgress');
-    const needs = $('#nurtureNeedsActive');
     if (title) title.textContent = cadence.petBannerTitle || '24小时抚养节奏';
     if (sub) sub.textContent = cadence.petBannerSub || cadence.purpose || '';
     if (nextDue) {
@@ -247,7 +246,6 @@
       const dn = cadence.deepNurture || {};
       deep.textContent = dn.progressLabel || (dn.done ? '已完成' : '进行中');
     }
-    if (needs) needs.textContent = String(cadence.needsActive || 0);
   }
 
   function setStat(id, valId, n) {
@@ -278,43 +276,47 @@
     const avg = (pet.hunger + pet.mood + pet.clean + pet.health) / 4;
     if (avg >= 80) return '状态绝佳！「' + look.petName + '」围着你转～下一形态就在旁边哦';
     if (avg >= 60) return '状态还不错，再照料一下会更开心，也更接近下一形态。';
-    if (avg >= 40) return 'Miss na kita… kain, painom, or play tayo, aayos agad.';
+    if (avg >= 40) return '有点想你了…喂一口、喝一口或梳洗一下，马上就会好。';
     return '状态偏低！快来喂食、玩耍、喝水吧。';
   }
 
   function renderNeeds(needs, voice) {
     const bar = $('#petNeedsBar');
-    if (!bar) return;
-    if (!needs || !needs.items) {
-      bar.innerHTML = '';
-      return;
+    if (bar) {
+      if (!needs || !needs.items) {
+        bar.innerHTML = '';
+      } else {
+        bar.innerHTML = needs.items
+          .map(function (it) {
+            return (
+              '<span class="pet-need-chip ' +
+              (it.active ? 'is-active' : 'is-satisfied') +
+              '" data-need="' +
+              it.id +
+              '">' +
+              '<span>' +
+              it.icon +
+              '</span><span>' +
+              (it.active ? it.label : it.satisfiedLabel) +
+              '</span>' +
+              (it.satisfied
+                ? '<span class="cd" data-need-cd="' + it.id + '">' + it.remainLabel + '</span>'
+                : '') +
+              '</span>'
+            );
+          })
+          .join('');
+      }
     }
-    bar.innerHTML = needs.items
-      .map(function (it) {
-        return (
-          '<span class="pet-need-chip ' +
-          (it.active ? 'is-active' : 'is-satisfied') +
-          '" data-need="' +
-          it.id +
-          '">' +
-          '<span>' +
-          it.icon +
-          '</span><span>' +
-          (it.active ? it.label : it.satisfiedLabel) +
-          '</span>' +
-          (it.satisfied
-            ? '<span class="cd" data-need-cd="' + it.id + '">' + it.remainLabel + '</span>'
-            : '') +
-          '</span>'
-        );
-      })
-      .join('');
 
-    document.querySelectorAll('.pet-act[data-need]').forEach(function (btn) {
+    document.querySelectorAll('.pet-act[data-need], .pet-nurture-btn[data-need]').forEach(function (btn) {
       const key = btn.dataset.need;
-      const item = needs.items.find(function (it) {
-        return it.id === key;
-      });
+      const item =
+        needs && needs.items
+          ? needs.items.find(function (it) {
+              return it.id === key;
+            })
+          : null;
       btn.classList.toggle('has-need', !!(item && item.active));
     });
 
@@ -728,22 +730,19 @@
     list.innerHTML = (rank.list || [])
       .map(function (r, i) {
         return (
-          '<li class="' +
+          '<tr class="' +
           (r.isMe ? 'is-me' : '') +
-          '"><span class="rk">#' +
+          '"><td class="col-rank">' +
           (i + 1) +
-          '</span><span class="nm">' +
+          '</td><td class="col-user"><span class="nm">' +
           r.name +
-          '</span><span class="meta">VIP' +
+          '</span><small>VIP' +
           r.vip +
-          (r.speciesLabel ? ' · ' + r.speciesLabel : '') +
-          ' · ' +
+          '</small></td><td class="col-pet">' +
           r.emoji +
           ' ' +
           r.petName +
-          '</span><span class="pts">' +
-          r.points +
-          '</span></li>'
+          '</td></tr>'
         );
       })
       .join('');
@@ -802,7 +801,6 @@
     const keep = opts.keep;
     const ult = s.ultimate || {};
     const preview = s.evolvePreview || s.preview || {};
-    const en = s.labelEn ? ' · ' + s.labelEn : '';
     return (
       '<button type="button" class="pet-species-pick' +
       (keep ? ' is-keep' : '') +
@@ -815,12 +813,10 @@
       '</span>' +
       '<strong>' +
       s.label +
-      en +
       (keep ? ' · 保留' : '') +
       '</strong>' +
       '<small>' +
       (s.loreZh || '') +
-      (s.loreEn ? ' · ' + s.loreEn : '') +
       '</small>' +
       '<small>' +
       (opts.inheritNote || ('当前预览 · ' + (preview.name || ''))) +
@@ -878,7 +874,7 @@
       s.label +
       '</div>' +
       '<div class="spc-en">' +
-      (s.labelEn || '') +
+      (s.loreZh || '') +
       '</div>' +
       '<div class="spc-start">' +
       '<span class="spc-start-label">幼宠</span>' +
@@ -938,12 +934,12 @@
     if (confirm) {
       confirm.disabled = !picked;
       confirm.textContent = picked
-        ? '进入「' + (picked.label || picked.labelEn) + '」抚养'
+        ? '进入「' + (picked.label || '') + '」抚养'
         : '进入抚养';
     }
     if (hint) {
       hint.textContent = picked
-        ? '已选中「' + picked.label + '」' + (picked.labelEn ? ' · ' + picked.labelEn : '')
+        ? '已选中「' + picked.label + '」'
         : '点一张卡片选中神兽，再点进入抚养';
     }
   }
@@ -983,7 +979,7 @@
             '">' +
             (art ? '<img class="spc-roster-img" src="' + art + '" alt="">' : '') +
             '<span>' +
-            (s.labelEn || s.label) +
+            (s.label || '') +
             '</span></button>'
           );
         })
@@ -1353,6 +1349,8 @@
     setStat('statMood', 'statMoodVal', pet.mood);
     setStat('statClean', 'statCleanVal', pet.clean);
     setStat('statHealth', 'statHealthVal', pet.health);
+    const cleanNurture = document.querySelector('.pet-nurture-btn[data-care="clean"]');
+    if (cleanNurture) cleanNurture.classList.toggle('has-need', pet.clean < 50);
 
     const title = $('#petTitle');
     const meta = $('#petMeta');
@@ -1370,41 +1368,48 @@
         : look.form;
 
     if (title) {
-      title.textContent =
-        viewingOther && viewForm
-          ? viewForm.name + ' · ' + (viewForm.formTitle || '') + ' · 回顾'
-          : look.title;
+      if (snap.needsSpeciesPick) {
+        title.textContent = '待选神兽';
+      } else if (viewingOther && viewForm) {
+        title.textContent = viewForm.name;
+      } else {
+        title.textContent = look.petName || look.formName || 'VIP管家宠';
+      }
     }
     if (meta) {
-      meta.textContent =
-        'VIP' +
-        look.vip +
-        ' · ' +
-        look.tier +
-        ' · 亲密度 Lv.' +
-        look.careLevel +
-        ' · 照料 ' +
-        pet.careCount +
-        ' 次';
+      if (snap.needsSpeciesPick) {
+        meta.textContent = '请先选择本命神兽';
+      } else {
+        const formTitle =
+          (viewingOther && viewForm && viewForm.formTitle) ||
+          (look.form && look.form.formTitle) ||
+          '';
+        const bits = [];
+        if (formTitle) bits.push(formTitle);
+        if (viewingOther) bits.push('回顾');
+        bits.push('亲密度 Lv.' + look.careLevel);
+        bits.push('照料 ' + pet.careCount + ' 次');
+        meta.textContent = bits.join(' · ');
+      }
     }
     if (bind) {
-      bind.textContent = look.bindLabel || '';
-      bind.classList.remove('unbound');
+      bind.textContent = look.bound === false ? '未绑定' : '已绑定';
+      bind.classList.toggle('unbound', look.bound === false);
     }
     const speciesHint = $('#petSpeciesHint');
     if (speciesHint) {
       if (snap.needsSpeciesPick) {
-        speciesHint.textContent = '品种：待选神兽（首次必选）';
+        speciesHint.textContent = '本命神兽：待选神兽（首次必选）';
       } else {
         speciesHint.textContent =
-          '品种：' +
-          (look.speciesLabel || '') +
-          (look.speciesLabelEn ? ' · ' + look.speciesLabelEn : '') +
-          ' · 可随时更换，新神兽继承当前形态档';
+          '本命神兽：' +
+          (look.speciesLabel || '');
       }
     }
     const btnSwitch = $('#btnSwitchSpecies');
-    if (btnSwitch) btnSwitch.hidden = !!snap.needsSpeciesPick;
+    const switchWrap = $('#petSwitchWrap');
+    if (switchWrap) switchWrap.hidden = !!snap.needsSpeciesPick;
+    else if (btnSwitch) btnSwitch.hidden = !!snap.needsSpeciesPick;
     renderNeeds(snap.needs, snap.voice);
     renderNextForm(snap.nextForm);
     if (hint) {
@@ -1421,7 +1426,7 @@
     const nextCard = $('#petNextForm');
     if (nextCard) nextCard.classList.toggle('is-dim', !!viewingOther);
 
-    document.querySelectorAll('.pet-act[data-care], .btn-pet-use').forEach(function (btn) {
+    document.querySelectorAll('.pet-act[data-care], .pet-nurture-btn[data-care], .btn-pet-use').forEach(function (btn) {
       btn.disabled = !!snap.needsSpeciesPick;
     });
 
@@ -1658,7 +1663,7 @@
       });
     }
 
-    document.querySelectorAll('.pet-act[data-care]').forEach((btn) => {
+    document.querySelectorAll('.pet-act[data-care], .pet-nurture-btn[data-care]').forEach((btn) => {
       btn.addEventListener('click', (e) => {
         runCare(btn.dataset.care, e);
       });
@@ -1712,6 +1717,26 @@
 
     const btnSwitch = $('#btnSwitchSpecies');
     if (btnSwitch) btnSwitch.addEventListener('click', openSwitchSpeciesModal);
+    const btnSwitchHelp = $('#btnSwitchSpeciesHelp');
+    const switchHelpPop = $('#switchSpeciesHelpPop');
+    function setSwitchHelpOpen(on) {
+      if (!switchHelpPop || !btnSwitchHelp) return;
+      switchHelpPop.hidden = !on;
+      btnSwitchHelp.setAttribute('aria-expanded', on ? 'true' : 'false');
+    }
+    if (btnSwitchHelp && switchHelpPop) {
+      btnSwitchHelp.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        setSwitchHelpOpen(!!switchHelpPop.hidden);
+      });
+      document.addEventListener('click', function (e) {
+        if (switchHelpPop.hidden) return;
+        const wrap = $('#petSwitchWrap');
+        if (wrap && wrap.contains(e.target)) return;
+        setSwitchHelpOpen(false);
+      });
+    }
     const switchConfirm = $('#switchSpeciesConfirm');
     const switchCancel = $('#switchSpeciesCancel');
     const switchModal = $('#switchSpeciesModal');

@@ -1,5 +1,5 @@
 /**
- * VIP管家宠 · 冲档版 — shared state (localStorage)
+ * 萌宠乐园 — shared state (localStorage)
  * VIP庄园已砍掉（不做）；游戏厅 / 平台划转：非本需求（out of scope）
  */
 (function (global) {
@@ -133,10 +133,10 @@
       satisfiedLabel: '饱食满足',
       action: 'feed',
       icon: '🍖',
-      bubble: 'Gutom na ako… kain naman please?',
-      lambing: 'kain',
+      bubble: '肚子饿了…喂我一口好不好？',
+      lambing: '喂食',
       flag: 'hungry',
-      evolveNudge: 'Kain muna, para lumaki ako ha',
+      evolveNudge: '先喂我一口，才长得快呀',
     },
     play: {
       id: 'play',
@@ -144,10 +144,10 @@
       satisfiedLabel: '玩乐满足',
       action: 'play',
       icon: '🎾',
-      bubble: 'Play tayo naman… miss na kita maglaro.',
-      lambing: 'play tayo',
+      bubble: '陪我玩嘛…好想和你一起玩。',
+      lambing: '玩耍',
       flag: 'wantPlay',
-      evolveNudge: 'Play tayo, malapit na next form',
+      evolveNudge: '陪我玩一会儿，下一形态就更近了',
     },
     drink: {
       id: 'drink',
@@ -155,10 +155,10 @@
       satisfiedLabel: '饮水满足',
       action: 'drink',
       icon: '💧',
-      bubble: 'Uhaw na ako, painom please?',
-      lambing: 'painom',
+      bubble: '好渴呀，给我喝一口？',
+      lambing: '喝水',
       flag: 'wantDrink',
-      evolveNudge: 'Painom muna, then we grow ha',
+      evolveNudge: '先喝一口，我们再一起长大',
     },
   };
   const PET_NEED_KEYS = ['eat', 'play', 'drink'];
@@ -252,7 +252,7 @@
       label: '彩羽神鸟',
       labelEn: 'Sarimanok',
       tone: '啾',
-      cue: 'Uy~',
+      cue: '啾~',
       unit: '神鸟',
       loreEn: 'Maranao lucky bird',
       loreZh: '吉祥彩羽',
@@ -262,7 +262,7 @@
       label: '月食神龙',
       labelEn: 'Bakunawa',
       tone: '嗷',
-      cue: 'Naku~',
+      cue: '嗷~',
       unit: '神龙',
       loreEn: 'Moon serpent',
       loreZh: '守护月光',
@@ -272,7 +272,7 @@
       label: '山林精灵',
       labelEn: 'Diwata',
       tone: '叮',
-      cue: 'Hehe~',
+      cue: '叮~',
       unit: '精灵',
       loreEn: 'Nature spirit',
       loreZh: '守护山林',
@@ -282,17 +282,17 @@
       label: '吉兆灵鸟',
       labelEn: 'Tigmamanukan',
       tone: '啼',
-      cue: 'Uy~',
+      cue: '啼~',
       unit: '灵鸟',
       loreEn: 'Sacred omen bird · Bathala',
-      loreZh: 'Bathala 吉兆',
+      loreZh: '吉兆护行',
     },
     sirena: {
       id: 'sirena',
       label: '海之仙女',
       labelEn: 'Sirena',
       tone: '哼',
-      cue: 'Hmm~',
+      cue: '哼~',
       unit: '海仙',
       loreEn: 'Sea maiden',
       loreZh: '守护海域',
@@ -302,7 +302,7 @@
       label: '树精守护神',
       labelEn: 'Kapre',
       tone: '呵',
-      cue: 'Hoy~',
+      cue: '呵~',
       unit: '树精',
       loreEn: 'Tree giant guardian',
       loreZh: '守护巨树的山林神灵',
@@ -316,7 +316,7 @@
       2: { id: 'sari_butler', name: '管家彩鸟', formTitle: '管家', emoji: '🐦', stage: 'buddy', accent: '#ffb86b', desc: '彩羽神鸟 · VIP2 管家' },
       3: { id: 'sari_golden', name: '金甲彩羽', formTitle: '金甲', emoji: '🦜', stage: 'buddy', accent: '#f5c542', desc: '彩羽神鸟 · VIP3 金甲' },
       4: { id: 'sari_winged', name: '翼彩神鸟', formTitle: '翼宠', emoji: '🦢', stage: 'elite', accent: '#7eb6ff', desc: '彩羽神鸟 · VIP4 翼形态' },
-      5: { id: 'sari_crowned', name: '冠羽吉祥鸟', formTitle: '冠宠', emoji: '🦚', stage: 'legend', accent: '#c9a0ff', desc: '彩羽神鸟 · VIP5 冠宠 · Sarimanok' },
+      5: { id: 'sari_crowned', name: '冠羽吉祥鸟', formTitle: '冠宠', emoji: '🦚', stage: 'legend', accent: '#c9a0ff', desc: '彩羽神鸟 · VIP5 冠宠' },
     },
     bakunawa: {
       0: { id: 'baku_egg', name: '月卵幼龙', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#ffd4a8', desc: '月食神龙 · 入门幼龙' },
@@ -324,7 +324,7 @@
       2: { id: 'baku_butler', name: '管家月蛇', formTitle: '管家', emoji: '🐍', stage: 'buddy', accent: '#ffb86b', desc: '月食神龙 · VIP2 管家' },
       3: { id: 'baku_golden', name: '金甲月龙', formTitle: '金甲', emoji: '🐲', stage: 'buddy', accent: '#f5c542', desc: '月食神龙 · VIP3 金甲' },
       4: { id: 'baku_winged', name: '翼月神龙', formTitle: '翼宠', emoji: '🌌', stage: 'elite', accent: '#7eb6ff', desc: '月食神龙 · VIP4 翼形态' },
-      5: { id: 'baku_crowned', name: '冠月食神龙', formTitle: '冠宠', emoji: '🐉', stage: 'legend', accent: '#c9a0ff', desc: '月食神龙 · VIP5 冠宠 · Bakunawa' },
+      5: { id: 'baku_crowned', name: '冠月食神龙', formTitle: '冠宠', emoji: '🐉', stage: 'legend', accent: '#c9a0ff', desc: '月食神龙 · VIP5 冠宠' },
     },
     diwata: {
       0: { id: 'diwa_sprout', name: '幼芽精灵', formTitle: '幼宠', emoji: '🌱', stage: 'baby', accent: '#ffd4a8', desc: '山林精灵 · 入门幼芽' },
@@ -332,7 +332,7 @@
       2: { id: 'diwa_butler', name: '管家山林', formTitle: '管家', emoji: '🌿', stage: 'buddy', accent: '#ffb86b', desc: '山林精灵 · VIP2 管家' },
       3: { id: 'diwa_golden', name: '金甲灵光', formTitle: '金甲', emoji: '✨', stage: 'buddy', accent: '#f5c542', desc: '山林精灵 · VIP3 金甲' },
       4: { id: 'diwa_winged', name: '翼林精灵', formTitle: '翼宠', emoji: '🦋', stage: 'elite', accent: '#7eb6ff', desc: '山林精灵 · VIP4 翼形态' },
-      5: { id: 'diwa_crowned', name: '冠山林精灵', formTitle: '冠宠', emoji: '🧚', stage: 'legend', accent: '#c9a0ff', desc: '山林精灵 · VIP5 冠宠 · Diwata' },
+      5: { id: 'diwa_crowned', name: '冠山林精灵', formTitle: '冠宠', emoji: '🧚', stage: 'legend', accent: '#c9a0ff', desc: '山林精灵 · VIP5 冠宠' },
     },
     tigmamanukan: {
       0: { id: 'tig_chick', name: '幼兆灵鸟', formTitle: '幼宠', emoji: '🐤', stage: 'baby', accent: '#ffd4a8', desc: '吉兆灵鸟 · 入门幼兆' },
@@ -340,7 +340,7 @@
       2: { id: 'tig_butler', name: '管家灵鸟', formTitle: '管家', emoji: '🕊️', stage: 'buddy', accent: '#ffb86b', desc: '吉兆灵鸟 · VIP2 管家' },
       3: { id: 'tig_golden', name: '金甲兆羽', formTitle: '金甲', emoji: '🦉', stage: 'buddy', accent: '#f5c542', desc: '吉兆灵鸟 · VIP3 金甲' },
       4: { id: 'tig_winged', name: '翼吉兆鸟', formTitle: '翼宠', emoji: '🪽', stage: 'elite', accent: '#7eb6ff', desc: '吉兆灵鸟 · VIP4 翼形态' },
-      5: { id: 'tig_crowned', name: '冠Bathala灵鸟', formTitle: '冠宠', emoji: '🦅', stage: 'legend', accent: '#c9a0ff', desc: '吉兆灵鸟 · VIP5 冠宠 · Tigmamanukan' },
+      5: { id: 'tig_crowned', name: '冠吉兆灵鸟', formTitle: '冠宠', emoji: '🦅', stage: 'legend', accent: '#c9a0ff', desc: '吉兆灵鸟 · VIP5 冠宠' },
     },
     sirena: {
       0: { id: 'sire_bubble', name: '幼浪海仙', formTitle: '幼宠', emoji: '🫧', stage: 'baby', accent: '#ffd4a8', desc: '海之仙女 · 入门幼浪' },
@@ -348,7 +348,7 @@
       2: { id: 'sire_butler', name: '管家海灵', formTitle: '管家', emoji: '🐟', stage: 'buddy', accent: '#ffb86b', desc: '海之仙女 · VIP2 管家' },
       3: { id: 'sire_golden', name: '金甲海仙', formTitle: '金甲', emoji: '🐠', stage: 'buddy', accent: '#f5c542', desc: '海之仙女 · VIP3 金甲' },
       4: { id: 'sire_winged', name: '翼潮仙女', formTitle: '翼宠', emoji: '🌊', stage: 'elite', accent: '#7eb6ff', desc: '海之仙女 · VIP4 翼形态' },
-      5: { id: 'sire_crowned', name: '冠海之仙女', formTitle: '冠宠', emoji: '🧜', stage: 'legend', accent: '#c9a0ff', desc: '海之仙女 · VIP5 冠宠 · Sirena' },
+      5: { id: 'sire_crowned', name: '冠海之仙女', formTitle: '冠宠', emoji: '🧜', stage: 'legend', accent: '#c9a0ff', desc: '海之仙女 · VIP5 冠宠' },
     },
     kapre: {
       0: { id: 'kap_sprout', name: '幼芽树精', formTitle: '幼宠', emoji: '🪵', stage: 'baby', accent: '#ffd4a8', desc: '树精守护神 · 入门幼芽' },
@@ -356,7 +356,7 @@
       2: { id: 'kap_butler', name: '管家树精', formTitle: '管家', emoji: '🌳', stage: 'buddy', accent: '#ffb86b', desc: '树精守护神 · VIP2 管家' },
       3: { id: 'kap_golden', name: '金甲树卫', formTitle: '金甲', emoji: '🛡️', stage: 'buddy', accent: '#f5c542', desc: '树精守护神 · VIP3 金甲' },
       4: { id: 'kap_winged', name: '翼林树神', formTitle: '翼宠', emoji: '🎋', stage: 'elite', accent: '#7eb6ff', desc: '树精守护神 · VIP4 翼形态' },
-      5: { id: 'kap_crowned', name: '冠树精守护神', formTitle: '冠宠', emoji: '🏯', stage: 'legend', accent: '#c9a0ff', desc: '树精守护神 · VIP5 冠宠 · Kapre' },
+      5: { id: 'kap_crowned', name: '冠树精守护神', formTitle: '冠宠', emoji: '🏯', stage: 'legend', accent: '#c9a0ff', desc: '树精守护神 · VIP5 冠宠' },
     },
   };
 
@@ -1599,7 +1599,7 @@
         totals.days +
         ' 个合格抚养日、' +
         totals.acts +
-        ' 次互动。Salamat。';
+        ' 次互动。谢谢你。';
     } else if (current) {
       lead =
         '正在穿着「' +
@@ -1624,7 +1624,7 @@
         (actionBits ? '你' + actionBits + '。' : '') +
         '我的' +
         lookBit +
-        '就是你养亮的。这是你把我带出起点的成就。Salamat。';
+        '就是你养亮的。这是你把我带出起点的成就。谢谢你。';
     } else {
       lead =
         tone +
@@ -1636,7 +1636,7 @@
         (actionBits || '一直回来抚养') +
         '。我的' +
         lookBit +
-        '是你一笔一笔养出来的。Ingat，这段成就不会丢。';
+        '是你一笔一笔养出来的。保重，这段成就不会丢。';
     }
     return Object.assign(base, {
       kicker: current ? '当前穿着 · 已达成' : '抚养成就 · 已养成',
@@ -1996,12 +1996,12 @@
     const form = sync.form;
     const meta = PET_SPECIES[sp];
     const greet =
-      (meta.cue || 'Uy~') +
-      ' Ako si 「' +
+      (meta.cue || '啾~') +
+      ' 我是「' +
       (form && form.name) +
       '」· ' +
-      meta.labelEn +
-      '. Bound na tayo sa VIP. Alagaan mo ako ha?';
+      meta.label +
+      '。从现在起和 VIP 绑定在一起。请好好养我呀。';
     pushChatSystem(greet);
     emit({ type: 'chooseStarterSpecies', species: sp, form: form });
     return {
@@ -3265,126 +3265,126 @@
     return out;
   }
 
-  /** 菲律宾神兽口吻：撒娇走日常 lambing / Taglish（sige na, please naman, miss na kita）；抚慰走 Ingat、Bathala、suwerte */
+  /** 展示期全中文；方案定稿后再加菲语 / 英语。撒娇促抚养，抚慰不催养、正向不凶。 */
   const SPECIES_VOICE = {
     sarimanok: {
       look: {
-        幼宠: 'soft baby feathers at maliit na crest',
-        银徽: 'bagong-liwanag na silver marks',
-        管家: 'bowtie at neatly kept feathers',
-        金甲: 'golden armor feathers',
-        翼宠: 'mahahabang rainbow wings',
-        冠宠: 'open crown plumage',
+        幼宠: '软软的幼羽和小冠',
+        银徽: '刚亮起来的银纹',
+        管家: '领结和整齐的彩羽',
+        金甲: '金甲彩羽',
+        翼宠: '展开的虹彩长翼',
+        冠宠: '盛开的冠羽',
       },
-      nurtureLook: '{tone} Sige na please, haplos naman yung {look} ko~ Para glowing, parang lucky bird.',
-      nurtureGrow: 'Gusto ko nang lumaki, hanggang {next}. Bisitahin mo ako araw-araw ha? Konting alaga lang. {tone}',
-      nurtureLove: '{tone} Miss na kita eh. Super clingy ako today—kain, haplos, kausap. Huwag mo naman akong iwan ha.',
-      lobbyComfort: 'Ingat · konting suwerte from the feathers',
+      nurtureLook: '{tone} 来摸摸我的{look}好不好？摸亮了才像吉祥鸟。',
+      nurtureGrow: '我想长大，一直到{next}。每天回来看我一眼就好。{tone}',
+      nurtureLove: '{tone} 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 彩羽给你一点好运',
       comfort: [
-        'Uy, nandito ka na! {tone} Ayos na yung {look} ko. Ingat—konting suwerte for you today.',
-        'Salamat you came home. Walang pressure mag-alaga now; sit lang. Feathers ko, beside you.',
-        'Ingat ha. Hindi ako nangungutang—company lang. Bathala + colorful feathers = good day.',
-        '{tone} Nandito ka, maliwanag ang bahay. Salamat. Take it easy.',
+        '{tone} 你回来了！我的{look}都好好的。保重——今天给你一点好运。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。彩羽陪着你。',
+        '保重。我不是来讨债的，只想陪着你。彩羽在，今天会顺利。',
+        '{tone} 你在，家里就亮了。谢谢。慢慢来就好。',
       ],
     },
     bakunawa: {
       look: {
-        幼宠: 'fine scales sa moon-egg',
-        银徽: 'silver moon-serpent marks',
-        管家: 'coiled moonlight body',
-        金甲: 'golden moon scales',
-        翼宠: 'star-river wings',
-        冠宠: 'crowned moon halo',
+        幼宠: '月卵上细细的鳞',
+        银徽: '银色月纹',
+        管家: '盘着月光的身子',
+        金甲: '金色月鳞',
+        翼宠: '星河之翼',
+        冠宠: '冠上的月晕',
       },
-      nurtureLook: '{tone} Medyo dim na yung {look} ko… stay with me sandali, moonlight tayo. Please naman?',
-      nurtureGrow: 'Alagaan mo pa ako, para malapit na sa {next}. Huwag mo akong iwan ha—malungkot ang buwan pag mag-isa. {tone}',
-      nurtureLove: '{tone} Magko-coil lang ako sa tabi mo. Hindi nakakatakot—lambing lang. Haplos sa scales, kain, play. Miss na kita.',
-      lobbyComfort: 'Ingat · nandito pa ang buwan, nandito rin ako',
+      nurtureLook: '{tone} 我的{look}有点暗了…陪我一会儿，一起看月亮好不好？',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。别丢下我——月亮一个人会寂寞。{tone}',
+      nurtureLove: '{tone} 我就在你旁边盘着。不可怕，只是撒娇。摸摸鳞、喂一口、陪我玩。好想你。',
+      lobbyComfort: '保重 · 月亮还在，我也在',
       comfort: [
-        'Nandito pa ang buwan, nandito rin ako. 「{name}」keeps the light until you uuwi.',
-        '{tone} Kalmado ang dagat tonight. No rush to nurture—I just want your heart a bit brighter. Ingat.',
-        'Tinitingnan ang buwan, naaalala ang kwento. You came; uminit yung {look} ko. Ingat.',
-        'Salamat. Puwede akong maging malaking dragon, but with you I\'m soft. Sit with me lang.',
+        '月亮还在，我也在。「{name}」替你守着光，等你回家。',
+        '{tone} 今晚海面很静。不用急着抚养——只想让你心里亮一点。保重。',
+        '看着月亮，想起那些故事。你来了，我的{look}也暖了。保重。',
+        '谢谢你。我可以是很大的龙，但在你身边很软。就坐一会儿吧。',
       ],
     },
     diwata: {
       look: {
-        幼宠: 'sprout at dew',
-        银徽: 'silver leaf marks',
-        管家: 'vine sash ng forest steward',
-        金甲: 'golden forest glow',
-        翼宠: 'butterfly-like forest wings',
-        冠宠: 'crowned flower garland',
+        幼宠: '嫩芽和露珠',
+        银徽: '银色叶纹',
+        管家: '林间管家的藤蔓腰带',
+        金甲: '金色林光',
+        翼宠: '蝶一般的林翼',
+        冠宠: '冠上的花环',
       },
-      nurtureLook: '{tone} Yung {look} ko medyo wilted… konting alaga please, babalik ang glow. Sige na.',
-      nurtureGrow: 'Slow-slow lang ang Diwata. Sige na, alagaan mo pa ako hanggang {next}. {tone}',
-      nurtureLove: '{tone} Halika sa gubat. Kain, play, painom please naman. Miss na kita—promise I\'ll be good.',
-      lobbyComfort: 'Ingat · may proteksyon sa gubat',
+      nurtureLook: '{tone} 我的{look}有点蔫了…照顾一下，光就会回来。求你了。',
+      nurtureGrow: '山林精灵长得慢。再养我一阵，一直到{next}。{tone}',
+      nurtureLove: '{tone} 来林子里吧。喂我、陪我玩、给我喝一口。好想你——我会乖乖的。',
+      lobbyComfort: '保重 · 山林里有人护着你',
       comfort: [
-        'Binabantayan ng Diwata ang bundok, at yung umuuwi. Nandito ka—may bulong ang dahon. Ingat.',
-        'Hindi kailangan mag-force care. Mag-alay sandali sa gubat; I\'ll send you a breeze. Ingat.',
-        '{tone} Salamat. Kind heart? May lugar ka sa gubat.',
-        'Kalmado yung {look} ko today. Kausap tayo lang, enough na.',
+        '山林精灵守着山，也守着回家的人。你来了——叶子在轻轻说话。保重。',
+        '现在不用硬着头皮抚养。在林子里停一下，我送你一阵风。保重。',
+        '{tone} 谢谢你。心软的人，林子里有你的位置。',
+        '今天我的{look}很安静。说说话就够了。',
       ],
     },
     tigmamanukan: {
       look: {
-        幼宠: 'omen baby feathers',
-        银徽: 'silver omen marks',
-        管家: 'guide feathers',
-        金甲: 'golden omen plumage',
-        翼宠: 'Bathala wing-shadow',
-        冠宠: 'crowned Bathala feathers',
+        幼宠: '吉兆幼羽',
+        银徽: '银色吉兆纹',
+        管家: '指路的翎羽',
+        金甲: '金色兆羽',
+        翼宠: '吉兆翼影',
+        冠宠: '冠上的吉兆羽',
       },
-      nurtureLook: '{tone} Paki-ayos naman yung {look} ko? Kahit ibon ni Bathala, kailangan ng lambing para maka-guide.',
-      nurtureGrow: 'Tulungan mo akong lumaki pa, hanggang {next}. Bisita araw-araw ha? {tone}',
-      nurtureLove: '{tone} Tinitingnan nila ako bago magbyahe—tinitingnan kita. Haplos, kain, please. Miss na kita.',
-      lobbyComfort: 'Ingat sa byahe · tama ang direksyon ngayon',
+      nurtureLook: '{tone} 帮我把{look}理一理好不好？就算是吉兆灵鸟，也需要摸摸才能给人指路。',
+      nurtureGrow: '帮我再长大一点，一直到{next}。每天来看我一眼呀。{tone}',
+      nurtureLove: '{tone} 别人出门前会看我——我也在看你。摸摸我、喂我一口。好想你。',
+      lobbyComfort: '出行保重 · 今天方向是对的',
       comfort: [
-        'Tama ang direksyon ngayon. Ang omen ni Bathala ay proteksyon, hindi pangtakot. Ingat sa byahe.',
-        '{tone} Pagpasok mo, good sign na. No rush to nurture—blessing lang.',
-        'Salamat. Ibon sa balikat mo: aayos ang araw. Ingat.',
-        'May ilaw pa yung {look} ko. Pagod ka? Rest. Nandito lang ako.',
+        '今天方向是对的。吉兆是护佑，不是吓唬人。出行保重。',
+        '{tone} 你一进来，就是好兆头。不用急着抚养——先收下这份祝福。',
+        '谢谢你。肩上有灵鸟，这一天会顺。保重。',
+        '我的{look}还有光。累了就歇着。我就在这里。',
       ],
     },
     sirena: {
       look: {
-        幼宠: 'bubble-soft baby tide',
-        银徽: 'silver shell-glow',
-        管家: 'tide-gauze ng sea steward',
-        金甲: 'golden tide marks',
-        翼宠: 'wave-wings',
-        冠宠: 'crowned pearl tiara',
+        幼宠: '软软的幼潮',
+        银徽: '银色贝光',
+        管家: '海管家的潮纱',
+        金甲: '金色潮纹',
+        翼宠: '浪翼',
+        冠宠: '冠上的珍珠冠',
       },
-      nurtureLook: '{tone} Dry na yung {look} ko… painom naman, suklay-suklay please.',
-      nurtureGrow: 'Kailangan ng tide para lumaki. Alagaan mo pa ako, malapit na {next}. Sige na please. {tone}',
-      nurtureLove: '{tone} Waiting sa shore. Hindi kita hihilahin sa tubig—play, merienda, kausap. Miss na kita ha.',
-      lobbyComfort: 'Ingat · nasa baybay ako, kalmado ang dagat',
+      nurtureLook: '{tone} 我的{look}有点干了…给我喝一口，再梳一梳好不好？',
+      nurtureGrow: '潮水来了才会长大。再养我一阵，就靠近{next}了。求你了。{tone}',
+      nurtureLove: '{tone} 我在岸边等你。不会把你拉进水里——陪我玩、吃点心、说说话。好想你。',
+      lobbyComfort: '保重 · 我在岸边，海面很静',
       comfort: [
-        'Kalmado ang dagat today. Ang kanta ng Sirena ay para sa safe na uuwi, hindi para hilahin ka. Ingat.',
-        '{tone} Ingat. Nasa baybay ako. No need to nurture now—listen to the waves lang.',
-        'Salamat you came to see the sea. Tinago ko yung pearl-glow for you.',
-        'May ilaw yung {look} ko. Nandito ka, so steady ang tide. Ingat.',
+        '今天海面很静。海之仙女的歌是送你平安回家，不是把你拉走。保重。',
+        '{tone} 保重。我在岸边。现在不用抚养——听听浪就好。',
+        '谢谢你来看海。珠光我替你藏着。',
+        '我的{look}有光。你在，潮就稳。保重。',
       ],
     },
     kapre: {
       look: {
-        幼宠: 'tiny bark marks',
-        银徽: 'silver vine emblem',
-        管家: 'leaf cloak ng tree steward',
-        金甲: 'golden bark armor',
-        翼宠: 'opening canopy',
-        冠宠: 'crowned tree-crown',
+        幼宠: '小小的树纹',
+        银徽: '银色藤徽',
+        管家: '树管家的叶披风',
+        金甲: '金色树甲',
+        翼宠: '张开的树冠',
+        冠宠: '冠上的树冠',
       },
-      nurtureLook: '{tone} Yung {look} ko medyo dry… painom, haplos sa puno please naman.',
-      nurtureGrow: 'Mabagal lumaki ang puno, pero matagal magbantay. Stay with me hanggang {next} ha. {tone}',
-      nurtureLove: '{tone} Nakaupo sa ilalim ng puno, waiting. Kain, kausap, lambing. Huwag mo naman akong iwan ha.',
-      lobbyComfort: 'Ingat · nandito pa ang puno sa harap ng bahay',
+      nurtureLook: '{tone} 我的{look}有点干了…给树喝一口、摸摸树干好不好？',
+      nurtureGrow: '树长得慢，但会守很久。陪我一直到{next}呀。{tone}',
+      nurtureLove: '{tone} 我坐在树下等你。喂我、说说话、撒娇一下。别丢下我。',
+      lobbyComfort: '保重 · 门前的树还在',
       comfort: [
-        'Binabantayan ng Kapre ang balete, at ang bahay. Umuwi ka—malamig na ulit ang shade. Ingat.',
-        'Hindi kailangan mag-task now. Sit under the tree. Ingat. I\'m watching.',
-        '{tone} Salamat. Nandito pa ang puno sa harap ng bahay—hindi ka nag-iisa.',
-        'Kalmado yung {look} ko. Respect sa puno; respect din sa pag-uuwi mo.',
+        '树精守着古树，也守着家。你回来了——树荫又凉快了。保重。',
+        '现在不用做任务。在树下坐一会儿。保重。我看着呢。',
+        '{tone} 谢谢你。门前的树还在——你不是一个人。',
+        '我的{look}很安静。敬树，也敬你回家这一趟。',
       ],
     },
   };
@@ -3397,11 +3397,11 @@
 
   function formLookBit(sp, formTitle) {
     const voice = SPECIES_VOICE[sp] || SPECIES_VOICE.sarimanok;
-    return (voice && voice.look && voice.look[formTitle]) || 'maliit na anyo';
+    return (voice && voice.look && voice.look[formTitle]) || '小小的样子';
   }
 
   /**
-   * 进页互动口吻：需要抚养 → 外形/成长/感情撒娇；不需要 → 菲律宾信仰习惯的鼓励与抚慰。
+   * 进页互动口吻：需要抚养 → 外形/成长/感情撒娇；不需要 → 正向抚慰，不催养。
    */
   function getPetVoiceInfo(opts) {
     opts = opts || {};
@@ -3410,11 +3410,11 @@
     if (!hasChosenSpecies(pet)) {
       return {
         mode: 'need_species',
-        bubbles: ['Pili ka muna ng Philippine mythical beast ha, bago tayo mag-lambing~'],
+        bubbles: ['先选一只菲律宾神兽，我们再一起撒娇～'],
         enterToast: null,
         greeting: null,
-        chips: ['Sige, pili na', 'Haplos later'],
-        hint: 'Pili ka muna ng VIP管家神兽, then we can mag-alaga~',
+        chips: ['去选神兽', '稍后再摸'],
+        hint: '先选一只 VIP 管家神兽，才能开始抚养～',
         lookBit: '',
         lobbyComfort: null,
       };
@@ -3424,9 +3424,9 @@
     const meta = PET_SPECIES[sp] || PET_SPECIES.sarimanok;
     const voice = SPECIES_VOICE[sp] || SPECIES_VOICE.sarimanok;
     const formTitle = (look.form && look.form.formTitle) || FORM_STAGE_TITLES[look.displayTier] || '幼宠';
-    const lookBit = (voice.look && voice.look[formTitle]) || 'maliit na anyo';
+    const lookBit = (voice.look && voice.look[formTitle]) || '小小的样子';
     const growth = getStageGrowthInfo();
-    const nextTitle = (growth && growth.toTitle) || 'next form';
+    const nextTitle = (growth && growth.toTitle) || '下一形态';
     const needs = getPetNeedsInfo({ skipToast: true, skipEvolveNudge: true });
     const cadence = getNurtureCadenceInfo();
     const avg = ((pet.hunger || 0) + (pet.mood || 0) + (pet.clean || 0)) / 3;
@@ -3437,15 +3437,15 @@
       cadence.status === 'overdue' ||
       cadence.status === 'due_soon';
     const vars = {
-      tone: meta.cue || 'Uy~',
+      tone: meta.cue || '啾~',
       name: look.petName || meta.label,
       look: lookBit,
       next: nextTitle,
       form: formTitle,
       unit: meta.unit,
     };
-    const chipsNurture = ['Haplos naman', 'Kain na', 'Play tayo', 'Miss na kita', 'Cute ba ako?', 'Sige na please'];
-    const chipsComfort = ['Ingat', 'Salamat', 'I\'m good', 'Kausap tayo', 'Haplos', 'Uuwi ka'];
+    const chipsNurture = ['摸摸我', '喂食', '陪我玩', '好想你', '我可爱吗？', '求求你'];
+    const chipsComfort = ['保重', '谢谢你', '我很好', '陪我说说话', '摸摸', '你回来了'];
     if (needNurture) {
       const bubbles = [
         fillVoice(voice.nurtureLook, vars),
@@ -3454,12 +3454,12 @@
       ];
       if (needs && needs.active && needs.active[0]) {
         bubbles.push(
-          (meta.cue || 'Uy~') +
-            ' Please naman—' +
+          (meta.cue || '啾~') +
+            ' 求你了——' +
             (needs.active[0].lambing || needs.active[0].label) +
-            '. Konting lambing muna ha, para glowing yung ' +
+            '。先宠我一下，让' +
             lookBit +
-            '.'
+            '亮起来。'
         );
       }
       const pendingToast = pet.voiceToastDate !== todayKey();
@@ -3469,7 +3469,7 @@
         lookBit: lookBit,
         bubbles: bubbles,
         enterToast: pendingToast ? pickDaily(bubbles, sp + '|nurtureToast') : null,
-        greeting: pickDaily(bubbles, sp + '|greetN') + ' Ako si 「' + vars.name + '」· ' + formTitle + '.',
+        greeting: pickDaily(bubbles, sp + '|greetN') + ' 我是「' + vars.name + '」· ' + formTitle + '。',
         chips: chipsNurture,
         hint: fillVoice(voice.nurtureLove, vars),
         lobbyComfort: null,
@@ -3489,7 +3489,7 @@
       greeting: pickDaily(comfortPool, sp + '|greetC'),
       chips: chipsComfort,
       hint: pickDaily(comfortPool, sp + '|hint'),
-      lobbyComfort: voice.lobbyComfort || 'Ingat · 神兽在窝里等你',
+      lobbyComfort: voice.lobbyComfort || '保重 · 神兽在窝里等你',
     };
   }
 
@@ -3510,82 +3510,82 @@
     const vip = look.vip;
     const formTitle = (look.form && look.form.formTitle) || '管家';
     if (!hasChosenSpecies(pet)) {
-      return 'Pili ka muna ng VIP管家神兽 ha, then we can mag-lambing~';
+      return '先选一只 VIP 管家神兽，我们再一起撒娇～';
     }
     const sp = normalizeSpecies(pet.species);
-    const cue = PET_SPECIES[sp].cue || 'Uy~';
+    const cue = PET_SPECIES[sp].cue || '啾~';
     const unit = PET_SPECIES[sp].unit;
 
-    if (/你好|嗨|哈喽|hello|\bhi\b|\buy\b|nandito/.test(t)) {
+    if (/你好|嗨|哈喽|hello|\bhi\b|回来|在吗/.test(t)) {
       const v = getPetVoiceInfo({ skipToast: true });
-      return (v && v.greeting) || cue + ' Uy! Nandito ka~ Ako si 「' + name + '」· ' + formTitle + '.';
+      return (v && v.greeting) || cue + ' 你来了～我是「' + name + '」· ' + formTitle + '。';
     }
-    if (/好看|外形|羽毛|样子|漂亮|帅|可爱|cute|ganda/.test(t)) {
+    if (/好看|外形|羽毛|样子|漂亮|帅|可爱|cute/.test(t)) {
       const v = getPetVoiceInfo({ skipToast: true });
       return (
         cue +
-        ' Tingnan mo yung ' +
-        (v.lookBit || 'look') +
-        ' ko~ Cute ba ako? Ako si 「' +
+        ' 看看我的' +
+        (v.lookBit || '样子') +
+        '～我可爱吗？我是「' +
         name +
         '」· ' +
         formTitle +
-        '. Haplos, kain—para mas glowing.'
+        '。摸摸我、喂我一口，才会更亮。'
       );
     }
-    if (/长大|成长|进化|下一|形态|lumaki|grow/.test(t) && !/换种|品种/.test(t)) {
+    if (/长大|成长|进化|下一|形态|grow/.test(t) && !/换种|品种/.test(t)) {
       const g = getStageGrowthInfo();
       if (g && g.isUltimate) {
-        return cue + ' Crowned na ako—「' + name + '」. Alagaan mo pa rin ako ha. Lambing forever.';
+        return cue + ' 我已经是冠宠了——「' + name + '」。还是要你继续养我呀。永远撒娇。';
       }
       return (
         cue +
-        ' Gusto ko nang lumaki, hanggang 「' +
-        ((g && g.toTitle) || 'next form') +
-        '」. Bisitahin mo ako, play at kain… huwag mo naman akong iwan ha.'
+        ' 我想长大，一直到「' +
+        ((g && g.toTitle) || '下一形态') +
+        '」。常来看我、陪我玩、喂我一口…别丢下我。'
       );
     }
-    if (/想你|爱你|陪|撒娇|喜欢|miss|lambing|mahal|sige na/.test(t)) {
-      return cue + ' Miss na kita eh. 「' + name + '」 clingy today—haplos, kausap, kain. Huwag mo naman akong iwan ha.';
+    if (/想你|爱你|陪|撒娇|喜欢|miss/.test(t)) {
+      return cue + ' 好想你。「' + name + '」今天特别黏——摸摸我、说说话、喂我一口。别丢下我。';
     }
-    if (/保佑|祝福|ingat|bathala|suwerte|salamat|好运/.test(t)) {
+    if (/保佑|祝福|保重|好运|谢谢/.test(t)) {
       const v = getPetVoiceInfo({ skipToast: true });
-      return (v && v.mode === 'comfort' ? v.greeting : null) || cue + ' Ingat ha. Nandito lang ako. Sana maganda ang araw mo.';
+      return (v && v.mode === 'comfort' ? v.greeting : null) || cue + ' 保重。我就在这里。愿你今天顺利。';
     }
     if (/狗|猫|汪|喵|dog|cat/.test(t)) {
-      return 'Philippine mythical beasts lang ha, walang pusa o aso. Ako si 「' + name + '」· ' + PET_SPECIES[sp].labelEn + '!';
+      return '这里只有菲律宾神话神兽，没有猫狗哦。我是「' + name + '」· ' + PET_SPECIES[sp].label + '！';
     }
     if (/品种|种类|换种|进化|神兽|神话/.test(t)) {
       return (
-        'Ako si ' +
+        '我是' +
         unit +
         '「' +
         name +
-        '」~ Puwede kang mag-switch ng Philippine mythical beast anytime; mag-inherit yung current form. Ultimate is 「' +
+        '」～可以随时更换菲律宾神兽，会继承我现在的形态档。终极形态是「' +
         petUltimateForm(sp).name +
-        '」, may gift pag na-reach (hindi recharge)!'
+        '」，养成后有礼物（不是充值）！'
       );
     }
-    if (/饿|吃|食|肚子|喂一口|喂我|kain|gutom/.test(t)) {
-      if (pet.hunger < 40) return cue + ' Gutom na ako! Hunger ' + pet.hunger + '—kain na please!';
-      if (pet.hunger < 70) return 'Medyo gutom pa… kaya pa, but kain later ha? (hunger ' + pet.hunger + ') ' + cue;
-      return 'Busog na! Salamat. (hunger ' + pet.hunger + ') ' + cue;
+    if (/饿|吃|食|肚子|喂一口|喂我/.test(t)) {
+      if (pet.hunger < 40) return cue + ' 好饿！饱食 ' + pet.hunger + '——快喂我一口！';
+      if (pet.hunger < 70) return '还有点饿…先撑着，等下再喂我好不好？（饱食 ' + pet.hunger + '）' + cue;
+      return '吃饱啦！谢谢你。（饱食 ' + pet.hunger + '）' + cue;
     }
-    if (/玩|陪玩|play|laro/.test(t)) {
-      if (pet.mood < 40) return 'Medyo lungkot… play tayo please? (mood ' + pet.mood + ')';
-      return cue + ' Play tayo! Mood ' + pet.mood + '~ Haplos at kain, mas glowing ako.';
+    if (/玩|陪玩|play/.test(t)) {
+      if (pet.mood < 40) return '有点闷…陪我玩好不好？（心情 ' + pet.mood + '）';
+      return cue + ' 陪我玩！心情 ' + pet.mood + '～摸摸我、喂一口，我会更亮。';
     }
-    if (/心情|开心|难过|情绪|saya|lungkot/.test(t)) {
-      if (pet.mood < 40) return 'Medyo lungkot… play tayo please? (mood ' + pet.mood + ')';
-      if (pet.mood < 70) return 'Okay naman—konting play pa, mas masaya.';
-      return cue + ' Super saya with you 💕';
+    if (/心情|开心|难过|情绪/.test(t)) {
+      if (pet.mood < 40) return '有点闷…陪我玩好不好？（心情 ' + pet.mood + '）';
+      if (pet.mood < 70) return '还行——再玩一会儿会更开心。';
+      return cue + ' 和你在一起超开心 💕';
     }
-    if (/脏|清洁|洗澡|净灵露|香波|linis|hugas|suklay/.test(t)) {
-      if (pet.clean < 40) return 'Medyo magulo pa… linis / suklay naman please? (clean ' + pet.clean + ')';
-      return 'Ayos na, glowing! ' + cue;
+    if (/脏|清洁|洗澡|净灵露|香波/.test(t)) {
+      if (pet.clean < 40) return '有点乱了…帮我清洁 / 梳一梳好不好？（清洁 ' + pet.clean + '）';
+      return '已经亮晶晶了！' + cue;
     }
-    if (/摸|抱抱|rua|贴贴|haplos|pat/.test(t)) {
-      return cue + ' Mmm haplos… ang sarap. Intimacy Lv.' + pet.careLevel + '. More lambing please.';
+    if (/摸|抱抱|rua|贴贴|pat/.test(t)) {
+      return cue + ' 嗯…摸摸好舒服。亲密度 Lv.' + pet.careLevel + '。再宠我一下。';
     }
     if (/vip|冲档|升级|等级/.test(t)) {
       return (
@@ -3631,8 +3631,8 @@
       return pickDaily(voice.bubbles, sp + '|chatFall') || voice.greeting;
     }
     const fallbacks = [
-      'Nandito lang ako, listening. 「' + name + '」 is with you~',
-      'Try: Haplos naman / Cute ba ako? / Ingat',
+      '我就在这里听着。「' + name + '」陪着你～',
+      '可以说：摸摸我 / 我可爱吗？ / 保重',
     ];
     return fallbacks[Math.floor(Math.random() * fallbacks.length)];
   }
@@ -3687,7 +3687,7 @@
     return { ok: true, greeting: line, messages: clone(pet.chatMessages) };
   }
 
-  const CHAT_QUICK_CHIPS = ['Haplos naman', 'Kain na', 'Cute ba ako?', 'Ingat', 'Miss na kita', 'Sige na please'];
+  const CHAT_QUICK_CHIPS = ['摸摸我', '喂食', '我可爱吗？', '保重', '好想你', '求求你'];
 
   /** 演示：临时提升亲密度（不改 VIP） */
   function demoBoostCareLevel(toLevel) {

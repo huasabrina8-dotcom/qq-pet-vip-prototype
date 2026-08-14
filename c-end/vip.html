@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juan365 VIP Level — VIP管家宠</title>
+  <title>Juan365 VIP等级 — 萌宠乐园</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
       <span class="c-logo-mark">J</span>
       Juan365
     </a>
-    <button class="c-search" type="button" aria-label="Search">
+    <button class="c-search" type="button" aria-label="搜索">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>
       </svg>
@@ -28,15 +28,15 @@
         <span id="balG">1,288.45</span>
       </div>
     </div>
-    <button class="c-btn-refresh" id="btnRefresh" type="button" aria-label="Refresh">
+    <button class="c-btn-refresh" id="btnRefresh" type="button" aria-label="刷新">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
         <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
       </svg>
     </button>
-    <button class="c-btn-deposit" id="btnDeposit" type="button">Deposit</button>
+    <button class="c-btn-deposit" id="btnDeposit" type="button">充值</button>
     <div class="c-avatar">👤<span class="crown">👑</span></div>
-    <button class="c-icon-btn" type="button" aria-label="Support">
+    <button class="c-icon-btn" type="button" aria-label="客服">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
         <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
@@ -46,11 +46,11 @@
 
   <div class="vip-page">
     <div class="pet-page-nav" style="margin-bottom:12px">
-      <a class="vip-back" href="lobby.html">← 返回 Lobby</a>
+      <a class="vip-back" href="lobby.html">← 返回大厅</a>
       <div class="pet-page-links">
         <a href="pet.html">宠物窝</a>
         <span class="sep">·</span>
-        <span class="here">VIP Level</span>
+        <span class="here">VIP等级</span>
       </div>
     </div>
 
@@ -76,8 +76,8 @@
           </svg>
         </a>
         <div class="status-meta">
-          <div class="tier">Your tier <strong id="statusTier">VIP3s</strong></div>
-          <div class="lvl">Your level <strong id="statusLevel">VIP3</strong></div>
+          <div class="tier">你的档位 <strong id="statusTier">VIP3s</strong></div>
+          <div class="lvl">你的等级 <strong id="statusLevel">VIP3</strong></div>
           <div class="vip-progress">
             <div class="vip-progress-bar">
               <div class="vip-progress-fill" id="statusFill" style="width:60%"></div>
@@ -95,9 +95,9 @@
       <!-- Carousel -->
       <div class="carousel-card">
         <div class="carousel-head">
-          <h2>Juan365 VIP Level</h2>
+          <h2>Juan365 VIP等级</h2>
           <div class="cashback-rate">
-            <div><span id="rateLabel">VIP3</span> Cashback Rate</div>
+            <div><span id="rateLabel">VIP3</span> 返水比例</div>
             <div class="rate"><span id="rateVal">3%</span><span class="pie" aria-hidden="true"></span></div>
           </div>
         </div>
@@ -106,8 +106,8 @@
         </div>
         <div class="carousel-dots" id="carouselDots"></div>
         <div class="carousel-nav">
-          <button type="button" id="carPrev" aria-label="Prev">‹</button>
-          <button type="button" id="carNext" aria-label="Next">›</button>
+          <button type="button" id="carPrev" aria-label="上一张">‹</button>
+          <button type="button" id="carNext" aria-label="下一张">›</button>
         </div>
       </div>
     </div>
@@ -135,42 +135,42 @@
     </section>
 
     <div class="vip-tabs" role="tablist">
-      <button class="vip-tab active" type="button" data-tab="benefits" role="tab">VIP Benefits</button>
-      <button class="vip-tab" type="button" data-tab="guide" role="tab">VIP Guide</button>
-      <button class="vip-tab" type="button" data-tab="rewards" role="tab">Rewards</button>
+      <button class="vip-tab active" type="button" data-tab="benefits" role="tab">VIP权益</button>
+      <button class="vip-tab" type="button" data-tab="guide" role="tab">VIP指南</button>
+      <button class="vip-tab" type="button" data-tab="rewards" role="tab">奖励</button>
     </div>
 
     <div class="tab-panel active" id="panel-benefits" role="tabpanel">
       <div class="benefits-grid" id="benefitsGrid">
         <div class="benefit-card" data-benefit="cashout">
           <div class="benefit-check">✓</div>
-          <h4>Faster Cashout For VIP</h4>
-          <p>Priority Withdrawals, No Waiting</p>
+          <h4>VIP 优先出款</h4>
+          <p>优先提现，无需排队</p>
         </div>
         <div class="benefit-card" data-benefit="upgrade">
           <div class="benefit-check">✓</div>
-          <h4>VIP Upgrade Gift — Claim Via Support</h4>
-          <p>Claim Your Reward Bonus Balance ₱888</p>
+          <h4>VIP 升级礼包 — 联系客服领取</h4>
+          <p>领取奖励余额 ₱888</p>
         </div>
         <div class="benefit-card" data-benefit="birthday">
           <div class="benefit-check">✓</div>
-          <h4>Your Birthday JUAN365 Gift</h4>
-          <p>Celebrate With A FREE Cake + CASH ₱388</p>
+          <h4>Juan365 生日礼</h4>
+          <p>免费蛋糕寄送 + 现金 ₱388</p>
         </div>
         <div class="benefit-card" data-benefit="support">
           <div class="benefit-check">✓</div>
-          <h4>Personal VIP Support</h4>
-          <p>One On One VIP SUPPORT · Contact for ₱588 Bonus</p>
+          <h4>专属 VIP 客服</h4>
+          <p>一对一 VIP 客服 · 联系可获 ₱588 奖励余额</p>
         </div>
         <div class="benefit-card" data-benefit="monthly">
           <div class="benefit-check">✓</div>
-          <h4>VIP 15th Bonus Credited</h4>
-          <p>Monthly bonus after 06:00 AM · Contact CS for ₱300</p>
+          <h4>每月 15 日礼金</h4>
+          <p>每月 06:00 后可联系客服领取 ₱300</p>
         </div>
         <div class="benefit-card" data-benefit="travel">
           <div class="benefit-check">✓</div>
-          <h4>VIP Travel Fund — Juan365 Covers</h4>
-          <p>Flights / hotels up to ₱8,000 via Support request</p>
+          <h4>VIP 差旅基金 — Juan365 承担</h4>
+          <p>机票 / 酒店最高 ₱8,000，需向客服申请</p>
         </div>
       </div>
     </div>
@@ -179,24 +179,24 @@
       <div class="guide-content">
         <h4>如何获得 XP（VIP管家宠）</h4>
         <ul>
-          <li><strong>领取每日返水</strong>：Lobby 侧栏 Claim → +30 XP（任务额外 +40 XP）</li>
+          <li><strong>领取每日返水</strong>：大厅侧栏领取 → +30 XP（任务额外 +40 XP）</li>
           <li><strong>每日任务</strong>：登录签到 / 访问 VIP / 观看视频 → 各可完成一次</li>
-          <li><strong>Deposit 演示</strong>：Header 橙色 Deposit → +₱100 与 +25 XP</li>
-          <li><strong>Demo +XP</strong>：本页按钮 → +500 XP（冲档演示）</li>
+          <li><strong>充值演示</strong>：顶栏橙色充值 → +₱100 与 +25 XP</li>
+          <li><strong>演示 +XP</strong>：本页按钮 → +500 XP（冲档演示）</li>
           <li><strong>照料宠物</strong>：宠物窝喂食 / 玩耍 / 清洁 → 少量 XP；当日首次照料另得任务 +35 XP</li>
         </ul>
         <p style="font-size:12px;color:#888;margin-top:8px">游戏厅 / 平台划转不在本需求范围内。</p>
         <h4>VIP 等级表</h4>
         <table>
           <thead>
-            <tr><th>Level</th><th>Tier</th><th>Need XP</th><th>Cashback</th><th>Max</th></tr>
+            <tr><th>等级</th><th>档位</th><th>所需 XP</th><th>返水</th><th>上限</th></tr>
           </thead>
           <tbody id="vipTableBody"></tbody>
         </table>
         <h4>说明</h4>
         <ul>
-          <li>Tier（档位）形如 VIP3s；Level 形如 VIP3 — 与 Juan365 VIP Level 页一致。</li>
-          <li>权益礼包需通过 <strong>Claim Via Support</strong> 联系客服领取（本原型以弹窗演示）。</li>
+          <li>档位形如 VIP3s；等级形如 VIP3 — 与 Juan365 VIP 等级页一致。</li>
+          <li>权益礼包需通过 <strong>联系客服领取</strong>（本原型以弹窗演示）。</li>
         </ul>
       </div>
     </div>
@@ -205,24 +205,24 @@
       <div class="rewards-content">
         <h4>当前可领奖励（演示）</h4>
         <ul>
-          <li>升级礼包 VIP3 → 联系 Support 领取 ₱888 Bonus Balance</li>
-          <li>Daily Cashback 已在 Lobby 侧栏绿色 Claim 按钮领取</li>
-          <li>达到 VIP4 后解锁更高返水上限与 Travel Fund</li>
+          <li>升级礼包 VIP3 → 联系客服领取 ₱888 奖励余额</li>
+          <li>每日返水已在大厅侧栏绿色领取按钮领取</li>
+          <li>达到 VIP4 后解锁更高返水上限与差旅基金</li>
         </ul>
         <h4>冲档小贴士</h4>
         <ul>
-          <li>优先完成 Daily Tasks，性价比最高</li>
-          <li>先 Claim 返水，再点 Deposit / Demo +XP 快速体验升档</li>
-          <li>权益礼包通过 Claim Via Support 联系客服领取（弹窗演示）</li>
+          <li>优先完成每日任务，性价比最高</li>
+          <li>先领取返水，再点充值 / 演示 +XP 快速体验升档</li>
+          <li>权益礼包通过联系客服领取（弹窗演示）</li>
         </ul>
       </div>
     </div>
 
     <div class="demo-bar">
-      <button class="btn-demo-xp" id="btnDemoXp" type="button">Demo +500 XP（冲档演示）</button>
-      <button class="btn-ghost" id="btnReset" type="button">Reset Demo</button>
+      <button class="btn-demo-xp" id="btnDemoXp" type="button">演示 +500 XP（冲档演示）</button>
+      <button class="btn-ghost" id="btnReset" type="button">重置演示</button>
       <a class="btn-ghost" href="pet.html" style="display:inline-flex;align-items:center">🐾 宠物窝</a>
-      <a class="btn-ghost" href="lobby.html" style="display:inline-flex;align-items:center">← Lobby</a>
+      <a class="btn-ghost" href="lobby.html" style="display:inline-flex;align-items:center">← 大厅</a>
     </div>
   </div>
 
@@ -230,7 +230,7 @@
   <div class="modal-overlay" id="supportModal">
     <div class="modal">
       <div class="levelup-burst" style="font-size:40px">🎧</div>
-      <h3>Claim Via Support</h3>
+      <h3>联系客服领取</h3>
       <p id="supportDesc">请联系 VIP 客服领取该权益礼包。本原型仅演示流程。</p>
       <div class="benefit-list" id="supportDetail"></div>
       <button class="btn-ok" id="supportOk" type="button">知道了</button>

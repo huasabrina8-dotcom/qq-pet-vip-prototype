@@ -47,7 +47,7 @@
       to.tier +
       ' · 返水 ' +
       to.cashback +
-      '% · Max ₱' +
+      '% · 上限 ₱' +
       TTStore.formatMoney(to.maxCashback);
     if (leveled.form && leveled.form.name) {
       desc +=
@@ -97,7 +97,7 @@
         if (options.depositGivesXp && TTStore.demoDeposit) {
           const res = TTStore.demoDeposit(100);
           toast(
-            'Deposit 演示 +₱' +
+            '充值演示 +₱' +
               TTStore.formatMoney(res.amount) +
               ' · +' +
               res.xpGain +
@@ -107,7 +107,7 @@
           handleLeveled(res, e);
           return;
         }
-        toast('Deposit 演示：请前往充值页（原型未接入）');
+        toast('充值演示：请前往充值页（原型未接入）');
       });
     }
     const reset = $('#btnReset');

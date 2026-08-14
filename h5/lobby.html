@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="format-detection" content="telephone=no">
-  <title>大厅 — VIP管家宠 H5</title>
+  <title>大厅 — 萌宠乐园 H5</title>
   <link rel="stylesheet" href="/h5/css/h5.css">
   <link rel="stylesheet" href="/h5/css/pages.css">
 </head>
@@ -20,21 +20,21 @@
         <div class="h5-bal-row"><span class="h5-coin p">P</span><span id="balP">2,710.00</span></div>
         <div class="h5-bal-row"><span class="h5-coin g">G</span><span id="balG">1,288.45</span></div>
       </div>
-      <button class="h5-btn-icon h5-btn-refresh" id="btnRefresh" type="button" aria-label="Refresh">
+      <button class="h5-btn-icon h5-btn-refresh" id="btnRefresh" type="button" aria-label="刷新">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
           <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
         </svg>
       </button>
-      <button class="h5-btn-deposit" id="btnDeposit" type="button">Deposit</button>
+      <button class="h5-btn-deposit" id="btnDeposit" type="button">充值</button>
     </div>
   </header>
 
   <main class="h5-page">
     <div class="lobby-hero">
-      <div class="kicker">NEWCOMERS BONUS</div>
-      <div class="title">₱36.5 SIGN-UP</div>
-      <div class="sub">VIP管家宠陪你冲档 — 任务 · 返水 · 宠</div>
+      <div class="kicker">新人礼包</div>
+      <div class="title">₱36.5 注册礼</div>
+      <div class="sub">萌宠乐园陪你冲档 — 任务 · 返水 · 宠</div>
     </div>
 
     <a class="pet-hud" id="petHud" href="pet.html">
@@ -51,24 +51,24 @@
     <div class="h5-section cashback-card">
       <div class="cb-row">
         <div>
-          <div class="cb-label">Daily Cashback</div>
+          <div class="cb-label">每日返水</div>
           <div class="cb-amount" id="cbAmount">₱55.54</div>
         </div>
-        <button class="btn-claim" id="btnClaimCb" type="button">Claim</button>
+        <button class="btn-claim" id="btnClaimCb" type="button">领取</button>
       </div>
       <div class="cb-row">
         <div>
-          <div class="cb-label">Weekly Cashback</div>
+          <div class="cb-label">每周返水</div>
           <div class="cb-amount mystery">???</div>
         </div>
-        <div class="cb-timer" id="weeklyTimer">79h 23m 09s</div>
+        <div class="cb-timer" id="weeklyTimer">79时 23分 09秒</div>
       </div>
     </div>
 
     <div class="entry-grid">
       <a class="entry-card vip" href="vip.html" id="missionCard">
         <div class="entry-ico">👑</div>
-        <div class="entry-title">VIP Level</div>
+        <div class="entry-title">VIP等级</div>
         <div class="entry-pct" id="missionPct">60%</div>
         <div class="xp-bar"><div class="xp-bar-fill" id="missionFill" style="width:60%"></div></div>
         <div class="entry-sub" id="missionHint">再获 XP 升 VIP4</div>
@@ -76,37 +76,37 @@
     </div>
 
     <div class="feat-watch" id="featWatch" role="button" tabindex="0">
-      <div class="feat-label">Featured</div>
-      <div class="feat-title">Watch & Earn</div>
+      <div class="feat-label">精选</div>
+      <div class="feat-title">观看赚钱</div>
       <div class="feat-bar">点按完成观看任务 · +60 XP</div>
     </div>
 
     <div class="h5-section tasks-card">
-      <div class="h5-section-title"><span>🎁 Daily Tasks</span><button class="btn-ghost" id="btnReset" type="button" style="min-height:32px;font-size:11px;padding:0 10px">Reset</button></div>
+      <div class="h5-section-title"><span>🎁 每日任务</span><button class="btn-ghost" id="btnReset" type="button" style="min-height:32px;font-size:11px;padding:0 10px">重置</button></div>
       <div class="task-item" data-task="login">
         <div class="task-desc">每日登录签到</div>
         <span class="task-xp">+50 XP</span>
-        <button class="btn-task" type="button" data-action="login">Go</button>
+        <button class="btn-task" type="button" data-action="login">去完成</button>
       </div>
       <div class="task-item" data-task="claimCashback">
         <div class="task-desc">领取每日返水</div>
         <span class="task-xp">+40 XP</span>
-        <button class="btn-task" type="button" disabled data-action="claimCashback">Go</button>
+        <button class="btn-task" type="button" disabled data-action="claimCashback">去完成</button>
       </div>
       <div class="task-item" data-task="visitVip">
-        <div class="task-desc">访问 VIP Level 页</div>
+        <div class="task-desc">访问 VIP 等级页</div>
         <span class="task-xp">+40 XP</span>
-        <button class="btn-task" type="button" data-action="visitVip">Go</button>
+        <button class="btn-task" type="button" data-action="visitVip">去完成</button>
       </div>
       <div class="task-item" data-task="watchVideo">
         <div class="task-desc">观看推广视频</div>
         <span class="task-xp">+60 XP</span>
-        <button class="btn-task" type="button" data-action="watchVideo">Go</button>
+        <button class="btn-task" type="button" data-action="watchVideo">去完成</button>
       </div>
       <div class="task-item" data-task="carePet">
         <div class="task-desc">照料宠物一次</div>
         <span class="task-xp">+35 XP</span>
-        <button class="btn-task" type="button" data-action="carePet">Go</button>
+        <button class="btn-task" type="button" data-action="carePet">去完成</button>
       </div>
     </div>
   </main>
