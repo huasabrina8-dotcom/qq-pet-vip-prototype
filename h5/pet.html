@@ -6,8 +6,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="format-detection" content="telephone=no">
   <title>宠物窝 — 萌宠乐园 H5</title>
-  <link rel="stylesheet" href="css/h5.css?v=20260815b">
-  <link rel="stylesheet" href="css/pages.css?v=20260814h">
+  <link rel="stylesheet" href="css/h5.css?v=20260815e">
+  <link rel="stylesheet" href="css/pages.css?v=20260815e">
 </head>
 <body class="is-pet-nest">
   <header class="h5-header">
@@ -238,27 +238,17 @@
         </div>
       </div>
 
-      <div class="h5-section pet-vip-card" id="careVipCard">
-        <div class="pet-vip-row">
-          <div>
-            <div class="pet-vip-label">冲档进度</div>
-            <div class="pet-vip-val" id="petVipLine">VIP3 · 还需 XP</div>
-          </div>
+      <details class="pet-demo-fold">
+        <summary>演示工具</summary>
+        <div class="demo-bar pet-demo-bar">
+          <button class="btn-ghost" id="btnDemoCare" type="button">本档抚养完成</button>
+          <button class="btn-ghost" id="btnDemoGold" type="button">养成到金甲</button>
+          <button class="btn-ghost" id="btnDemoProtect" type="button">经过24小时</button>
+          <button class="btn-ghost" id="btnDemoNeeds" type="button">需求提醒</button>
+          <button class="btn-ghost" id="btnDemoVip5" type="button">VIP5 终极奖励</button>
+          <button class="btn-ghost" id="btnReset" type="button">重置演示</button>
         </div>
-        <div class="xp-bar"><div class="xp-bar-fill" id="petVipFill" style="width:60%"></div></div>
-        <p class="pet-vip-note">完成每日任务可 +XP 冲档。返水在大厅领取。</p>
-        <details class="pet-demo-fold">
-          <summary>演示工具</summary>
-          <div class="demo-bar pet-demo-bar">
-            <button class="btn-ghost" id="btnDemoCare" type="button">本档抚养完成</button>
-            <button class="btn-ghost" id="btnDemoGold" type="button">养成到金甲</button>
-            <button class="btn-ghost" id="btnDemoProtect" type="button">经过24小时</button>
-            <button class="btn-ghost" id="btnDemoNeeds" type="button">需求提醒</button>
-            <button class="btn-ghost" id="btnDemoVip5" type="button">VIP5 终极奖励</button>
-            <button class="btn-ghost" id="btnReset" type="button">重置演示</button>
-          </div>
-        </details>
-      </div>
+      </details>
     </div>
 
     <div class="pet-tab-panel" data-panel="chat" role="tabpanel" hidden aria-hidden="true" style="display:none">
@@ -306,7 +296,7 @@
 
   <nav class="h5-tabbar" aria-label="底部导航">
     <a class="h5-tab" href="lobby.html" data-tab="lobby"><span class="ico">🏠</span>大厅</a>
-    <a class="h5-tab" href="pet.html" data-tab="pet"><span class="ico">🐾</span>宠物</a>
+    <a class="h5-tab" href="pet.html?v=20260815e" data-tab="pet"><span class="ico">🐾</span>宠物</a>
   </nav>
 
   <div class="species-pick-overlay" id="speciesPickOverlay" hidden aria-hidden="true">
@@ -399,6 +389,6 @@
   <script src="../c-end/js/state.js?v=20260815b"></script>
   <script src="js/ui.js?v=20260814h"></script>
   <script src="js/shell.js?v=20260814h"></script>
-  <script src="js/pet.js?v=20260815c"></script>
+  <script src="js/pet.js?v=20260815e"></script>
 </body>
 </html>

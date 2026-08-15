@@ -206,7 +206,7 @@
 
     document.querySelectorAll('.btn-task[data-action="carePet"]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        window.location.href = 'pet.html';
+        window.location.href = 'pet.html?v=20260815e';
       });
     });
 
