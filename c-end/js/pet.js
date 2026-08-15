@@ -1447,23 +1447,6 @@
       }
     });
 
-    const prog = TTStore.progressToNext(state.xp);
-    const vipLine = $('#petVipLine');
-    const vipFill = $('#petVipFill');
-    if (vipFill) vipFill.style.width = prog.pct.toFixed(1) + '%';
-    if (vipLine) {
-      if (!prog.next) vipLine.textContent = 'VIP5 · 已满级 · 终极形态';
-      else {
-        vipLine.textContent =
-          'VIP' +
-          prog.level +
-          ' · 还需 ' +
-          TTStore.formatXp(prog.remaining) +
-          ' XP → VIP' +
-          prog.next.level;
-      }
-    }
-
     const dp = $('#dailyPointsVal');
     const dr = $('#dailyRankVal');
     if (dp) dp.textContent = String(snap.daily.points);

@@ -1992,8 +1992,7 @@ img {
   gap: 12px;
 }
 .pet-actions-card,
-.pet-inv-card,
-.pet-vip-card {
+.pet-inv-card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -2145,28 +2144,6 @@ img {
   background: #ffe8d0;
 }
 
-.pet-vip-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-.pet-vip-label {
-  font-size: 11px;
-  color: var(--text-3);
-}
-.pet-vip-val {
-  font-weight: 700;
-  font-size: 13px;
-  margin-top: 2px;
-}
-.pet-vip-note {
-  margin-top: 8px;
-  font-size: 11px;
-  color: var(--text-3);
-  line-height: 1.4;
-}
 .pet-demo-bar {
   margin-top: 0;
   padding: 10px;
@@ -2432,7 +2409,6 @@ img {
 .pet-tab-panel.is-past-form #careActionGrid,
 .pet-tab-panel.is-past-form #careInvCard,
 .pet-tab-panel.is-past-form #intimacyQuests,
-.pet-tab-panel.is-past-form #careVipCard,
 .pet-tab-panel.is-past-form #carePanelTitle,
 .pet-tab-panel.is-past-form #carePanelSub {
   display: none !important;
