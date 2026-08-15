@@ -3995,27 +3995,34 @@ img {
   }
 }
 
-/* Floating pet overlay */
-.pet-float-dock {
+/* Floating pet overlay — full page layer */
+.pet-float-layer {
   position: fixed;
-  left: 18px;
-  bottom: 48px;
-  z-index: 150;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: visible;
 }
 .pet-float-fab {
-  position: relative;
-  width: 72px;
-  height: 72px;
+  position: absolute;
+  left: 16px;
+  top: 96px;
+  width: 76px;
+  height: 76px;
   border: 0;
   padding: 0;
   background: transparent;
-  cursor: pointer;
+  cursor: grab;
+  pointer-events: auto;
+  z-index: 2;
+  touch-action: none;
 }
+.pet-float-fab:active { cursor: grabbing; }
 .pet-float-fab[hidden],
 .pet-float-panel[hidden] { display: none !important; }
 .pet-float-bob {
-  width: 72px;
-  height: 72px;
+  width: 76px;
+  height: 76px;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -4048,8 +4055,11 @@ img {
   box-shadow: 0 2px 6px rgba(255, 98, 0, 0.35);
 }
 .pet-float-panel {
-  width: 340px;
-  height: 460px;
+  position: absolute;
+  right: 20px;
+  bottom: 44px;
+  width: 360px;
+  height: 480px;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -4057,6 +4067,8 @@ img {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  pointer-events: auto;
+  z-index: 3;
 }
 .pet-float-top {
   display: flex;

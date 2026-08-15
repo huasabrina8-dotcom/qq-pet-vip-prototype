@@ -1,17 +1,27 @@
 /**
- * 萌宠悬浮窗：页面上层常驻，点开和神兽对话
+ * 萌宠悬浮层：铺满整个页面，神兽在视口内游走，始终压在内容之上
  */
 (function (global) {
   'use strict';
 
+  var SIZE = 76;
+  var pos = { x: 16, y: 96 };
+  var wanderTimer = 0;
+  var dragging = false;
+  var moved = false;
+
   function petHref() {
-    return 'pet.html?v=20260815g';
+    return 'pet.html?v=20260815h';
   }
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
+  }
+
+  function isH5() {
+    return document.documentElement.classList.contains('h5') || !!document.querySelector('.h5-tabbar');
   }
 
   function look() {
@@ -21,12 +31,67 @@
     return TTStore.petAppearance(TTStore.get());
   }
 
+  function bounds() {
+    var pad = 8;
+    var header = isH5() ? 56 : 64;
+    var bottom = isH5() ? 68 : 52;
+    var minX = pad;
+    var maxX = Math.max(pad, window.innerWidth - SIZE - pad);
+    var minY = header;
+    var maxY = Math.max(header, window.innerHeight - SIZE - bottom);
+    if (isH5()) {
+      var col = Math.min(430, window.innerWidth);
+      var left = (window.innerWidth - col) / 2;
+      minX = left + pad;
+      maxX = left + col - SIZE - pad;
+    }
+    if (maxX < minX) maxX = minX;
+    if (maxY < minY) maxY = minY;
+    return { minX: minX, maxX: maxX, minY: minY, maxY: maxY };
+  }
+
+  function clampPos() {
+    var b = bounds();
+    pos.x = Math.min(b.maxX, Math.max(b.minX, pos.x));
+    pos.y = Math.min(b.maxY, Math.max(b.minY, pos.y));
+  }
+
+  function placeFab(smooth) {
+    var fab = document.getElementById('petFloatFab');
+    if (!fab) return;
+    clampPos();
+    fab.style.transition = smooth ? 'left 4.8s linear, top 4.8s linear' : 'none';
+    fab.style.left = pos.x + 'px';
+    fab.style.top = pos.y + 'px';
+  }
+
+  function wander() {
+    var panel = document.getElementById('petFloatPanel');
+    if (dragging || (panel && !panel.hidden)) return;
+    var b = bounds();
+    pos.x = b.minX + Math.random() * (b.maxX - b.minX);
+    pos.y = b.minY + Math.random() * (b.maxY - b.minY);
+    placeFab(true);
+  }
+
+  function startWander() {
+    stopWander();
+    wanderTimer = global.setInterval(wander, 5200);
+  }
+
+  function stopWander() {
+    if (wanderTimer) {
+      global.clearInterval(wanderTimer);
+      wanderTimer = 0;
+    }
+  }
+
   function ensure() {
-    if (document.getElementById('petFloatDock')) return;
-    var wrap = document.createElement('div');
-    wrap.id = 'petFloatDock';
-    wrap.className = 'pet-float-dock';
-    wrap.innerHTML =
+    if (document.getElementById('petFloatLayer')) return;
+    var layer = document.createElement('div');
+    layer.id = 'petFloatLayer';
+    layer.className = 'pet-float-layer';
+    layer.innerHTML =
       '<button type="button" class="pet-float-fab" id="petFloatFab" aria-label="打开萌宠对话">' +
       '<span class="pet-float-bob" id="petFloatAva">🐾</span>' +
       '<span class="pet-float-hint" id="petFloatHint">陪你</span>' +
@@ -35,7 +100,7 @@
       '<div class="pet-float-top">' +
       '<span class="ava" id="petFloatPanelAva">🐾</span>' +
       '<div><strong id="petFloatTitle">和萌宠对话</strong>' +
-      '<small>悬浮陪伴 · 计入今日深度抚养</small></div>' +
+      '<small>整页悬浮陪伴 · 计入今日深度抚养</small></div>' +
       '<a class="pet-float-go" id="petFloatGo" href="' +
       petHref() +
       '">去窝</a>' +
@@ -48,7 +113,7 @@
       '<button type="submit">发送</button>' +
       '</form>' +
       '</div>';
-    document.body.appendChild(wrap);
+    document.body.appendChild(layer);
   }
 
   function setAva(el, info) {
@@ -63,7 +128,7 @@
   function renderLog(msgs) {
     var log = document.getElementById('petFloatLog');
     if (!log) return;
-    var list = (msgs && msgs.length) ? msgs : [{ role: 'pet', text: '点开就能跟我说话啦～' }];
+    var list = msgs && msgs.length ? msgs : [{ role: 'pet', text: '我会在整页陪着你，点我就能说话～' }];
     log.innerHTML = list
       .map(function (m) {
         return (
@@ -127,6 +192,59 @@
     if (csFab) csFab.hidden = false;
   }
 
+  function bindDrag(fab, open) {
+    var startX = 0;
+    var startY = 0;
+    var origX = 0;
+    var origY = 0;
+
+    function onMove(e) {
+      var p = e.touches ? e.touches[0] : e;
+      var dx = p.clientX - startX;
+      var dy = p.clientY - startY;
+      if (Math.abs(dx) + Math.abs(dy) > 8) moved = true;
+      pos.x = origX + dx;
+      pos.y = origY + dy;
+      placeFab(false);
+      if (e.cancelable) e.preventDefault();
+    }
+
+    function onUp(e) {
+      dragging = false;
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onUp);
+      clampPos();
+      placeFab(false);
+      startWander();
+      if (!moved) open();
+      if (e && e.cancelable) e.preventDefault();
+    }
+
+    function onDown(e) {
+      var p = e.touches ? e.touches[0] : e;
+      dragging = true;
+      moved = false;
+      stopWander();
+      fab.style.transition = 'none';
+      startX = p.clientX;
+      startY = p.clientY;
+      origX = pos.x;
+      origY = pos.y;
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+      document.addEventListener('touchmove', onMove, { passive: false });
+      document.addEventListener('touchend', onUp);
+    }
+
+    fab.addEventListener('mousedown', onDown);
+    fab.addEventListener('touchstart', onDown, { passive: true });
+    fab.addEventListener('click', function (e) {
+      e.preventDefault();
+    });
+  }
+
   function bind() {
     ensure();
     var fab = document.getElementById('petFloatFab');
@@ -137,10 +255,16 @@
     if (!fab || !panel || panel.dataset.bound === '1') return;
     panel.dataset.bound = '1';
 
+    var b = bounds();
+    pos.x = b.minX + 8;
+    pos.y = b.minY + 24;
+    placeFab(false);
+
     function open() {
       closeCs();
       panel.hidden = false;
       fab.hidden = true;
+      stopWander();
       if (TTStore.petChatGreeting) TTStore.petChatGreeting(false);
       refresh();
       if (input) input.focus();
@@ -148,9 +272,10 @@
     function hide() {
       panel.hidden = true;
       fab.hidden = false;
+      startWander();
     }
 
-    fab.addEventListener('click', open);
+    bindDrag(fab, open);
     if (closeBtn) closeBtn.addEventListener('click', hide);
     if (form) {
       form.addEventListener('submit', function (e) {
@@ -158,8 +283,14 @@
         send(input ? input.value : '');
       });
     }
+    global.addEventListener('resize', function () {
+      clampPos();
+      placeFab(false);
+    });
     if (TTStore.subscribe) TTStore.subscribe(refresh);
     refresh();
+    startWander();
+    global.setTimeout(wander, 800);
   }
 
   function boot() {
