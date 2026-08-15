@@ -515,7 +515,7 @@
   }
 
   function switchTab(tab) {
-    if (tab === 'chat' || tab === 'friends') tab = 'care';
+    if (tab === 'friends') tab = 'care';
     activeTab = tab;
     document.querySelectorAll('.pet-tab').forEach((btn) => {
       const on = btn.dataset.tab === tab;

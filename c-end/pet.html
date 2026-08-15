@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <title>宠物窝 — 萌宠乐园</title>
-  <link rel="stylesheet" href="css/styles.css?v=20260815e">
+  <link rel="stylesheet" href="css/styles.css?v=20260815g">
 </head>
 <body>
   <header class="c-header">
@@ -37,7 +37,7 @@
       </svg>
     </button>
     <div class="c-avatar">👤<span class="crown">👑</span></div>
-    <button class="c-icon-btn" type="button" aria-label="客服">
+    <button class="c-icon-btn" type="button" id="btnCsChat" aria-label="客服" title="在线客服">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
         <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
@@ -179,6 +179,7 @@
         </div>
         <nav class="pet-tabs" role="tablist" aria-label="宠物窝功能">
           <button type="button" class="pet-tab is-active" data-tab="care" role="tab" aria-selected="true">照料</button>
+          <button type="button" class="pet-tab" data-tab="chat" role="tab" aria-selected="false">对话</button>
           <button type="button" class="pet-tab" data-tab="rank" role="tab" aria-selected="false">今日排名</button>
         </nav>
 
@@ -282,14 +283,19 @@
         </div>
         </div><!-- /care panel -->
 
-        <div class="pet-tab-panel" data-panel="chat" role="tabpanel" hidden aria-hidden="true" style="display:none">
+        <div class="pet-tab-panel" data-panel="chat" role="tabpanel" hidden>
           <div class="pet-panel-card pet-chat-card">
-            <h2 class="pet-side-title">和管家宠对话</h2>
-            <p class="pet-side-sub">规则回复演示 · 会参考状态 / VIP 形态 / 绑定 · 保留近 20 条</p>
+            <div class="pet-chat-head">
+              <span class="pet-chat-ava" aria-hidden="true">🐾</span>
+              <div>
+                <h2 class="pet-side-title">和萌宠对话</h2>
+                <p class="pet-side-sub">神兽在线 · 对话计入今日深度抚养 · 近 20 条</p>
+              </div>
+            </div>
             <div class="pet-chat-log" id="chatLog" aria-live="polite"></div>
             <div class="pet-chat-chips" id="chatChips"></div>
             <form class="pet-chat-form" id="chatForm">
-              <input type="text" id="chatInput" maxlength="80" placeholder="跟管家宠说点什么…" autocomplete="off">
+              <input type="text" id="chatInput" maxlength="80" placeholder="跟萌宠说点什么…" autocomplete="off">
               <button type="submit" class="btn-ok" id="chatSend">发送</button>
             </form>
           </div>
@@ -430,8 +436,10 @@
 
   <div class="toast-wrap" id="toastWrap"></div>
 
-  <script src="js/state.js?v=20260815e"></script>
-  <script src="js/ui.js?v=20260814h"></script>
-  <script src="js/pet.js?v=20260815e"></script>
+  <script src="js/state.js?v=20260815f"></script>
+  <script src="js/ui.js?v=20260815f"></script>
+  <script src="js/cs-chat.js?v=20260815g"></script>
+  <script src="js/pet-float.js?v=20260815g"></script>
+  <script src="js/pet.js?v=20260815f"></script>
 </body>
 </html>

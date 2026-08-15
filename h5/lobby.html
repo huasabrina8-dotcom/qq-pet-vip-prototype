@@ -6,8 +6,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="format-detection" content="telephone=no">
   <title>大厅 — 萌宠乐园 H5</title>
-  <link rel="stylesheet" href="css/h5.css">
-  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/h5.css?v=20260815g">
+  <link rel="stylesheet" href="css/pages.css?v=20260815f">
 </head>
 <body>
   <header class="h5-header">
@@ -20,6 +20,12 @@
         <div class="h5-bal-row"><span class="h5-coin p">P</span><span id="balP">2,710.00</span></div>
         <div class="h5-bal-row"><span class="h5-coin g">G</span><span id="balG">1,288.45</span></div>
       </div>
+      <button class="h5-btn-icon" id="btnCsChat" type="button" aria-label="客服">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+          <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+        </svg>
+      </button>
       <button class="h5-btn-icon h5-btn-refresh" id="btnRefresh" type="button" aria-label="刷新">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
@@ -129,6 +135,8 @@
   <script src="../c-end/js/state.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/shell.js"></script>
+  <script src="../c-end/js/cs-chat.js?v=20260815g"></script>
+  <script src="../c-end/js/pet-float.js?v=20260815g"></script>
   <script src="js/lobby.js"></script>
 </body>
 </html>
