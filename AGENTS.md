@@ -32,7 +32,7 @@ Serve from **project root** (`python3 -m http.server 8765`) so H5 can use `/c-en
 10. Old name「厅厅管家宠」is retired; pointer doc only.
 11. **Retention loop = 24h nurture cadence** — purpose: raise login stickiness; means: come back every ~24h for a **deep nurture** session (daily intimacy quests: pat×3 + chat×1 + feed×2) to join pet growth. Rolling window from `lastInteractAt`, aligned with care protect + need satisfy. Do **not** lock to one click / 24h; surface protect + needs + deep-nurture progress as retention (not punishment-only).
 12. **Six art styles in library** — `neutral` / `sacred` / `cute` / `inkgold` / `obsidian` / `duskgold`. VIP page switches among them anytime at the current wearing form (not paywalled). Final keep-set TBD.
-13. **Form growth = nurture time + interactions** — each stage needs qualified 24h nurture-days and interaction count; higher stages take longer (1/2/3/5/7 days). Display form = `evoTier` only. VIP is a growth ceiling, not an instant morph.
+13. **Form growth = nurture time + interactions** — each stage needs qualified 24h nurture-days and interaction count; higher stages take longer (2/4/6/10/14 days). Display form = `evoTier` only. VIP is a growth ceiling, not an instant morph. **VIP0 and VIP1 share the same ceiling** (银徽).
 14. **Display language** — C-end pages and pet voice are **Chinese-only** until the full scheme is locked; then add 菲语 + 英语. Keep `labelEn` in data. Intended later voice: Taglish lambing when nurture is due; Ingat / Bathala / suwerte comfort when not (positive, not ominous).
 
 ## GitHub

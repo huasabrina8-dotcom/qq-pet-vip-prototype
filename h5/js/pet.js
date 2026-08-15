@@ -8,7 +8,7 @@
 
   const GUIDE_COPY = [
     {
-      label: '新手 1/5',
+      label: '新手 1/6',
       title: '认识 VIP管家宠',
       desc: '欢迎来到宠物窝！我是与你 VIP 一对一绑定的管家宠——不同 VIP 等级有不同形态；VIP5 终极形态可自选养成奖励（非充值）～',
       primary: '下一步',
@@ -16,7 +16,7 @@
       highlight: null,
     },
     {
-      label: '新手 2/5',
+      label: '新手 2/6',
       title: '看懂状态条',
       desc: '🍽 饱食 · 😊 心情 · ✨ 清洁（还有健康）会随时间慢慢下降。偏低时来照料，状态立刻回升！',
       primary: '下一步',
@@ -24,7 +24,7 @@
       highlight: 'stats',
     },
     {
-      label: '新手 3/5',
+      label: '新手 3/6',
       title: '先喂一口',
       desc: '当日抚养可以点「饱食」喂神兽。点「下一步」继续。',
       primary: '下一步',
@@ -32,7 +32,7 @@
       highlight: 'feed',
     },
     {
-      label: '新手 4/5',
+      label: '新手 4/6',
       title: '再照料一次',
       desc: '还可以点「喝水」「清洁」。更多互动里可以抚摸、玩耍。点「下一步」继续。',
       primary: '下一步',
@@ -40,12 +40,20 @@
       highlight: 'playclean',
     },
     {
-      label: '新手 5/5',
-      title: '进化 · 对话 · 好友',
-      desc: '亲密度升级可「进化」并换菲律宾神兽品种；对话也涨亲密度。建议每 24 小时回来深度抚养一次参与成长～去 VIP 页 / 每日任务赚 XP 冲终极形态！',
+      label: '新手 5/6',
+      title: '进化 · 对话页签',
+      desc: '亲密度升级可「进化」并换菲律宾神兽。窝里「对话」页签也能聊天、涨亲密度。建议每 24 小时回来深度抚养一次。',
+      primary: '下一步',
+      action: 'next',
+      highlight: null,
+    },
+    {
+      label: '新手 6/6',
+      title: '整页悬浮对话框',
+      desc: '萌宠会浮在整页最上面走来走去。点它打开对话框说话（计入今日深度抚养）；按住可以拖到任意位置。大厅里同样有这只悬浮萌宠。',
       primary: '开始照看',
       action: 'finish',
-      highlight: null,
+      highlight: 'petfloat',
     },
   ];
 
@@ -511,6 +519,10 @@
       document.querySelectorAll('.pet-nurture-btn[data-care="drink"], .pet-nurture-btn[data-care="clean"]').forEach(function (el) {
         el.classList.add('pet-guide-hl');
       });
+    } else if (key === 'petfloat') {
+      if (window.TTPetFloat && TTPetFloat.parkForGuide) TTPetFloat.parkForGuide();
+      const fab = $('#petFloatFab');
+      if (fab) fab.classList.add('pet-guide-hl');
     }
   }
 
@@ -1483,6 +1495,7 @@
     if (!g || g.finished || !g.active) {
       if (!overlay.dataset.force) overlay.hidden = true;
       clearHighlights();
+      if (window.TTPetFloat && TTPetFloat.resumeFromGuide) TTPetFloat.resumeFromGuide();
       return;
     }
     const copy = GUIDE_COPY[g.step] || GUIDE_COPY[0];
@@ -1586,6 +1599,7 @@
         if (res.guideDone) toast('新手引导完成 · 去照看管家宠吧', 'success');
         overlay.hidden = true;
         clearHighlights();
+        if (window.TTPetFloat && TTPetFloat.resumeFromGuide) TTPetFloat.resumeFromGuide();
       } else {
         TTStore.petGuideNext();
       }
@@ -1597,6 +1611,7 @@
       toast('已跳过引导 · 直接开玩', 'success');
       overlay.hidden = true;
       clearHighlights();
+      if (window.TTPetFloat && TTPetFloat.resumeFromGuide) TTPetFloat.resumeFromGuide();
       renderAll();
     });
   }
@@ -1611,7 +1626,7 @@
     const snap0 = TTStore.getPetSnapshot();
     const g0 = snap0.guide;
     // Care guide waits until starter species is chosen
-    if (!snap0.needsSpeciesPick && g0 && g0.active && !g0.finished && g0.step <= 4) {
+    if (!snap0.needsSpeciesPick && g0 && g0.active && !g0.finished && g0.step <= 5) {
       const ov = $('#guideOverlay');
       if (ov) {
         ov.hidden = false;

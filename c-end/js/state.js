@@ -388,12 +388,18 @@
    * 档越高越久，用来拉登录粘性；VIP 只作可成长上限，不跳形态。
    */
   const STAGE_GROWTH = [
-    { from: 0, to: 1, needDays: 1, needActs: 6 },
-    { from: 1, to: 2, needDays: 2, needActs: 12 },
-    { from: 2, to: 3, needDays: 3, needActs: 20 },
-    { from: 3, to: 4, needDays: 5, needActs: 36 },
-    { from: 4, to: 5, needDays: 7, needActs: 56 },
+    { from: 0, to: 1, needDays: 2, needActs: 6 },
+    { from: 1, to: 2, needDays: 4, needActs: 12 },
+    { from: 2, to: 3, needDays: 6, needActs: 20 },
+    { from: 3, to: 4, needDays: 10, needActs: 36 },
+    { from: 4, to: 5, needDays: 14, needActs: 56 },
   ];
+
+  /** 萌宠成长上限：VIP0 与 VIP1 同一档，均可养到银徽。冲档数字仍是 0–5。 */
+  function petGrowthVip(vip) {
+    const n = Math.max(0, Math.min(5, Number(vip) || 0));
+    return Math.max(1, n);
+  }
 
   function normalizeArtStyle(raw) {
     return ART_STYLE_IDS.indexOf(raw) >= 0 ? raw : 'neutral';
@@ -776,7 +782,7 @@
       },
       questClaimed: false,
     },
-    /** Newbie guide: step 0..4, finished at 5 */
+    /** Newbie guide: step 0..5, finished at 6 */
     guide: {
       active: true,
       step: 0,
@@ -980,7 +986,7 @@
     backfillStageHistory(parsed.pet);
     if (parsed.pet.guide.finished) {
       parsed.pet.guide.active = false;
-      parsed.pet.guide.step = Math.max(parsed.pet.guide.step, 5);
+      parsed.pet.guide.step = Math.max(parsed.pet.guide.step, 6);
     }
   }
 
@@ -1319,8 +1325,8 @@
         name: form ? form.name : title,
         current: i === evoTier,
         grown: i <= evoTier,
-        pending: i > evoTier && i <= vip,
-        vipLocked: i > vip,
+        pending: i > evoTier && i <= petGrowthVip(vip),
+        vipLocked: i > petGrowthVip(vip),
       };
     });
     return {
@@ -1399,7 +1405,7 @@
     const needActs = need.needActs;
     const daysReady = haveDays >= needDays;
     const actsReady = haveActs >= needActs;
-    const vipBlocked = need.to > vip;
+    const vipBlocked = need.to > petGrowthVip(vip);
     const canEvolve = daysReady && actsReady && !vipBlocked;
     let reason = null;
     if (vipBlocked) reason = 'need_vip';
@@ -1440,7 +1446,7 @@
       progressPct: progressPct,
       progressHint: progressHint,
       tableHint:
-        '幼宠→银徽 1天 · 银徽→管家 2天 · 管家→金甲 3天 · 金甲→翼宠 5天 · 翼宠→冠宠 7天（每 24h 互动计 1 抚养日）',
+        '幼宠→银徽 2天 · 银徽→管家 4天 · 管家→金甲 6天 · 金甲→翼宠 10天 · 翼宠→冠宠 14天（每 24h 互动计 1 抚养日）',
     });
   }
 
@@ -1459,8 +1465,8 @@
     const title = FORM_STAGE_TITLES[tier] || '幼宠';
     const grown = tier <= evo;
     const current = tier === evo;
-    const pending = tier > evo && tier <= vip;
-    const vipLocked = tier > vip;
+    const pending = tier > evo && tier <= petGrowthVip(vip);
+    const vipLocked = tier > petGrowthVip(vip);
     const totals = journeyTotals(pet);
     const overallLine =
       '累计已达成 ' +
@@ -1745,7 +1751,7 @@
     const sp = normalizeSpecies(speciesOpt) || (hasChosenSpecies(pet) ? normalizeSpecies(pet.species) : null);
     if (!sp) return [];
     const displayTier = petDisplayTier(pet);
-    const unlockedCeil = Math.max(vip, clampEvoTier(pet.evoTier));
+    const unlockedCeil = Math.max(petGrowthVip(vip), clampEvoTier(pet.evoTier));
     return [0, 1, 2, 3, 4, 5].map(function (lv) {
       const form = petFormForVip(lv, sp);
       return {
@@ -2195,8 +2201,8 @@
 
   const EVOLVE_RULES_COPY = [
     '每个形态需经过抚养日 + 互动才进入下一阶段；档越高所需时间越长',
-    '合格抚养日：每 24 小时互动最多计 1 天（幼宠 1 天 → 冠宠前 7 天）',
-    'VIP 只限制可成长上限，不会因升 VIP 直接换形态',
+    '合格抚养日：每 24 小时互动最多计 1 天（幼宠 2 天 → 冠宠前 14 天）',
+    'VIP 只限制可成长上限；VIP0 与 VIP1 同一档（均可养到银徽），不会因升 VIP 直接换形态',
     '每次进化：同种形态升一阶；换种请用「更换神兽」（随时，新神兽继承当前形态档）',
     '达终极（冠宠）可自选养成奖励（非充值）',
   ];
@@ -3787,7 +3793,7 @@
     if (!g || g.finished) return false;
     if (g.step === expectedStep) {
       g.step = nextStep;
-      if (nextStep >= 5) {
+      if (nextStep >= 6) {
         g.finished = true;
         g.active = false;
       }
@@ -3800,12 +3806,12 @@
     applyDecay();
     const g = state.pet.guide;
     if (!g || g.finished) return { ok: false, reason: 'done' };
-    if (g.step >= 4) {
+    if (g.step >= 5) {
       g.finished = true;
       g.active = false;
-      g.step = 5;
-      emit({ type: 'petGuide', step: 5, guideDone: true });
-      return { ok: true, step: 5, guideDone: true };
+      g.step = 6;
+      emit({ type: 'petGuide', step: 6, guideDone: true });
+      return { ok: true, step: 6, guideDone: true };
     }
     g.step += 1;
     emit({ type: 'petGuide', step: g.step });
@@ -3817,7 +3823,7 @@
     const g = state.pet.guide;
     g.finished = true;
     g.active = false;
-    g.step = 5;
+    g.step = 6;
     emit({ type: 'petGuideSkip' });
     return { ok: true, guideDone: true };
   }
@@ -3876,6 +3882,7 @@
     },
 
     levelFromXp,
+    petGrowthVip,
     progressToNext,
     formatMoney,
     formatXp,

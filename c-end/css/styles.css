@@ -4017,7 +4017,11 @@ img {
   z-index: 2;
   touch-action: none;
 }
-.pet-float-fab:active { cursor: grabbing; }
+.pet-float-fab.pet-guide-hl,
+.pet-float-fab.is-guide .pet-float-bob {
+  box-shadow: 0 0 0 4px #fff, 0 0 0 8px var(--orange), 0 12px 28px rgba(255, 122, 0, 0.45);
+  animation: petFloatBob 2.8s ease-in-out infinite, pet-guide-pulse 1.2s ease-in-out infinite;
+}
 .pet-float-fab[hidden],
 .pet-float-panel[hidden] { display: none !important; }
 .pet-float-bob {

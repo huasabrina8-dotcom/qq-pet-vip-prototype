@@ -293,6 +293,37 @@
     global.setTimeout(wander, 800);
   }
 
+  function parkForGuide() {
+    ensure();
+    stopWander();
+    var panel = document.getElementById('petFloatPanel');
+    if (panel) panel.hidden = true;
+    var fab = document.getElementById('petFloatFab');
+    if (fab) fab.hidden = false;
+    var b = bounds();
+    pos.x = b.minX + Math.max(0, (b.maxX - b.minX) * 0.58);
+    pos.y = b.minY + 10;
+    if (fab) {
+      fab.style.transition = 'left 0.35s ease, top 0.35s ease';
+      fab.style.left = pos.x + 'px';
+      fab.style.top = pos.y + 'px';
+      fab.classList.add('is-guide');
+    }
+  }
+
+  function resumeFromGuide() {
+    var fab = document.getElementById('petFloatFab');
+    if (fab) fab.classList.remove('is-guide');
+    var panel = document.getElementById('petFloatPanel');
+    if (panel && !panel.hidden) return;
+    if (!wanderTimer) startWander();
+  }
+
+  global.TTPetFloat = {
+    parkForGuide: parkForGuide,
+    resumeFromGuide: resumeFromGuide,
+  };
+
   function boot() {
     if (!document.body) return;
     bind();
