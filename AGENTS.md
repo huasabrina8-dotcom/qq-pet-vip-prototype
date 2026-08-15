@@ -2,7 +2,8 @@
 
 ## First read (required)
 
-1. [`docs/萌宠乐园-开发测试宣讲需求.md`](./docs/萌宠乐园-开发测试宣讲需求.md) — **给开发 / 测试宣讲与验收**（含 **玩家手册**）  
+0. [`docs/产品文档规范要求.md`](./docs/产品文档规范要求.md) — 全公司需求文档规范（以后所有项目一律按此出需求）
+1. [`docs/萌宠乐园-开发测试宣讲需求.md`](./docs/萌宠乐园-开发测试宣讲需求.md) — **完整 PRD**（规范六段：背景目标 / 功能 / 流程 / 异常 / 验收 / 风险；含 **玩家手册**）  
 2. [`docs/宠物VIP庄园-需求关键词手账.md`](./docs/宠物VIP庄园-需求关键词手账.md) — product decisions & hard locks  
 3. [`docs/VIP管家宠-冲档版-需求说明.md`](./docs/VIP管家宠-冲档版-需求说明.md) — full rules  
 4. Shared state: `c-end/js/state.js` (`localStorage` → `vip_butler_pet_v3`)
