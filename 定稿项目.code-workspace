@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "name": "萌宠乐园",
+      "path": "."
+    },
+    {
+      "name": "后台活动配置 · 前台 · 抽奖",
+      "path": "../qq-lottery-prototype"
+    },
+    {
+      "name": "QRPH 充值 1% 真金返利",
+      "path": "../qq-qrph-rebate-prototype"
+    }
+  ],
+  "settings": {}
+}

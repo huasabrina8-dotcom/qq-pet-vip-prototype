@@ -11,7 +11,7 @@
       label: '新手 1/5',
       title: '认识 VIP管家宠',
       desc: '欢迎来到宠物窝！我是与你 VIP 一对一绑定的管家宠——不同 VIP 等级有不同形态；VIP5 终极形态可自选养成奖励（非充值）～',
-      primary: '开始吧',
+      primary: '下一步',
       action: 'next',
       highlight: null,
     },
@@ -25,18 +25,18 @@
     },
     {
       label: '新手 3/5',
-      title: '先喂一口吧',
-      desc: '点「喂食」加饱食与亲密度，还能拿 VIP XP。喂一次试试！',
-      primary: '去喂食',
-      action: 'feed',
+      title: '先喂一口',
+      desc: '当日抚养可以点「饱食」喂神兽。点「下一步」继续。',
+      primary: '下一步',
+      action: 'next',
       highlight: 'feed',
     },
     {
       label: '新手 4/5',
-      title: '抚摸或玩耍',
-      desc: '「抚摸」「玩耍」「讲故事」等都能涨亲密度。任选一个完成照料循环！',
-      primary: '去试试',
-      action: 'playclean',
+      title: '再照料一次',
+      desc: '还可以点「喝水」「清洁」。更多互动里可以抚摸、玩耍。点「下一步」继续。',
+      primary: '下一步',
+      action: 'next',
       highlight: 'playclean',
     },
     {
@@ -503,12 +503,13 @@
       const stats = $('#petStats');
       if (stats) stats.classList.add('pet-guide-hl');
     } else if (key === 'feed') {
+      const nurture = document.querySelector('.pet-nurture-btn[data-care="feed"]');
+      if (nurture) nurture.classList.add('pet-guide-hl');
       const btn = $('#btnFeed');
       if (btn) btn.classList.add('pet-guide-hl');
     } else if (key === 'playclean') {
-      ['btnPlay', 'btnPat', 'btnClean'].forEach(function (id) {
-        const el = document.getElementById(id);
-        if (el) el.classList.add('pet-guide-hl');
+      document.querySelectorAll('.pet-nurture-btn[data-care="drink"], .pet-nurture-btn[data-care="clean"]').forEach(function (el) {
+        el.classList.add('pet-guide-hl');
       });
     }
   }
@@ -1513,9 +1514,8 @@
       primary.textContent = copy.primary;
       primary.dataset.action = copy.action;
     }
-    if (overlay.dataset.force === '1' || g.step <= 1) {
-      overlay.hidden = false;
-    }
+    overlay.hidden = false;
+    overlay.dataset.force = '1';
     applyHighlight(copy.highlight);
   }
 
@@ -1597,21 +1597,14 @@
     if (!overlay || !primary || !skip) return;
 
     primary.addEventListener('click', () => {
-      const action = primary.dataset.action;
-      if (action === 'next') {
-        const res = TTStore.petGuideNext();
-        if (res.ok) overlay.dataset.force = '1';
-      } else if (action === 'feed' || action === 'playclean') {
-        overlay.hidden = true;
-        const g = TTStore.get().pet.guide;
-        const copy = GUIDE_COPY[g.step] || {};
-        applyHighlight(copy.highlight);
-        toast(action === 'feed' ? '点高亮的「喂食」按钮～' : '点「抚摸」或「玩耍」试试～', 'success');
-      } else if (action === 'finish') {
+      overlay.dataset.force = '1';
+      if (primary.dataset.action === 'finish') {
         const res = TTStore.petGuideNext();
         if (res.guideDone) toast('新手引导完成 · 去照看管家宠吧', 'success');
         overlay.hidden = true;
         clearHighlights();
+      } else {
+        TTStore.petGuideNext();
       }
       renderAll();
     });

@@ -472,23 +472,27 @@ img {
 .guide-overlay {
   position: fixed;
   inset: 0;
-  z-index: 150;
+  z-index: 220;
   background: rgba(0, 0, 0, 0.45);
   display: flex;
   align-items: flex-end;
   justify-content: center;
   padding: 16px;
-  padding-bottom: calc(16px + var(--safe-bottom));
+  padding-bottom: calc(16px + var(--tabbar-h) + var(--safe-bottom));
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0.25s, visibility 0.25s;
 }
-.modal-overlay.open,
-.guide-overlay:not([hidden]) {
+.modal-overlay.open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+.guide-overlay:not([hidden]) {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
 }
 .guide-overlay[hidden] {
   display: none !important;
@@ -504,6 +508,9 @@ img {
   box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.15);
   transform: translateY(24px);
   transition: transform 0.3s var(--ease);
+}
+.guide-card {
+  pointer-events: auto;
 }
 .modal-overlay.open .modal,
 .guide-overlay:not([hidden]) .guide-card {
@@ -562,11 +569,20 @@ img {
 }
 .guide-actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: stretch;
   gap: 10px;
 }
+.guide-actions .btn-ok {
+  flex: 1;
+  width: auto;
+  min-height: 48px;
+}
 .guide-actions .btn-ghost {
-  width: 100%;
+  width: auto;
+  flex-shrink: 0;
+  min-height: 48px;
+  padding: 0 14px;
 }
 
 .pet-guide-hl {

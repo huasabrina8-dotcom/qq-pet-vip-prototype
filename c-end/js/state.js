@@ -3800,24 +3800,14 @@
     applyDecay();
     const g = state.pet.guide;
     if (!g || g.finished) return { ok: false, reason: 'done' };
-    // Linear next for informational steps; action steps stay until care
-    if (g.step === 0) {
-      g.step = 1;
-    } else if (g.step === 1) {
-      g.step = 2;
-    } else if (g.step === 2 || g.step === 3) {
-      // waiting for care action — UI may dismiss overlay
-      emit({ type: 'petGuide', step: g.step, waiting: true });
-      return { ok: true, step: g.step, waiting: true };
-    } else if (g.step === 4) {
+    if (g.step >= 4) {
       g.finished = true;
       g.active = false;
       g.step = 5;
       emit({ type: 'petGuide', step: 5, guideDone: true });
       return { ok: true, step: 5, guideDone: true };
-    } else {
-      return { ok: false, reason: 'done' };
     }
+    g.step += 1;
     emit({ type: 'petGuide', step: g.step });
     return { ok: true, step: g.step };
   }
