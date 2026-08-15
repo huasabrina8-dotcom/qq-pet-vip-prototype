@@ -276,7 +276,13 @@
     }
 
     bindDrag(fab, open);
-    if (closeBtn) closeBtn.addEventListener('click', hide);
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        hide();
+      });
+    }
     if (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
