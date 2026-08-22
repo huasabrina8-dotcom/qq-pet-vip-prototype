@@ -174,7 +174,7 @@
   const QUEST_VIP_XP = 20;
   const COMBO_KIND_NEED = 3;
   const INTIMACY_PER_LEVEL = 5;
-  /** 亲密度每 5 点升 1 Care Level；形态进阶另计抚养日+互动（档越高越久） */
+  /** 亲密度每 5 点升 1 Care Level；形态进阶另计抚养日+互动+当日对话（档越高越久） */
   /** 终极形态（VIP5）达成奖励 · 每品种自选一次 · 非充值 */
   const ULTIMATE_REWARD_OPTIONS = [
     {
@@ -384,15 +384,15 @@
   };
   const FORM_STAGE_TITLES = ['幼宠', '银徽', '管家', '金甲', '翼宠', '冠宠'];
   /**
-   * 当前形态 → 下一形态：合格抚养日（每 24h 互动最多计 1 天）+ 本档互动次数。
+   * 当前形态 → 下一形态：合格抚养日（每 24h 互动最多计 1 天）+ 本档互动次数 + 每日对话。
    * 档越高越久，用来拉登录粘性；VIP 只作可成长上限，不跳形态。
    */
   const STAGE_GROWTH = [
-    { from: 0, to: 1, needDays: 2, needActs: 6 },
-    { from: 1, to: 2, needDays: 4, needActs: 12 },
-    { from: 2, to: 3, needDays: 6, needActs: 20 },
-    { from: 3, to: 4, needDays: 10, needActs: 36 },
-    { from: 4, to: 5, needDays: 14, needActs: 56 },
+    { from: 0, to: 1, needDays: 2, needActs: 6, needChats: 2 },
+    { from: 1, to: 2, needDays: 4, needActs: 12, needChats: 2 },
+    { from: 2, to: 3, needDays: 6, needActs: 20, needChats: 3 },
+    { from: 3, to: 4, needDays: 10, needActs: 36, needChats: 3 },
+    { from: 4, to: 5, needDays: 14, needActs: 56, needChats: 4 },
   ];
 
   /** 萌宠成长上限：VIP0 与 VIP1 同一档，均可养到银徽。冲档数字仍是 0–5。 */
@@ -690,6 +690,74 @@
     { id: 'r10', name: '棉花糖', vip: 0, species: 'kapre', points: 33 },
   ];
 
+  /** 站内信演示：有未读时在悬浮对话内容区展示（不是萌宠闲聊） */
+  const INBOX_DEFAULT = [
+    {
+      id: 'im01',
+      title: '每日返水已入账',
+      body: '会员 wjfytn329022，今日返水 ₱12.80 已到账，可在大厅领取。',
+      time: '2026-08-19 09:12:08',
+      read: false,
+      type: '钱包',
+    },
+    {
+      id: 'im02',
+      title: '周末亏损返现开启',
+      body: '充值天数 ≥ 15 天可领周末亏损返现，活动至 2026-08-24 23:59:59。',
+      time: '2026-08-19 08:00:15',
+      read: false,
+      type: '活动',
+    },
+    {
+      id: 'im03',
+      title: '系统维护通知',
+      body: '支付通道将于 2026-08-20 02:00:00–04:00:00 维护，期间充提可能延迟到账。',
+      time: '2026-08-18 21:30:44',
+      read: false,
+      type: '系统',
+    },
+    {
+      id: 'im04',
+      title: '深度抚养提醒',
+      body: '你的本命神兽已超过 20 小时未照料，回来抚摸、对话、喂食可继续攒合格抚养日。',
+      time: '2026-08-18 18:05:22',
+      read: false,
+      type: '养成',
+    },
+    {
+      id: 'im05',
+      title: 'GCash 充值成功',
+      body: '订单 D202608181840003，金额 ₱500.00 已入账。',
+      time: '2026-08-18 18:40:03',
+      read: false,
+      type: '钱包',
+    },
+    {
+      id: 'im06',
+      title: '登录安全提示',
+      body: '欢迎回到 Juan365。请理性娱乐，年满 21 周岁。本次登录设备：iPhone · 马尼拉。',
+      time: '2026-08-18 07:02:11',
+      read: false,
+      type: '系统',
+    },
+    {
+      id: 'im07',
+      title: '提现已结算',
+      body: '提现 ₱1,000.00 至 GCash 0969****3098 已结算。',
+      time: '2026-08-14 21:09:33',
+      read: true,
+      type: '钱包',
+    },
+    {
+      id: 'im08',
+      title: '周返水已领取',
+      body: '会员 wjfytn329022 上周返水 ₱218.00 已领取入账。',
+      time: '2026-08-11 00:00:08',
+      read: true,
+      type: '钱包',
+    },
+  ];
+
   const FRIENDS_DEFAULT = [
     { id: 'f1', name: '小鹿同学', avatar: '🦌', vip: 2, species: 'diwata', hunger: 28, mood: 42, clean: 55, health: 70 },
     { id: 'f2', name: '阿橙', avatar: '🧡', vip: 3, species: 'kapre', hunger: 48, mood: 32, clean: 40, health: 65 },
@@ -708,7 +776,7 @@
     lastEvolvedLevel: 1,
     /** 抚养驱动的同种形态阶（0–5）；展示形态 = evoTier，不随 VIP 跳档 */
     evoTier: 0,
-    /** 本档合格抚养日 / 互动次数（进阶门槛，档越高越久） */
+    /** 本档合格抚养日 / 互动次数；当日对话另计 dailyIntimacy.counts.chat */
     stageEnteredAt: Date.now(),
     stageNurtureDays: 0,
     stageActCount: 0,
@@ -757,6 +825,8 @@
     helpDate: todayKey(),
     /** 今日排名种子（演示假玩家） */
     rankSeed: cloneRankSeed(),
+    /** 站内信（演示）；未读在悬浮对话内容区优先展示 */
+    inbox: cloneInboxSeed(),
     /** 对话记录（近 20 条，按日可清） */
     chatMessages: [],
     chatDate: todayKey(),
@@ -791,6 +861,19 @@
       playedOrCleaned: false,
     },
   };
+
+  function cloneInboxSeed() {
+    return INBOX_DEFAULT.map(function (m) {
+      return {
+        id: m.id,
+        title: m.title,
+        body: m.body,
+        time: m.time,
+        read: !!m.read,
+        type: m.type,
+      };
+    });
+  }
 
   function cloneRankSeed() {
     return RANK_SEED_DEFAULT.map(function (r) {
@@ -878,6 +961,7 @@
       parsed.pet = clone(PET_DEFAULT);
       parsed.pet.friends = cloneFriends();
       parsed.pet.rankSeed = cloneRankSeed();
+      parsed.pet.inbox = cloneInboxSeed();
       parsed.pet.adoptedAt = Date.now();
       return;
     }
@@ -965,6 +1049,7 @@
       helpUsed: Math.max(0, Number(p.helpUsed) || 0),
       helpDate: p.helpDate || todayKey(),
       rankSeed: normalizeRankSeed(p.rankSeed),
+      inbox: normalizeInbox(p.inbox),
       chatMessages: normalizeChat(p.chatMessages),
       chatDate: p.chatDate || todayKey(),
       chatGreetedDate: p.chatGreetedDate || null,
@@ -1028,6 +1113,21 @@
     });
     base.questClaimed = !!raw.questClaimed;
     return base;
+  }
+
+  function normalizeInbox(list) {
+    if (!Array.isArray(list)) return cloneInboxSeed();
+    return list.slice(0, 20).map(function (m, i) {
+      const fallback = INBOX_DEFAULT[i] || INBOX_DEFAULT[0];
+      return {
+        id: String(m.id || fallback.id || 'im' + i),
+        title: String(m.title || fallback.title || '站内信'),
+        body: String(m.body || fallback.body || ''),
+        time: String(m.time || fallback.time || '2026-08-19 09:00:00'),
+        read: !!m.read,
+        type: String(m.type || fallback.type || '系统'),
+      };
+    });
   }
 
   function normalizeChat(list) {
@@ -1346,15 +1446,24 @@
     };
   }
 
+  function todayChatCount(pet) {
+    if (!pet) return 0;
+    refreshPetSocialDaily(pet);
+    const c = pet.dailyIntimacy && pet.dailyIntimacy.counts;
+    return Math.max(0, Number(c && c.chat) || 0);
+  }
+
   function getStageGrowthInfo(stateObj) {
     const s = stateObj || state;
     const pet = s.pet || {};
     ensureStageProgress(pet);
+    refreshPetSocialDaily(pet);
     const vip = levelFromXp(s.xp);
     const evoTier = clampEvoTier(pet.evoTier);
     const need = stageGrowthNeed(evoTier);
     const haveDays = pet.stageNurtureDays || 0;
     const haveActs = pet.stageActCount || 0;
+    const haveChats = todayChatCount(pet);
     const now = Date.now();
     const lastQ = Number(pet.stageLastQualifyAt) || 0;
     const nextQualifyAt = lastQ ? lastQ + CARE_PROTECT_MS : 0;
@@ -1367,6 +1476,7 @@
       vip: vip,
       haveDays: haveDays,
       haveActs: haveActs,
+      haveChats: haveChats,
       fromTitle: fromTitle,
       toTitle: toTitle,
       nextQualifyAt: nextQualifyAt,
@@ -1380,8 +1490,10 @@
         isUltimate: false,
         needDays: 0,
         needActs: 0,
+        needChats: 0,
         daysPct: 0,
         actsPct: 0,
+        chatsPct: 0,
         progressPct: 0,
         progressHint: '请先选择 VIP管家神兽',
         vipBlocked: false,
@@ -1394,8 +1506,10 @@
         isUltimate: true,
         needDays: 0,
         needActs: 0,
+        needChats: 0,
         daysPct: 100,
         actsPct: 100,
+        chatsPct: 100,
         progressPct: 100,
         progressHint: '已达终极形态',
         vipBlocked: false,
@@ -1403,20 +1517,24 @@
     }
     const needDays = need.needDays;
     const needActs = need.needActs;
+    const needChats = Math.max(1, Number(need.needChats) || 3);
     const daysReady = haveDays >= needDays;
     const actsReady = haveActs >= needActs;
+    const chatsReady = haveChats >= needChats;
     const vipBlocked = need.to > petGrowthVip(vip);
-    const canEvolve = daysReady && actsReady && !vipBlocked;
+    const canEvolve = daysReady && actsReady && chatsReady && !vipBlocked;
     let reason = null;
     if (vipBlocked) reason = 'need_vip';
     else if (!canEvolve) reason = 'need_nurture';
     const daysPct = Math.min(100, Math.round((haveDays / needDays) * 100));
     const actsPct = Math.min(100, Math.round((haveActs / needActs) * 100));
-    const progressPct = Math.round((daysPct + actsPct) / 2);
+    const chatsPct = Math.min(100, Math.round((haveChats / needChats) * 100));
+    const progressPct = Math.round((daysPct + actsPct + chatsPct) / 3);
     const remainDays = Math.max(0, needDays - haveDays);
     const remainActs = Math.max(0, needActs - haveActs);
+    const remainChats = Math.max(0, needChats - haveChats);
     let progressHint;
-    if (vipBlocked && daysReady && actsReady) {
+    if (vipBlocked && daysReady && actsReady && chatsReady) {
       progressHint = '抚养已满 · 升至 VIP' + need.to + ' 解锁「' + toTitle + '」';
     } else if (canEvolve) {
       progressHint = '可进化解锁「' + toTitle + '」';
@@ -1424,6 +1542,7 @@
       const bits = [];
       if (remainDays > 0) bits.push('再回来抚养 ' + remainDays + ' 天');
       if (remainActs > 0) bits.push('再互动 ' + remainActs + ' 次');
+      if (remainChats > 0) bits.push('再对话 ' + remainChats + ' 次');
       progressHint = bits.join(' · ') + ' 可进化「' + toTitle + '」';
       if (remainDays > 0 && nextQualifyRemainMs > 0) {
         progressHint += '（下次计日 ' + formatProtectRemain(nextQualifyRemainMs) + '）';
@@ -1435,18 +1554,22 @@
       isUltimate: false,
       needDays: needDays,
       needActs: needActs,
+      needChats: needChats,
       needTo: need.to,
       daysReady: daysReady,
       actsReady: actsReady,
+      chatsReady: chatsReady,
       vipBlocked: vipBlocked,
       remainDays: remainDays,
       remainActs: remainActs,
+      remainChats: remainChats,
       daysPct: daysPct,
       actsPct: actsPct,
+      chatsPct: chatsPct,
       progressPct: progressPct,
       progressHint: progressHint,
       tableHint:
-        '幼宠→银徽 2天 · 银徽→管家 4天 · 管家→金甲 6天 · 金甲→翼宠 10天 · 翼宠→冠宠 14天（每 24h 互动计 1 抚养日）',
+        '幼宠→银徽 2天/6次/日对话2 · 银徽→管家 4天/12次/日对话2 · 管家→金甲 6天/20次/日对话3 · 金甲→翼宠 10天/36次/日对话3 · 翼宠→冠宠 14天/56次/日对话4',
     });
   }
 
@@ -1515,8 +1638,8 @@
         kicker: pending ? '尚未达成 · 抚养中' : '尚未达成',
         lead: vipLocked
           ? '升至 VIP' + tier + ' 后，养满上一档即可进化「' + title + '」。'
-          : '继续抚养与互动即可解锁「' + title + '」；档越高所需时间越长。',
-        note: '形态靠抚养日+互动进阶，VIP 只作成长上限。',
+          : '继续抚养、互动并完成当日对话即可解锁「' + title + '」；档越高所需时间越长。',
+        note: '形态靠抚养日+互动+当日对话进阶，VIP 只作成长上限。',
         isPast: true,
         isLocked: true,
         cta: '回到当前形态继续抚养',
@@ -1556,7 +1679,8 @@
           (reachHist ? reachHist.days : reachNeed.needDays) +
           ' 日 / ' +
           (reachHist ? reachHist.acts : reachNeed.needActs) +
-          ' 次',
+          ' 次 / 日对话 ' +
+          (reachNeed.needChats || 2),
       });
     }
     if (current) {
@@ -1573,7 +1697,10 @@
             (growth.haveActs || 0) +
             '/' +
             growth.needActs +
-            ' 次',
+            ' 次 · 今日对话 ' +
+            (growth.haveChats || 0) +
+            '/' +
+            (growth.needChats || 0),
         });
       } else {
         stats.push({ label: '本档', value: '已达终极形态' });
@@ -1620,7 +1747,11 @@
         (growth.haveActs || 0) +
         '/' +
         (growth.needActs || 0) +
-        ' 次互动。再回来深度抚养，就能靠近「' +
+        ' 次互动、今日对话 ' +
+        (growth.haveChats || 0) +
+        '/' +
+        (growth.needChats || 0) +
+        '。再回来深度抚养，就能靠近「' +
         (growth.toTitle || '下一形态') +
         '」。';
     } else if (tier === 0) {
@@ -2140,7 +2271,7 @@
   }
 
   /**
-   * 抚养进阶：本档抚养日+互动达标后可进化；
+   * 抚养进阶：本档抚养日+互动+当日对话达标后可进化；
    * 确认后同种 evoTier +1，并可换菲律宾神兽；VIP 只作可进化上限。
    */
   function getEvolveInfo() {
@@ -2200,8 +2331,9 @@
   }
 
   const EVOLVE_RULES_COPY = [
-    '每个形态需经过抚养日 + 互动才进入下一阶段；档越高所需时间越长',
+    '每个形态需经过抚养日 + 互动 + 当日对话才进入下一阶段；档越高越久',
     '合格抚养日：每 24 小时互动最多计 1 天（幼宠 2 天 → 冠宠前 14 天）',
+    '每日对话：自然日清零；幼宠/银徽 2 次，管家/金甲 3 次，翼宠 4 次。发送成功才计，自动问候和站内信不算',
     'VIP 只限制可成长上限；VIP0 与 VIP1 同一档（均可养到银徽），不会因升 VIP 直接换形态',
     '每次进化：同种形态升一阶；换种请用「更换神兽」（随时，新神兽继承当前形态档）',
     '达终极（冠宠）可自选养成奖励（非充值）',
@@ -2461,7 +2593,7 @@
 
   /**
    * 下一形态预览（刺激持续抚养）
-   * 进度：本档抚养日 + 互动；档越高所需时间越长。
+   * 进度：本档抚养日 + 互动 + 当日对话；档越高所需时间越长。
    */
   function getNextFormTeaser() {
     ensurePet(state);
@@ -2529,9 +2661,11 @@
       tip:
         '每个形态都要养够时间：本档需 ' +
         growth.needDays +
-        ' 个抚养日（每24h互动计1天）和 ' +
+        ' 个抚养日（每24h互动计1天）、' +
         growth.needActs +
-        ' 次互动。档越高越久。VIP 只限制上限，不跳形态。',
+        ' 次互动，以及每日对话 ' +
+        (growth.needChats || 2) +
+        ' 次。档越高越久。VIP 只限制上限，不跳形态。',
       celebrate: false,
       growth: growth,
     };
@@ -3719,6 +3853,43 @@
     return { ok: true, greeting: line, messages: clone(pet.chatMessages) };
   }
 
+  function getInboxInfo() {
+    ensurePet(state);
+    const list = clone(state.pet.inbox || []);
+    list.sort(function (a, b) {
+      return String(b.time).localeCompare(String(a.time));
+    });
+    const unread = list.filter(function (m) {
+      return !m.read;
+    });
+    return {
+      list: list,
+      unread: unread,
+      unreadCount: unread.length,
+    };
+  }
+
+  function markInboxRead(id) {
+    ensurePet(state);
+    const list = state.pet.inbox || [];
+    let found = false;
+    list.forEach(function (m) {
+      if (String(m.id) === String(id) && !m.read) {
+        m.read = true;
+        found = true;
+      }
+    });
+    if (found) emit({ type: 'inboxRead', id: id });
+    return getInboxInfo();
+  }
+
+  function demoRestoreUnreadInbox() {
+    ensurePet(state);
+    state.pet.inbox = cloneInboxSeed();
+    emit({ type: 'demoInbox' });
+    return getInboxInfo();
+  }
+
   const CHAT_QUICK_CHIPS = ['摸摸我', '喂食', '我可爱吗？', '保重', '好想你', '求求你'];
 
   /** 演示：临时提升亲密度（不改 VIP） */
@@ -3733,7 +3904,7 @@
     return { ok: true, careLevel: target };
   }
 
-  /** 演示：填满本档抚养日+互动，使其可进化（不改 VIP） */
+  /** 演示：填满本档抚养日+互动+当日对话，使其可进化（不改 VIP） */
   function demoCompleteStageGrowth() {
     applyDecay();
     const pet = state.pet;
@@ -3744,6 +3915,10 @@
     pet.stageNurtureDays = Math.max(pet.stageNurtureDays, growth.needDays || 0);
     pet.stageActCount = Math.max(pet.stageActCount, growth.needActs || 0);
     pet.stageLastQualifyAt = Date.now();
+    refreshPetSocialDaily(pet);
+    const needChats = Math.max(1, Number(growth.needChats) || 2);
+    if (!pet.dailyIntimacy.counts) pet.dailyIntimacy.counts = {};
+    pet.dailyIntimacy.counts.chat = Math.max(pet.dailyIntimacy.counts.chat || 0, needChats);
     if ((pet.careLevel || 1) < 3) {
       pet.careLevel = 3;
       pet.careCount = Math.max(pet.careCount, 10);
@@ -3865,6 +4040,7 @@
       state.pet = clone(PET_DEFAULT);
       state.pet.friends = cloneFriends();
       state.pet.rankSeed = cloneRankSeed();
+      state.pet.inbox = cloneInboxSeed();
       state.pet.chatMessages = [];
       state.pet.chatDate = todayKey();
       state.pet.chatGreetedDate = null;
@@ -4036,7 +4212,7 @@
         needsSpeciesPick: !hasChosenSpecies(state.pet),
         speciesCatalog: getSpeciesCatalog(),
         speciesRule:
-          '一员一宠始终绑定；首次进窝必选菲律宾神兽；可随时更换神兽并继承当前形态档；形态靠抚养日+互动进阶。VIP 只作成长上限。无出售/无付费换种。',
+          '一员一宠始终绑定；首次进窝必选菲律宾神兽；可随时更换神兽并继承当前形态档；形态靠抚养日+互动+当日对话进阶。VIP 只作成长上限。无出售/无付费换种。',
         careProtect: getCareProtectInfo(),
         nurtureCadence: getNurtureCadenceInfo(),
         careDemoteToast: (function () {
@@ -4075,6 +4251,7 @@
           messages: clone(state.pet.chatMessages || []),
           chips: (voiceInfo && voiceInfo.chips && voiceInfo.chips.slice()) || CHAT_QUICK_CHIPS.slice(),
         },
+        inbox: getInboxInfo(),
         pointsRules: clone(DAILY_POINTS),
       };
     },
@@ -4117,6 +4294,9 @@
     petDisplayTier,
     petChatSend,
     petChatGreeting,
+    getInboxInfo,
+    markInboxRead,
+    demoRestoreUnreadInbox,
     petAppearance,
     setArtStyle,
     getArtStyleSwitchInfo,

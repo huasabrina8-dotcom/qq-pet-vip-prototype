@@ -1209,7 +1209,8 @@
 }
 .pet-tab.is-active { background: var(--orange); border-color: var(--orange); color: #fff; }
 .pet-tab-panel[hidden] { display: none !important; }
-.pet-tab-panel[data-panel="friends"] { display: none !important; }
+.pet-tab-panel[data-panel="friends"],
+.pet-tab-panel[data-panel="chat"] { display: none !important; }
 
 .pet-chat-card {
   display: flex;
@@ -1760,6 +1761,7 @@
   border-radius: 999px;
 }
 .pet-stage-growth-fill.acts { background: linear-gradient(90deg, #86efac, #16a34a); }
+.pet-stage-growth-fill.chats { background: linear-gradient(90deg, #7dd3fc, #0284c7); }
 .pet-stage-growth-hint {
   margin: 8px 0 0;
   font-size: 12px;
@@ -2297,7 +2299,7 @@ body.is-pet-nest .pet-panel .pet-stage-growth {
   border: none;
 }
 body.is-pet-nest .pet-stage-growth-row {
-  grid-template-columns: 72px 1fr;
+  grid-template-columns: 108px 1fr;
   font-size: 12px;
 }
 body.is-pet-nest .btn-evolve {

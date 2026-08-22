@@ -2755,7 +2755,8 @@ img {
   color: #fff;
 }
 .pet-tab-panel[hidden] { display: none !important; }
-.pet-tab-panel[data-panel="friends"] { display: none !important; }
+.pet-tab-panel[data-panel="friends"],
+.pet-tab-panel[data-panel="chat"] { display: none !important; }
 .pet-panel-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -3289,7 +3290,7 @@ img {
 }
 .pet-stage-growth-row {
   display: grid;
-  grid-template-columns: 110px 1fr;
+  grid-template-columns: 118px 1fr;
   align-items: center;
   gap: 8px;
   margin-top: 6px;
@@ -3311,6 +3312,9 @@ img {
 }
 .pet-stage-growth-fill.acts {
   background: linear-gradient(90deg, #86efac, #16a34a);
+}
+.pet-stage-growth-fill.chats {
+  background: linear-gradient(90deg, #7dd3fc, #0284c7);
 }
 .pet-stage-growth-hint {
   margin: 8px 0 0;
@@ -4023,7 +4027,8 @@ img {
   animation: petFloatBob 2.8s ease-in-out infinite, pet-guide-pulse 1.2s ease-in-out infinite;
 }
 .pet-float-fab[hidden],
-.pet-float-panel[hidden] { display: none !important; }
+.pet-float-panel[hidden],
+.pet-float-chips[hidden] { display: none !important; }
 .pet-float-bob {
   width: 76px;
   height: 76px;
@@ -4143,6 +4148,73 @@ img {
   background: var(--orange);
   color: #fff;
   border-bottom-right-radius: 4px;
+}
+.pet-float-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 18px;
+  text-align: center;
+  pointer-events: none;
+  z-index: 3;
+  box-shadow: 0 0 0 2px #fff;
+}
+.pet-float-badge[hidden] { display: none !important; }
+.pet-float-mail {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 1px solid #ffe0c2;
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px 10px 10px;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+.pet-float-mail:hover { border-color: var(--orange); }
+.pet-float-mail-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.pet-float-mail-flag {
+  font-size: 10px;
+  font-weight: 800;
+  color: #fff;
+  background: #ef4444;
+  border-radius: 999px;
+  padding: 1px 6px;
+}
+.pet-float-mail-type {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--orange-deep);
+}
+.pet-float-mail strong {
+  display: block;
+  font-size: 13px;
+  margin: 0 0 2px;
+}
+.pet-float-mail small {
+  display: block;
+  font-size: 11px;
+  color: #667085;
+}
+.pet-float-mail p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #344054;
 }
 .pet-float-chips {
   display: flex;

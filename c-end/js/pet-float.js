@@ -95,6 +95,7 @@
       '<button type="button" class="pet-float-fab" id="petFloatFab" aria-label="打开萌宠对话">' +
       '<span class="pet-float-bob" id="petFloatAva">🐾</span>' +
       '<span class="pet-float-hint" id="petFloatHint">陪你</span>' +
+      '<span class="pet-float-badge" id="petFloatBadge" hidden>0</span>' +
       '</button>' +
       '<div class="pet-float-panel" id="petFloatPanel" hidden role="dialog" aria-label="和萌宠对话">' +
       '<div class="pet-float-top">' +
@@ -125,6 +126,49 @@
     }
   }
 
+  function renderInbox(unread) {
+    var log = document.getElementById('petFloatLog');
+    if (!log) return;
+    var n = unread.length;
+    var intro =
+      '<div class="pet-float-bubble pet">' +
+      escapeHtml('主人，你有 ' + n + ' 封未读站内信，先看一眼～') +
+      '</div>';
+    var cards = unread
+      .map(function (m) {
+        return (
+          '<button type="button" class="pet-float-mail" data-mid="' +
+          escapeHtml(m.id) +
+          '">' +
+          '<span class="pet-float-mail-row">' +
+          '<span class="pet-float-mail-flag">未读</span>' +
+          '<span class="pet-float-mail-type">' +
+          escapeHtml(m.type) +
+          '</span>' +
+          '</span>' +
+          '<strong>' +
+          escapeHtml(m.title) +
+          '</strong>' +
+          '<small>' +
+          escapeHtml(m.time) +
+          '</small>' +
+          '<p>' +
+          escapeHtml(m.body) +
+          '</p>' +
+          '</button>'
+        );
+      })
+      .join('');
+    log.innerHTML = intro + cards;
+    log.querySelectorAll('.pet-float-mail').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (global.TTStore && TTStore.markInboxRead) TTStore.markInboxRead(btn.dataset.mid);
+        refresh();
+      });
+    });
+    log.scrollTop = 0;
+  }
+
   function renderLog(msgs) {
     var log = document.getElementById('petFloatLog');
     if (!log) return;
@@ -143,30 +187,63 @@
     log.scrollTop = log.scrollHeight;
   }
 
+  function renderBadge(count) {
+    var badge = document.getElementById('petFloatBadge');
+    if (!badge) return;
+    if (count > 0) {
+      badge.hidden = false;
+      badge.textContent = count > 9 ? '9+' : String(count);
+    } else {
+      badge.hidden = true;
+    }
+  }
+
   function refresh() {
     var info = look();
     setAva(document.getElementById('petFloatAva'), info);
     setAva(document.getElementById('petFloatPanelAva'), info);
     var title = document.getElementById('petFloatTitle');
     if (title) title.textContent = info.needsSpeciesPick ? '和萌宠对话' : '和' + (info.petName || '萌宠') + '对话';
-    var hint = document.getElementById('petFloatHint');
-    if (hint) hint.textContent = info.needsSpeciesPick ? '选我' : '陪你';
     if (!global.TTStore || !TTStore.getPetSnapshot) return;
     var snap = TTStore.getPetSnapshot();
-    renderLog(snap.chat && snap.chat.messages);
+    var unreadCount = (snap.inbox && snap.inbox.unreadCount) || 0;
+    renderBadge(unreadCount);
+    var hint = document.getElementById('petFloatHint');
+    if (hint) {
+      if (unreadCount) hint.textContent = '信';
+      else hint.textContent = info.needsSpeciesPick ? '选我' : '陪你';
+    }
+    var fab = document.getElementById('petFloatFab');
+    if (fab) {
+      fab.setAttribute(
+        'aria-label',
+        unreadCount ? '打开萌宠对话，' + unreadCount + ' 封未读站内信' : '打开萌宠对话'
+      );
+    }
+    if (unreadCount && snap.inbox && snap.inbox.unread) {
+      renderInbox(snap.inbox.unread);
+    } else {
+      renderLog(snap.chat && snap.chat.messages);
+    }
     var chips = document.getElementById('petFloatChips');
-    if (chips && snap.chat && snap.chat.chips) {
-      chips.innerHTML = snap.chat.chips
-        .slice(0, 4)
-        .map(function (c) {
-          return '<button type="button" class="pet-float-chip" data-chip="' + escapeHtml(c) + '">' + escapeHtml(c) + '</button>';
-        })
-        .join('');
-      chips.querySelectorAll('.pet-float-chip').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          send(btn.dataset.chip);
+    if (chips) {
+      if (unreadCount) {
+        chips.hidden = true;
+        chips.innerHTML = '';
+      } else if (snap.chat && snap.chat.chips) {
+        chips.hidden = false;
+        chips.innerHTML = snap.chat.chips
+          .slice(0, 4)
+          .map(function (c) {
+            return '<button type="button" class="pet-float-chip" data-chip="' + escapeHtml(c) + '">' + escapeHtml(c) + '</button>';
+          })
+          .join('');
+        chips.querySelectorAll('.pet-float-chip').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            send(btn.dataset.chip);
+          });
         });
-      });
+      }
     }
   }
 

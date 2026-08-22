@@ -6,8 +6,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="format-detection" content="telephone=no">
   <title>宠物窝 — 萌宠乐园 H5</title>
-  <link rel="stylesheet" href="css/h5.css?v=20260815n">
-  <link rel="stylesheet" href="css/pages.css?v=20260815f">
+  <link rel="stylesheet" href="css/h5.css?v=20260819a">
+  <link rel="stylesheet" href="css/pages.css?v=20260819c">
 </head>
 <body class="is-pet-nest">
   <header class="h5-header">
@@ -130,6 +130,10 @@
             <span>互动 <b id="stageGrowthActs">0/6</b></span>
             <div class="pet-stage-growth-bar"><div class="pet-stage-growth-fill acts" id="stageGrowthActsFill" style="width:0%"></div></div>
           </div>
+          <div class="pet-stage-growth-row">
+            <span>今日对话 <b id="stageGrowthChats">0/2</b></span>
+            <div class="pet-stage-growth-bar"><div class="pet-stage-growth-fill chats" id="stageGrowthChatsFill" style="width:0%"></div></div>
+          </div>
           <p class="pet-stage-growth-hint" id="stageGrowthHint">每个形态需养够时间；档越高越久。</p>
         </div>
         <div class="pet-ultimate-banner" id="ultimateRewardBanner" hidden></div>
@@ -160,7 +164,6 @@
 
     <nav class="pet-tabs" role="tablist" aria-label="宠物窝功能">
       <button type="button" class="pet-tab is-active" data-tab="care" role="tab">照料</button>
-      <button type="button" class="pet-tab" data-tab="chat" role="tab">对话</button>
       <button type="button" class="pet-tab" data-tab="rank" role="tab">排名</button>
     </nav>
     </div>
@@ -253,12 +256,13 @@
           <button class="btn-ghost" id="btnDemoProtect" type="button">经过24小时</button>
           <button class="btn-ghost" id="btnDemoNeeds" type="button">需求提醒</button>
           <button class="btn-ghost" id="btnDemoVip5" type="button">VIP5 终极奖励</button>
+          <button class="btn-ghost" id="btnDemoInbox" type="button">未读站内信</button>
           <button class="btn-ghost" id="btnReset" type="button">重置演示</button>
         </div>
       </details>
     </div>
 
-    <div class="pet-tab-panel" data-panel="chat" role="tabpanel" hidden>
+    <div class="pet-tab-panel" data-panel="chat" role="tabpanel" hidden aria-hidden="true" style="display:none">
       <div class="h5-section pet-chat-card">
         <div class="pet-chat-head">
           <span class="pet-chat-ava" aria-hidden="true">🐾</span>
@@ -398,11 +402,11 @@
 
   <div class="toast-wrap" id="toastWrap"></div>
 
-  <script src="../c-end/js/state.js?v=20260815m"></script>
+  <script src="../c-end/js/state.js?v=20260819b"></script>
   <script src="js/ui.js?v=20260814h"></script>
   <script src="js/shell.js?v=20260814h"></script>
   <script src="../c-end/js/cs-chat.js?v=20260815g"></script>
-  <script src="../c-end/js/pet-float.js?v=20260815n"></script>
-  <script src="js/pet.js?v=20260815i"></script>
+  <script src="../c-end/js/pet-float.js?v=20260819a"></script>
+  <script src="js/pet.js?v=20260819c"></script>
 </body>
 </html>

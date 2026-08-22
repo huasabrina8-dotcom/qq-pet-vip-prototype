@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <title>宠物窝 — 萌宠乐园</title>
-  <link rel="stylesheet" href="css/styles.css?v=20260815i">
+  <link rel="stylesheet" href="css/styles.css?v=20260819c">
 </head>
 <body>
   <header class="c-header">
@@ -146,6 +146,10 @@
               <span>互动 <b id="stageGrowthActs">0/6</b></span>
               <div class="pet-stage-growth-bar"><div class="pet-stage-growth-fill acts" id="stageGrowthActsFill" style="width:0%"></div></div>
             </div>
+            <div class="pet-stage-growth-row">
+              <span>今日对话 <b id="stageGrowthChats">0/2</b></span>
+              <div class="pet-stage-growth-bar"><div class="pet-stage-growth-fill chats" id="stageGrowthChatsFill" style="width:0%"></div></div>
+            </div>
             <p class="pet-stage-growth-hint" id="stageGrowthHint">每个形态需养够时间；档越高越久。</p>
           </div>
           <div class="pet-ultimate-banner" id="ultimateRewardBanner" hidden></div>
@@ -179,7 +183,6 @@
         </div>
         <nav class="pet-tabs" role="tablist" aria-label="宠物窝功能">
           <button type="button" class="pet-tab is-active" data-tab="care" role="tab" aria-selected="true">照料</button>
-          <button type="button" class="pet-tab" data-tab="chat" role="tab" aria-selected="false">对话</button>
           <button type="button" class="pet-tab" data-tab="rank" role="tab" aria-selected="false">今日排名</button>
         </nav>
 
@@ -283,7 +286,7 @@
         </div>
         </div><!-- /care panel -->
 
-        <div class="pet-tab-panel" data-panel="chat" role="tabpanel" hidden>
+        <div class="pet-tab-panel" data-panel="chat" role="tabpanel" hidden aria-hidden="true" style="display:none">
           <div class="pet-panel-card pet-chat-card">
             <div class="pet-chat-head">
               <span class="pet-chat-ava" aria-hidden="true">🐾</span>
@@ -334,11 +337,12 @@
         <details class="pet-demo-fold">
           <summary>演示工具</summary>
           <div class="demo-bar pet-demo-bar">
-            <button class="btn-ghost" id="btnDemoCare" type="button" title="演示：填满本档抚养日与互动">本档抚养完成</button>
+            <button class="btn-ghost" id="btnDemoCare" type="button" title="演示：填满本档抚养日、互动与今日对话">本档抚养完成</button>
             <button class="btn-ghost" id="btnDemoGold" type="button" title="演示：直接养成到金甲，便于点前面的档看回顾">养成到金甲</button>
             <button class="btn-ghost" id="btnDemoProtect" type="button" title="将上次互动拨回 24h 前">经过24小时</button>
             <button class="btn-ghost" id="btnDemoNeeds" type="button" title="演示：需求到期提醒">需求提醒</button>
             <button class="btn-ghost" id="btnDemoVip5" type="button" title="演示冲至 VIP5 打开奖励自选">VIP5 终极奖励</button>
+            <button class="btn-ghost" id="btnDemoInbox" type="button" title="演示：悬浮对话展示未读站内信">未读站内信</button>
             <button class="btn-ghost" id="btnReset" type="button">重置演示</button>
             <a class="btn-ghost" href="lobby.html">← 大厅</a>
           </div>
@@ -436,10 +440,10 @@
 
   <div class="toast-wrap" id="toastWrap"></div>
 
-  <script src="js/state.js?v=20260815m"></script>
+  <script src="js/state.js?v=20260819b"></script>
   <script src="js/ui.js?v=20260815f"></script>
   <script src="js/cs-chat.js?v=20260815g"></script>
-  <script src="js/pet-float.js?v=20260815n"></script>
-  <script src="js/pet.js?v=20260815i"></script>
+  <script src="js/pet-float.js?v=20260819a"></script>
+  <script src="js/pet.js?v=20260819c"></script>
 </body>
 </html>

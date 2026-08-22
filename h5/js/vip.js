@@ -225,7 +225,7 @@
     const hint = document.getElementById('artStyleHint');
     if (hint) {
       hint.textContent =
-        '点任意形态看该档说明：已达成看抚养总结，未养成看解锁条件。六套风格可随时切换。形态靠抚养日+互动进阶。可随时更换神兽，新神兽继承当前形态档。';
+        '点任意形态看该档说明：已达成看抚养总结，未养成看解锁条件。六套风格可随时切换。形态靠抚养日+互动+当日对话进阶。可随时更换神兽，新神兽继承当前形态档。';
     }
     const switchBtn = document.getElementById('btnSwitchSpecies');
     if (switchBtn) switchBtn.hidden = !info.chosen;

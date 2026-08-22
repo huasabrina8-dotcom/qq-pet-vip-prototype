@@ -765,7 +765,8 @@ img {
   overflow: visible;
 }
 .pet-float-fab[hidden],
-.pet-float-panel[hidden] { display: none !important; }
+.pet-float-panel[hidden],
+.pet-float-chips[hidden] { display: none !important; }
 .pet-float-fab {
   position: absolute;
   left: 16px;
@@ -821,7 +822,7 @@ img {
   right: 12px;
   width: auto;
   bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 8px);
-  height: min(36vh, 292px);
+  height: min(48vh, 380px);
   max-height: calc(100dvh - var(--header-h) - var(--tabbar-h) - 72px);
   background: #fff;
   border-radius: 16px;
@@ -882,6 +883,29 @@ img {
   align-self: flex-end; background: var(--orange); color: #fff;
   border-bottom-right-radius: 4px;
 }
+.pet-float-badge {
+  position: absolute; top: 2px; right: 2px;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 999px; background: #ef4444; color: #fff;
+  font-size: 11px; font-weight: 800; line-height: 18px; text-align: center;
+  pointer-events: none; z-index: 3; box-shadow: 0 0 0 2px #fff;
+}
+.pet-float-badge[hidden] { display: none !important; }
+.pet-float-mail {
+  display: block; width: 100%; text-align: left;
+  border: 1px solid #ffe0c2; background: #fff;
+  border-radius: 12px; padding: 8px 10px 10px;
+  cursor: pointer; font: inherit; color: inherit;
+}
+.pet-float-mail-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.pet-float-mail-flag {
+  font-size: 10px; font-weight: 800; color: #fff;
+  background: #ef4444; border-radius: 999px; padding: 1px 6px;
+}
+.pet-float-mail-type { font-size: 11px; font-weight: 700; color: var(--orange-deep); }
+.pet-float-mail strong { display: block; font-size: 13px; margin: 0 0 2px; }
+.pet-float-mail small { display: block; font-size: 11px; color: #667085; }
+.pet-float-mail p { margin: 6px 0 0; font-size: 12px; line-height: 1.4; color: #344054; }
 .pet-float-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 10px 0; }
 .pet-float-chip {
   font-size: 11px; font-weight: 700; padding: 6px 10px; border-radius: 999px;

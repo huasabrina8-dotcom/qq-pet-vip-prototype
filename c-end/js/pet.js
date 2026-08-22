@@ -41,8 +41,8 @@
     },
     {
       label: '新手 5/6',
-      title: '进化 · 对话页签',
-      desc: '亲密度升级可「进化」并换菲律宾神兽。窝里「对话」页签也能聊天、涨亲密度。建议每 24 小时回来深度抚养一次。',
+      title: '进化与悬浮对话',
+      desc: '养够抚养日、互动和当日对话后可点「进化」。和萌宠说话请点整页悬浮的萌宠（计入今日深度抚养）。建议每 24 小时回来深度抚养一次。',
       primary: '下一步',
       action: 'next',
       highlight: null,
@@ -456,8 +456,10 @@
     const label = $('#stageGrowthLabel');
     const days = $('#stageGrowthDays');
     const acts = $('#stageGrowthActs');
+    const chats = $('#stageGrowthChats');
     const daysFill = $('#stageGrowthDaysFill');
     const actsFill = $('#stageGrowthActsFill');
+    const chatsFill = $('#stageGrowthChatsFill');
     const hint = $('#stageGrowthHint');
     if (label) {
       label.textContent = growth.isUltimate
@@ -470,8 +472,12 @@
     if (acts) {
       acts.textContent = growth.isUltimate ? '—' : growth.haveActs + '/' + growth.needActs;
     }
+    if (chats) {
+      chats.textContent = growth.isUltimate ? '—' : (growth.haveChats || 0) + '/' + (growth.needChats || 0);
+    }
     if (daysFill) daysFill.style.width = (growth.daysPct || 0) + '%';
     if (actsFill) actsFill.style.width = (growth.actsPct || 0) + '%';
+    if (chatsFill) chatsFill.style.width = (growth.chatsPct || 0) + '%';
     if (hint) hint.textContent = growth.progressHint || growth.tableHint || '';
   }
 
@@ -527,7 +533,7 @@
   }
 
   function switchTab(tab) {
-    if (tab === 'friends') tab = 'care';
+    if (tab === 'friends' || tab === 'chat') tab = 'care';
     activeTab = tab;
     document.querySelectorAll('.pet-tab').forEach((btn) => {
       const on = btn.dataset.tab === tab;
@@ -1782,7 +1788,7 @@
                 ? '已达终极形态'
                 : '演示失败'
           );
-        } else toast('演示：本档抚养日与互动已满', 'success');
+        } else toast('演示：本档抚养日、互动与今日对话已满', 'success');
         renderAll();
         if (TTStore.getEvolveInfo && TTStore.getEvolveInfo().canEvolve) openEvolveModal();
       });
@@ -1832,6 +1838,14 @@
         renderAll();
         const info = TTStore.getUltimateRewardInfo && TTStore.getUltimateRewardInfo();
         if (info && info.canClaim) openUltimatePickModal(info);
+      });
+    }
+    const btnDemoInbox = $('#btnDemoInbox');
+    if (btnDemoInbox) {
+      btnDemoInbox.addEventListener('click', function () {
+        if (TTStore.demoRestoreUnreadInbox) TTStore.demoRestoreUnreadInbox();
+        toast('演示：悬浮对话将展示未读站内信', 'success');
+        renderAll();
       });
     }
 
