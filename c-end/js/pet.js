@@ -1025,41 +1025,6 @@
     syncSpeciesPickConfirm();
   }
 
-  function renderSpeciesPickStyles() {
-    const box = $('#speciesPickStyles');
-    if (!box) return;
-    const styles = TTStore.ART_STYLES || [];
-    box.innerHTML = styles
-      .map(function (s) {
-        const on = s.id === pickArtStyle;
-        return (
-          '<button type="button" class="species-pick-style' +
-          (on ? ' is-on' : '') +
-          '" data-art-style="' +
-          s.id +
-          '" role="tab" aria-selected="' +
-          (on ? 'true' : 'false') +
-          '">' +
-          s.label +
-          '<small>' +
-          (s.hint || '') +
-          '</small></button>'
-        );
-      })
-      .join('');
-    box.querySelectorAll('.species-pick-style').forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const next = btn.dataset.artStyle;
-        if (!next || next === pickArtStyle) return;
-        pickArtStyle = next;
-        renderSpeciesPickStyles();
-        paintSpeciesPickGallery();
-      });
-    });
-  }
-
   function renderSpeciesPickOverlay(snap) {
     const overlay = $('#speciesPickOverlay');
     if (!overlay) return;
@@ -1074,7 +1039,6 @@
     if (TTStore.normalizeArtStyle) {
       pickArtStyle = TTStore.normalizeArtStyle(pickArtStyle || (snap && snap.pet && snap.pet.artStyle));
     }
-    renderSpeciesPickStyles();
     paintSpeciesPickGallery();
   }
 

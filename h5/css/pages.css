@@ -683,7 +683,7 @@
 .pet-next-art {
   display: block;
   width: 72px;
-  height: 88px;
+  height: 72px;
   border-radius: 12px;
   overflow: hidden;
   background: #fff8f0;
@@ -1934,11 +1934,12 @@
   box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.15);
 }
 .species-pick-roster {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 4px;
+  display: flex;
+  gap: 6px;
   margin: 0 0 10px;
   flex-shrink: 0;
+  overflow-x: auto;
+  padding-bottom: 4px;
 }
 .spc-roster-item {
   display: flex;
@@ -1950,6 +1951,7 @@
   border: 1px solid #eee;
   background: #fffaf5;
   min-width: 0;
+  flex: 0 0 64px;
   -webkit-tap-highlight-color: transparent;
 }
 .spc-roster-item span {
@@ -1964,10 +1966,10 @@
 .spc-roster-item img,
 .spc-roster-img {
   display: block;
-  width: 36px;
-  height: 68px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
-  object-position: center top;
+  object-position: center;
 }
 .spc-roster-item.is-selected {
   border-color: var(--orange);
@@ -2038,8 +2040,8 @@
 }
 .spc-ult-art {
   position: relative;
-  width: 88px;
-  height: 176px;
+  width: 96px;
+  height: 96px;
   margin: 0 auto;
   border-radius: 10px;
   overflow: hidden;
@@ -2101,8 +2103,8 @@
 .spc-start-label { font-weight: 700; color: var(--text-3); }
 .spc-start-art {
   position: relative;
-  width: 28px;
-  height: 56px;
+  width: 36px;
+  height: 36px;
   flex-shrink: 0;
   overflow: hidden;
   display: flex;

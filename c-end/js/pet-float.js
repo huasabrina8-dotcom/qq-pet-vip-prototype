@@ -9,10 +9,8 @@
   var wanderTimer = 0;
   var dragging = false;
   var moved = false;
-
-  function petHref() {
-    return 'pet.html?v=20260815h';
-  }
+  /** inbox = 站内信（左）；cs = 客服系统（右） */
+  var activeTab = 'inbox';
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -86,6 +84,27 @@
     }
   }
 
+  function entryAllowed() {
+    try {
+      var flag = localStorage.getItem('mengchong_float_entry_v1');
+      if (flag === '0') return false;
+      if (flag === '1') return true;
+    } catch (e) {}
+    return true;
+  }
+
+  function applyEntry() {
+    var layer = document.getElementById('petFloatLayer');
+    if (!layer) return entryAllowed();
+    var on = entryAllowed();
+    layer.hidden = !on;
+    if (!on) {
+      var panel = document.getElementById('petFloatPanel');
+      if (panel) panel.hidden = true;
+    }
+    return on;
+  }
+
   function ensure() {
     if (document.getElementById('petFloatLayer')) return;
     var layer = document.createElement('div');
@@ -101,11 +120,12 @@
       '<div class="pet-float-top">' +
       '<span class="ava" id="petFloatPanelAva">🐾</span>' +
       '<div><strong id="petFloatTitle">和萌宠对话</strong>' +
-      '<small>整页悬浮陪伴 · 计入今日深度抚养</small></div>' +
-      '<a class="pet-float-go" id="petFloatGo" href="' +
-      petHref() +
-      '">去窝</a>' +
+      '<small id="petFloatSub">整页悬浮陪伴 · 计入今日深度抚养</small></div>' +
       '<button type="button" class="pet-float-close" id="petFloatClose" aria-label="关闭">×</button>' +
+      '</div>' +
+      '<div class="pet-float-tabs" role="tablist">' +
+      '<button type="button" class="pet-float-tab is-active" id="petFloatTabInbox" role="tab" aria-selected="true">站内信<span class="pet-float-tab-count" id="petFloatTabCount" hidden>0</span></button>' +
+      '<button type="button" class="pet-float-tab" id="petFloatTabCs" role="tab" aria-selected="false">客服系统</button>' +
       '</div>' +
       '<div class="pet-float-log" id="petFloatLog" aria-live="polite"></div>' +
       '<div class="pet-float-chips" id="petFloatChips"></div>' +
@@ -187,6 +207,67 @@
     log.scrollTop = log.scrollHeight;
   }
 
+  function renderCs() {
+    var log = document.getElementById('petFloatLog');
+    var chips = document.getElementById('petFloatChips');
+    var api = global.TTCsChat;
+    var msgs = api && api.getMessages ? api.getMessages() : [];
+    var busy = !!(api && api.isBusy && api.isBusy());
+    if (log) {
+      var html = msgs
+        .map(function (m) {
+          return (
+            '<div class="pet-float-bubble ' +
+            (m.role === 'user' ? 'user' : 'agent') +
+            '">' +
+            escapeHtml(m.text) +
+            '</div>'
+          );
+        })
+        .join('');
+      if (busy) html += '<div class="pet-float-bubble agent typing">客服正在输入…</div>';
+      if (!html) html = '<div class="pet-float-bubble agent">在线客服在这里，有问题直接发。</div>';
+      log.innerHTML = html;
+      log.scrollTop = log.scrollHeight;
+    }
+    if (chips) {
+      chips.hidden = true;
+      chips.innerHTML = '';
+    }
+  }
+
+  function applyTabs(unreadCount) {
+    var onCs = activeTab === 'cs';
+    var inboxBtn = document.getElementById('petFloatTabInbox');
+    var csBtn = document.getElementById('petFloatTabCs');
+    var countEl = document.getElementById('petFloatTabCount');
+    var sub = document.getElementById('petFloatSub');
+    var input = document.getElementById('petFloatInput');
+    if (inboxBtn) {
+      inboxBtn.classList.toggle('is-active', !onCs);
+      inboxBtn.setAttribute('aria-selected', onCs ? 'false' : 'true');
+    }
+    if (csBtn) {
+      csBtn.classList.toggle('is-active', onCs);
+      csBtn.setAttribute('aria-selected', onCs ? 'true' : 'false');
+    }
+    if (countEl) {
+      if (unreadCount > 0) {
+        countEl.hidden = false;
+        countEl.textContent = unreadCount > 9 ? '9+' : String(unreadCount);
+      } else {
+        countEl.hidden = true;
+      }
+    }
+    if (sub) {
+      sub.textContent = onCs ? '在线客服 · 不计入今日对话' : '整页悬浮陪伴 · 计入今日深度抚养';
+    }
+    if (input) {
+      input.maxLength = onCs ? 120 : 80;
+      input.placeholder = onCs ? '输入要咨询的问题…' : '跟萌宠说点什么…';
+    }
+  }
+
   function renderBadge(count) {
     var badge = document.getElementById('petFloatBadge');
     if (!badge) return;
@@ -199,6 +280,7 @@
   }
 
   function refresh() {
+    if (!applyEntry()) return;
     var info = look();
     setAva(document.getElementById('petFloatAva'), info);
     setAva(document.getElementById('petFloatPanelAva'), info);
@@ -208,6 +290,7 @@
     var snap = TTStore.getPetSnapshot();
     var unreadCount = (snap.inbox && snap.inbox.unreadCount) || 0;
     renderBadge(unreadCount);
+    applyTabs(unreadCount);
     var hint = document.getElementById('petFloatHint');
     if (hint) {
       if (unreadCount) hint.textContent = '信';
@@ -219,6 +302,10 @@
         'aria-label',
         unreadCount ? '打开萌宠对话，' + unreadCount + ' 封未读站内信' : '打开萌宠对话'
       );
+    }
+    if (activeTab === 'cs') {
+      renderCs();
+      return;
     }
     if (unreadCount && snap.inbox && snap.inbox.unread) {
       renderInbox(snap.inbox.unread);
@@ -337,19 +424,42 @@
     pos.y = b.minY + 24;
     placeFab(false);
 
-    function open() {
-      closeCs();
-      panel.hidden = false;
-      fab.hidden = true;
-      stopWander();
-      if (TTStore.petChatGreeting) TTStore.petChatGreeting(false);
-      refresh();
-      if (input) input.focus();
-    }
     function hide() {
       panel.hidden = true;
       fab.hidden = false;
+      var csFab = document.getElementById('csChatFab');
+      if (csFab) csFab.hidden = false;
       startWander();
+    }
+    function openTab(tab) {
+      if (!entryAllowed()) {
+        applyEntry();
+        return;
+      }
+      var wasHidden = panel.hidden;
+      activeTab = tab === 'cs' ? 'cs' : 'inbox';
+      closeCs();
+      panel.hidden = false;
+      fab.hidden = true;
+      var csFab = document.getElementById('csChatFab');
+      if (csFab) csFab.hidden = true;
+      stopWander();
+      if (wasHidden && activeTab === 'inbox' && global.TTStore && TTStore.petChatGreeting) {
+        TTStore.petChatGreeting(false);
+      }
+      refresh();
+      if (input) input.focus();
+    }
+    function toggleTab(tab) {
+      var next = tab === 'cs' ? 'cs' : 'inbox';
+      if (!panel.hidden && activeTab === next) {
+        hide();
+        return;
+      }
+      openTab(next);
+    }
+    function open() {
+      openTab('inbox');
     }
 
     bindDrag(fab, open);
@@ -363,7 +473,33 @@
     if (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        send(input ? input.value : '');
+        var text = input ? input.value : '';
+        if (activeTab === 'cs') {
+          var sent = global.TTCsChat && TTCsChat.send && TTCsChat.send(text);
+          if (sent && input) input.value = '';
+          return;
+        }
+        send(text);
+      });
+    }
+    var tabInbox = document.getElementById('petFloatTabInbox');
+    var tabCs = document.getElementById('petFloatTabCs');
+    if (tabInbox) {
+      tabInbox.addEventListener('click', function () {
+        activeTab = 'inbox';
+        refresh();
+      });
+    }
+    if (tabCs) {
+      tabCs.addEventListener('click', function () {
+        activeTab = 'cs';
+        refresh();
+        if (input) input.focus();
+      });
+    }
+    if (global.TTCsChat && TTCsChat.subscribe) {
+      TTCsChat.subscribe(function () {
+        if (activeTab === 'cs') refresh();
       });
     }
     global.addEventListener('resize', function () {
@@ -371,6 +507,11 @@
       placeFab(false);
     });
     if (TTStore.subscribe) TTStore.subscribe(refresh);
+    global.addEventListener('storage', function (e) {
+      if (e && e.key === 'mengchong_float_entry_v1') applyEntry();
+    });
+    global.TTPetFloat.openTab = openTab;
+    global.TTPetFloat.toggleTab = toggleTab;
     refresh();
     startWander();
     global.setTimeout(wander, 800);
@@ -405,6 +546,8 @@
   global.TTPetFloat = {
     parkForGuide: parkForGuide,
     resumeFromGuide: resumeFromGuide,
+    openTab: function () {},
+    toggleTab: function () {},
   };
 
   function boot() {

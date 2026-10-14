@@ -227,141 +227,375 @@
   const USER_RANK_ID = 'me';
   const USER_DISPLAY_NAME = '我（你）';
 
-  /** Philippine mythic VIP-butler species (cute reinterpretations) */
+  /** 定稿 Q 版灵宠：18 行 × 横向 6 档（幼宠档是灵卵） */
   const PET_SPECIES_IDS = [
-    'sarimanok',
-    'bakunawa',
-    'diwata',
-    'tigmamanukan',
-    'sirena',
-    'kapre',
+    'sprout',
+    'moonhare',
+    'inkto',
+    'frostfox',
+    'purpleram',
+    'flameboar',
+    'cloudsheep',
+    'brookotter',
+    'twinmouse',
+    'waveturtle',
+    'bloomdeer',
+    'rockdrake',
+    'azurebird',
+    'bluebear',
+    'mushroom',
+    'inkcat',
+    'honeybee',
+    'tidefish',
   ];
 
   const LEGACY_SPECIES_MAP = {
-    dog: 'kapre',
-    cat: 'sarimanok',
-    tikbalang: 'kapre',
+    dog: 'inkcat',
+    cat: 'inkcat',
+    tikbalang: 'bloomdeer',
+    sarimanok: 'azurebird',
+    bakunawa: 'rockdrake',
+    diwata: 'sprout',
+    tigmamanukan: 'azurebird',
+    sirena: 'tidefish',
+    kapre: 'sprout',
   };
 
   /** Soft fallback only for friends/rank/gallery when species missing */
-  const SPECIES_FALLBACK = 'sarimanok';
+  const SPECIES_FALLBACK = 'sprout';
 
   const PET_SPECIES = {
-    sarimanok: {
-      id: 'sarimanok',
-      label: '彩羽神鸟',
-      labelEn: 'Sarimanok',
-      tone: '啾',
-      cue: '啾~',
-      unit: '神鸟',
-      loreEn: 'Maranao lucky bird',
-      loreZh: '吉祥彩羽',
+    sprout: {
+      id: 'sprout',
+      label: '萌芽灵蛙',
+      labelEn: '萌芽灵蛙',
+      tone: '呱',
+      cue: '呱~',
+      unit: '灵蛙',
+      loreEn: '护芽吐蕊',
+      loreZh: '护芽吐蕊',
     },
-    bakunawa: {
-      id: 'bakunawa',
-      label: '月食神龙',
-      labelEn: 'Bakunawa',
-      tone: '嗷',
-      cue: '嗷~',
-      unit: '神龙',
-      loreEn: 'Moon serpent',
-      loreZh: '守护月光',
+    moonhare: {
+      id: 'moonhare',
+      label: '月耳灵兔',
+      labelEn: '月耳灵兔',
+      tone: '唧',
+      cue: '唧~',
+      unit: '灵兔',
+      loreEn: '月耳护运',
+      loreZh: '月耳护运',
     },
-    diwata: {
-      id: 'diwata',
-      label: '山林精灵',
-      labelEn: 'Diwata',
-      tone: '叮',
-      cue: '叮~',
-      unit: '精灵',
-      loreEn: 'Nature spirit',
-      loreZh: '守护山林',
+    inkto: {
+      id: 'inkto',
+      label: '墨潮章灵',
+      labelEn: '墨潮章灵',
+      tone: '咕',
+      cue: '咕~',
+      unit: '章灵',
+      loreEn: '墨潮护海',
+      loreZh: '墨潮护海',
     },
-    tigmamanukan: {
-      id: 'tigmamanukan',
-      label: '吉兆灵鸟',
-      labelEn: 'Tigmamanukan',
-      tone: '啼',
-      cue: '啼~',
-      unit: '灵鸟',
-      loreEn: 'Sacred omen bird · Bathala',
-      loreZh: '吉兆护行',
+    frostfox: {
+      id: 'frostfox',
+      label: '霜绒灵狐',
+      labelEn: '霜绒灵狐',
+      tone: '呜',
+      cue: '呜~',
+      unit: '灵狐',
+      loreEn: '霜绒护冬',
+      loreZh: '霜绒护冬',
     },
-    sirena: {
-      id: 'sirena',
-      label: '海之仙女',
-      labelEn: 'Sirena',
+    purpleram: {
+      id: 'purpleram',
+      label: '紫岚灵羊',
+      labelEn: '紫岚灵羊',
+      tone: '咩',
+      cue: '咩~',
+      unit: '灵羊',
+      loreEn: '紫岚护云',
+      loreZh: '紫岚护云',
+    },
+    flameboar: {
+      id: 'flameboar',
+      label: '焰牙灵猪',
+      labelEn: '焰牙灵猪',
       tone: '哼',
       cue: '哼~',
-      unit: '海仙',
-      loreEn: 'Sea maiden',
-      loreZh: '守护海域',
+      unit: '灵猪',
+      loreEn: '焰牙护山',
+      loreZh: '焰牙护山',
     },
-    kapre: {
-      id: 'kapre',
-      label: '树精守护神',
-      labelEn: 'Kapre',
-      tone: '呵',
-      cue: '呵~',
-      unit: '树精',
-      loreEn: 'Tree giant guardian',
-      loreZh: '守护巨树的山林神灵',
+    cloudsheep: {
+      id: 'cloudsheep',
+      label: '云絮灵羊',
+      labelEn: '云絮灵羊',
+      tone: '咩',
+      cue: '咩~',
+      unit: '云羊',
+      loreEn: '云絮护晴',
+      loreZh: '云絮护晴',
+    },
+    brookotter: {
+      id: 'brookotter',
+      label: '溪石灵獭',
+      labelEn: '溪石灵獭',
+      tone: '吱',
+      cue: '吱~',
+      unit: '灵獭',
+      loreEn: '溪石护流',
+      loreZh: '溪石护流',
+    },
+    twinmouse: {
+      id: 'twinmouse',
+      label: '双缨灵鼠',
+      labelEn: '双缨灵鼠',
+      tone: '吱',
+      cue: '吱~',
+      unit: '灵鼠',
+      loreEn: '双缨护仓',
+      loreZh: '双缨护仓',
+    },
+    waveturtle: {
+      id: 'waveturtle',
+      label: '沧波灵龟',
+      labelEn: '沧波灵龟',
+      tone: '咕',
+      cue: '咕~',
+      unit: '灵龟',
+      loreEn: '沧波护岸',
+      loreZh: '沧波护岸',
+    },
+    bloomdeer: {
+      id: 'bloomdeer',
+      label: '花角灵鹿',
+      labelEn: '花角灵鹿',
+      tone: '呦',
+      cue: '呦~',
+      unit: '灵鹿',
+      loreEn: '花角护林',
+      loreZh: '花角护林',
+    },
+    rockdrake: {
+      id: 'rockdrake',
+      label: '岩焰灵龙',
+      labelEn: '岩焰灵龙',
+      tone: '嗷',
+      cue: '嗷~',
+      unit: '灵龙',
+      loreEn: '岩焰护岳',
+      loreZh: '岩焰护岳',
+    },
+    azurebird: {
+      id: 'azurebird',
+      label: '碧翎灵鸟',
+      labelEn: '碧翎灵鸟',
+      tone: '啾',
+      cue: '啾~',
+      unit: '灵鸟',
+      loreEn: '碧翎护空',
+      loreZh: '碧翎护空',
+    },
+    bluebear: {
+      id: 'bluebear',
+      label: '霁蓝灵熊',
+      labelEn: '霁蓝灵熊',
+      tone: '唔',
+      cue: '唔~',
+      unit: '灵熊',
+      loreEn: '霁蓝护梦',
+      loreZh: '霁蓝护梦',
+    },
+    mushroom: {
+      id: 'mushroom',
+      label: '紫伞灵菇',
+      labelEn: '紫伞灵菇',
+      tone: '噗',
+      cue: '噗~',
+      unit: '灵菇',
+      loreEn: '紫伞护荫',
+      loreZh: '紫伞护荫',
+    },
+    inkcat: {
+      id: 'inkcat',
+      label: '墨纹灵猫',
+      labelEn: '墨纹灵猫',
+      tone: '喵',
+      cue: '喵~',
+      unit: '灵猫',
+      loreEn: '墨纹护夜',
+      loreZh: '墨纹护夜',
+    },
+    honeybee: {
+      id: 'honeybee',
+      label: '金翅蜜灵',
+      labelEn: '金翅蜜灵',
+      tone: '嗡',
+      cue: '嗡~',
+      unit: '蜜灵',
+      loreEn: '金翅护蜜',
+      loreZh: '金翅护蜜',
+    },
+    tidefish: {
+      id: 'tidefish',
+      label: '澜鳞灵鱼',
+      labelEn: '澜鳞灵鱼',
+      tone: '咕',
+      cue: '咕~',
+      unit: '灵鱼',
+      loreEn: '澜鳞护潮',
+      loreZh: '澜鳞护潮',
     },
   };
 
   const PET_FORMS_BY_SPECIES = {
-    sarimanok: {
-      0: { id: 'sari_hatch', name: '幼羽彩鸟', formTitle: '幼宠', emoji: '🐣', stage: 'baby', accent: '#ffd4a8', desc: '彩羽神鸟 · 入门幼羽' },
-      1: { id: 'sari_silver', name: '银徽彩羽', formTitle: '银徽', emoji: '🐤', stage: 'baby', accent: '#b8c4d8', desc: '彩羽神鸟 · VIP1 银徽' },
-      2: { id: 'sari_butler', name: '管家彩鸟', formTitle: '管家', emoji: '🐦', stage: 'buddy', accent: '#ffb86b', desc: '彩羽神鸟 · VIP2 管家' },
-      3: { id: 'sari_golden', name: '金甲彩羽', formTitle: '金甲', emoji: '🦜', stage: 'buddy', accent: '#f5c542', desc: '彩羽神鸟 · VIP3 金甲' },
-      4: { id: 'sari_winged', name: '翼彩神鸟', formTitle: '翼宠', emoji: '🦢', stage: 'elite', accent: '#7eb6ff', desc: '彩羽神鸟 · VIP4 翼形态' },
-      5: { id: 'sari_crowned', name: '冠羽吉祥鸟', formTitle: '冠宠', emoji: '🦚', stage: 'legend', accent: '#c9a0ff', desc: '彩羽神鸟 · VIP5 冠宠' },
+    sprout: {
+      0: { id: 'sprout_0', name: '芽卵灵蛙', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#7dce7a', desc: '萌芽灵蛙 · 幼宠' },
+      1: { id: 'sprout_1', name: '银徽青芽', formTitle: '银徽', emoji: '🐸', stage: 'baby', accent: '#7dce7a', desc: '萌芽灵蛙 · 银徽' },
+      2: { id: 'sprout_2', name: '管家叶灵', formTitle: '管家', emoji: '🐸', stage: 'buddy', accent: '#7dce7a', desc: '萌芽灵蛙 · 管家' },
+      3: { id: 'sprout_3', name: '金甲花蛙', formTitle: '金甲', emoji: '🐸', stage: 'buddy', accent: '#7dce7a', desc: '萌芽灵蛙 · 金甲' },
+      4: { id: 'sprout_4', name: '翼芽灵蛙', formTitle: '翼宠', emoji: '🐸', stage: 'elite', accent: '#7dce7a', desc: '萌芽灵蛙 · 翼宠' },
+      5: { id: 'sprout_5', name: '冠萌芽灵蛙', formTitle: '冠宠', emoji: '🐸', stage: 'legend', accent: '#7dce7a', desc: '萌芽灵蛙 · 冠宠' },
     },
-    bakunawa: {
-      0: { id: 'baku_egg', name: '月卵幼龙', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#ffd4a8', desc: '月食神龙 · 入门幼龙' },
-      1: { id: 'baku_silver', name: '银徽月蛟', formTitle: '银徽', emoji: '🦎', stage: 'baby', accent: '#b8c4d8', desc: '月食神龙 · VIP1 银徽' },
-      2: { id: 'baku_butler', name: '管家月蛇', formTitle: '管家', emoji: '🐍', stage: 'buddy', accent: '#ffb86b', desc: '月食神龙 · VIP2 管家' },
-      3: { id: 'baku_golden', name: '金甲月龙', formTitle: '金甲', emoji: '🐲', stage: 'buddy', accent: '#f5c542', desc: '月食神龙 · VIP3 金甲' },
-      4: { id: 'baku_winged', name: '翼月神龙', formTitle: '翼宠', emoji: '🌌', stage: 'elite', accent: '#7eb6ff', desc: '月食神龙 · VIP4 翼形态' },
-      5: { id: 'baku_crowned', name: '冠月食神龙', formTitle: '冠宠', emoji: '🐉', stage: 'legend', accent: '#c9a0ff', desc: '月食神龙 · VIP5 冠宠' },
+    moonhare: {
+      0: { id: 'moonhare_0', name: '月卵灵兔', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#f3d27a', desc: '月耳灵兔 · 幼宠' },
+      1: { id: 'moonhare_1', name: '银徽月耳', formTitle: '银徽', emoji: '🐰', stage: 'baby', accent: '#f3d27a', desc: '月耳灵兔 · 银徽' },
+      2: { id: 'moonhare_2', name: '管家玉兔', formTitle: '管家', emoji: '🐰', stage: 'buddy', accent: '#f3d27a', desc: '月耳灵兔 · 管家' },
+      3: { id: 'moonhare_3', name: '金甲灵兔', formTitle: '金甲', emoji: '🐰', stage: 'buddy', accent: '#f3d27a', desc: '月耳灵兔 · 金甲' },
+      4: { id: 'moonhare_4', name: '翼月灵兔', formTitle: '翼宠', emoji: '🐰', stage: 'elite', accent: '#f3d27a', desc: '月耳灵兔 · 翼宠' },
+      5: { id: 'moonhare_5', name: '冠月耳灵兔', formTitle: '冠宠', emoji: '🐰', stage: 'legend', accent: '#f3d27a', desc: '月耳灵兔 · 冠宠' },
     },
-    diwata: {
-      0: { id: 'diwa_sprout', name: '幼芽精灵', formTitle: '幼宠', emoji: '🌱', stage: 'baby', accent: '#ffd4a8', desc: '山林精灵 · 入门幼芽' },
-      1: { id: 'diwa_silver', name: '银徽林灵', formTitle: '银徽', emoji: '🍃', stage: 'baby', accent: '#b8c4d8', desc: '山林精灵 · VIP1 银徽' },
-      2: { id: 'diwa_butler', name: '管家山林', formTitle: '管家', emoji: '🌿', stage: 'buddy', accent: '#ffb86b', desc: '山林精灵 · VIP2 管家' },
-      3: { id: 'diwa_golden', name: '金甲灵光', formTitle: '金甲', emoji: '✨', stage: 'buddy', accent: '#f5c542', desc: '山林精灵 · VIP3 金甲' },
-      4: { id: 'diwa_winged', name: '翼林精灵', formTitle: '翼宠', emoji: '🦋', stage: 'elite', accent: '#7eb6ff', desc: '山林精灵 · VIP4 翼形态' },
-      5: { id: 'diwa_crowned', name: '冠山林精灵', formTitle: '冠宠', emoji: '🧚', stage: 'legend', accent: '#c9a0ff', desc: '山林精灵 · VIP5 冠宠' },
+    inkto: {
+      0: { id: 'inkto_0', name: '墨卵章灵', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#7b4bb5', desc: '墨潮章灵 · 幼宠' },
+      1: { id: 'inkto_1', name: '银徽小章', formTitle: '银徽', emoji: '🐙', stage: 'baby', accent: '#7b4bb5', desc: '墨潮章灵 · 银徽' },
+      2: { id: 'inkto_2', name: '管家墨灵', formTitle: '管家', emoji: '🐙', stage: 'buddy', accent: '#7b4bb5', desc: '墨潮章灵 · 管家' },
+      3: { id: 'inkto_3', name: '金甲潮章', formTitle: '金甲', emoji: '🐙', stage: 'buddy', accent: '#7b4bb5', desc: '墨潮章灵 · 金甲' },
+      4: { id: 'inkto_4', name: '翼墨章灵', formTitle: '翼宠', emoji: '🐙', stage: 'elite', accent: '#7b4bb5', desc: '墨潮章灵 · 翼宠' },
+      5: { id: 'inkto_5', name: '冠墨潮章灵', formTitle: '冠宠', emoji: '🐙', stage: 'legend', accent: '#7b4bb5', desc: '墨潮章灵 · 冠宠' },
     },
-    tigmamanukan: {
-      0: { id: 'tig_chick', name: '幼兆灵鸟', formTitle: '幼宠', emoji: '🐤', stage: 'baby', accent: '#ffd4a8', desc: '吉兆灵鸟 · 入门幼兆' },
-      1: { id: 'tig_silver', name: '银徽吉兆', formTitle: '银徽', emoji: '🐦', stage: 'baby', accent: '#b8c4d8', desc: '吉兆灵鸟 · VIP1 银徽' },
-      2: { id: 'tig_butler', name: '管家灵鸟', formTitle: '管家', emoji: '🕊️', stage: 'buddy', accent: '#ffb86b', desc: '吉兆灵鸟 · VIP2 管家' },
-      3: { id: 'tig_golden', name: '金甲兆羽', formTitle: '金甲', emoji: '🦉', stage: 'buddy', accent: '#f5c542', desc: '吉兆灵鸟 · VIP3 金甲' },
-      4: { id: 'tig_winged', name: '翼吉兆鸟', formTitle: '翼宠', emoji: '🪽', stage: 'elite', accent: '#7eb6ff', desc: '吉兆灵鸟 · VIP4 翼形态' },
-      5: { id: 'tig_crowned', name: '冠吉兆灵鸟', formTitle: '冠宠', emoji: '🦅', stage: 'legend', accent: '#c9a0ff', desc: '吉兆灵鸟 · VIP5 冠宠' },
+    frostfox: {
+      0: { id: 'frostfox_0', name: '霜卵灵狐', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#b9e4ff', desc: '霜绒灵狐 · 幼宠' },
+      1: { id: 'frostfox_1', name: '银徽霜绒', formTitle: '银徽', emoji: '🦊', stage: 'baby', accent: '#b9e4ff', desc: '霜绒灵狐 · 银徽' },
+      2: { id: 'frostfox_2', name: '管家雪狐', formTitle: '管家', emoji: '🦊', stage: 'buddy', accent: '#b9e4ff', desc: '霜绒灵狐 · 管家' },
+      3: { id: 'frostfox_3', name: '金甲冰狐', formTitle: '金甲', emoji: '🦊', stage: 'buddy', accent: '#b9e4ff', desc: '霜绒灵狐 · 金甲' },
+      4: { id: 'frostfox_4', name: '翼霜灵狐', formTitle: '翼宠', emoji: '🦊', stage: 'elite', accent: '#b9e4ff', desc: '霜绒灵狐 · 翼宠' },
+      5: { id: 'frostfox_5', name: '冠霜绒灵狐', formTitle: '冠宠', emoji: '🦊', stage: 'legend', accent: '#b9e4ff', desc: '霜绒灵狐 · 冠宠' },
     },
-    sirena: {
-      0: { id: 'sire_bubble', name: '幼浪海仙', formTitle: '幼宠', emoji: '🫧', stage: 'baby', accent: '#ffd4a8', desc: '海之仙女 · 入门幼浪' },
-      1: { id: 'sire_silver', name: '银徽海珠', formTitle: '银徽', emoji: '🐚', stage: 'baby', accent: '#b8c4d8', desc: '海之仙女 · VIP1 银徽' },
-      2: { id: 'sire_butler', name: '管家海灵', formTitle: '管家', emoji: '🐟', stage: 'buddy', accent: '#ffb86b', desc: '海之仙女 · VIP2 管家' },
-      3: { id: 'sire_golden', name: '金甲海仙', formTitle: '金甲', emoji: '🐠', stage: 'buddy', accent: '#f5c542', desc: '海之仙女 · VIP3 金甲' },
-      4: { id: 'sire_winged', name: '翼潮仙女', formTitle: '翼宠', emoji: '🌊', stage: 'elite', accent: '#7eb6ff', desc: '海之仙女 · VIP4 翼形态' },
-      5: { id: 'sire_crowned', name: '冠海之仙女', formTitle: '冠宠', emoji: '🧜', stage: 'legend', accent: '#c9a0ff', desc: '海之仙女 · VIP5 冠宠' },
+    purpleram: {
+      0: { id: 'purpleram_0', name: '岚卵灵羊', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#c4a0e8', desc: '紫岚灵羊 · 幼宠' },
+      1: { id: 'purpleram_1', name: '银徽紫绒', formTitle: '银徽', emoji: '🐑', stage: 'baby', accent: '#c4a0e8', desc: '紫岚灵羊 · 银徽' },
+      2: { id: 'purpleram_2', name: '管家岚羊', formTitle: '管家', emoji: '🐑', stage: 'buddy', accent: '#c4a0e8', desc: '紫岚灵羊 · 管家' },
+      3: { id: 'purpleram_3', name: '金甲卷角', formTitle: '金甲', emoji: '🐑', stage: 'buddy', accent: '#c4a0e8', desc: '紫岚灵羊 · 金甲' },
+      4: { id: 'purpleram_4', name: '翼紫灵羊', formTitle: '翼宠', emoji: '🐑', stage: 'elite', accent: '#c4a0e8', desc: '紫岚灵羊 · 翼宠' },
+      5: { id: 'purpleram_5', name: '冠紫岚灵羊', formTitle: '冠宠', emoji: '🐑', stage: 'legend', accent: '#c4a0e8', desc: '紫岚灵羊 · 冠宠' },
     },
-    kapre: {
-      0: { id: 'kap_sprout', name: '幼芽树精', formTitle: '幼宠', emoji: '🪵', stage: 'baby', accent: '#ffd4a8', desc: '树精守护神 · 入门幼芽' },
-      1: { id: 'kap_silver', name: '银徽树灵', formTitle: '银徽', emoji: '🌿', stage: 'baby', accent: '#b8c4d8', desc: '树精守护神 · VIP1 银徽' },
-      2: { id: 'kap_butler', name: '管家树精', formTitle: '管家', emoji: '🌳', stage: 'buddy', accent: '#ffb86b', desc: '树精守护神 · VIP2 管家' },
-      3: { id: 'kap_golden', name: '金甲树卫', formTitle: '金甲', emoji: '🛡️', stage: 'buddy', accent: '#f5c542', desc: '树精守护神 · VIP3 金甲' },
-      4: { id: 'kap_winged', name: '翼林树神', formTitle: '翼宠', emoji: '🎋', stage: 'elite', accent: '#7eb6ff', desc: '树精守护神 · VIP4 翼形态' },
-      5: { id: 'kap_crowned', name: '冠树精守护神', formTitle: '冠宠', emoji: '🏯', stage: 'legend', accent: '#c9a0ff', desc: '树精守护神 · VIP5 冠宠' },
+    flameboar: {
+      0: { id: 'flameboar_0', name: '焰卵灵猪', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#e07a3d', desc: '焰牙灵猪 · 幼宠' },
+      1: { id: 'flameboar_1', name: '银徽小牙', formTitle: '银徽', emoji: '🐗', stage: 'baby', accent: '#e07a3d', desc: '焰牙灵猪 · 银徽' },
+      2: { id: 'flameboar_2', name: '管家焰猪', formTitle: '管家', emoji: '🐗', stage: 'buddy', accent: '#e07a3d', desc: '焰牙灵猪 · 管家' },
+      3: { id: 'flameboar_3', name: '金甲獠牙', formTitle: '金甲', emoji: '🐗', stage: 'buddy', accent: '#e07a3d', desc: '焰牙灵猪 · 金甲' },
+      4: { id: 'flameboar_4', name: '翼焰灵猪', formTitle: '翼宠', emoji: '🐗', stage: 'elite', accent: '#e07a3d', desc: '焰牙灵猪 · 翼宠' },
+      5: { id: 'flameboar_5', name: '冠焰牙灵猪', formTitle: '冠宠', emoji: '🐗', stage: 'legend', accent: '#e07a3d', desc: '焰牙灵猪 · 冠宠' },
+    },
+    cloudsheep: {
+      0: { id: 'cloudsheep_0', name: '云卵灵羊', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#d7e7f5', desc: '云絮灵羊 · 幼宠' },
+      1: { id: 'cloudsheep_1', name: '银徽云絮', formTitle: '银徽', emoji: '☁️', stage: 'baby', accent: '#d7e7f5', desc: '云絮灵羊 · 银徽' },
+      2: { id: 'cloudsheep_2', name: '管家晴羊', formTitle: '管家', emoji: '☁️', stage: 'buddy', accent: '#d7e7f5', desc: '云絮灵羊 · 管家' },
+      3: { id: 'cloudsheep_3', name: '金甲柔云', formTitle: '金甲', emoji: '☁️', stage: 'buddy', accent: '#d7e7f5', desc: '云絮灵羊 · 金甲' },
+      4: { id: 'cloudsheep_4', name: '翼云灵羊', formTitle: '翼宠', emoji: '☁️', stage: 'elite', accent: '#d7e7f5', desc: '云絮灵羊 · 翼宠' },
+      5: { id: 'cloudsheep_5', name: '冠云絮灵羊', formTitle: '冠宠', emoji: '☁️', stage: 'legend', accent: '#d7e7f5', desc: '云絮灵羊 · 冠宠' },
+    },
+    brookotter: {
+      0: { id: 'brookotter_0', name: '溪卵灵獭', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#8d6b4a', desc: '溪石灵獭 · 幼宠' },
+      1: { id: 'brookotter_1', name: '银徽溪獭', formTitle: '银徽', emoji: '🦦', stage: 'baby', accent: '#8d6b4a', desc: '溪石灵獭 · 银徽' },
+      2: { id: 'brookotter_2', name: '管家石灵', formTitle: '管家', emoji: '🦦', stage: 'buddy', accent: '#8d6b4a', desc: '溪石灵獭 · 管家' },
+      3: { id: 'brookotter_3', name: '金甲戏水', formTitle: '金甲', emoji: '🦦', stage: 'buddy', accent: '#8d6b4a', desc: '溪石灵獭 · 金甲' },
+      4: { id: 'brookotter_4', name: '翼溪灵獭', formTitle: '翼宠', emoji: '🦦', stage: 'elite', accent: '#8d6b4a', desc: '溪石灵獭 · 翼宠' },
+      5: { id: 'brookotter_5', name: '冠溪石灵獭', formTitle: '冠宠', emoji: '🦦', stage: 'legend', accent: '#8d6b4a', desc: '溪石灵獭 · 冠宠' },
+    },
+    twinmouse: {
+      0: { id: 'twinmouse_0', name: '缨卵灵鼠', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#c9c3bc', desc: '双缨灵鼠 · 幼宠' },
+      1: { id: 'twinmouse_1', name: '银徽小缨', formTitle: '银徽', emoji: '🐭', stage: 'baby', accent: '#c9c3bc', desc: '双缨灵鼠 · 银徽' },
+      2: { id: 'twinmouse_2', name: '管家灵鼠', formTitle: '管家', emoji: '🐭', stage: 'buddy', accent: '#c9c3bc', desc: '双缨灵鼠 · 管家' },
+      3: { id: 'twinmouse_3', name: '金甲双耳', formTitle: '金甲', emoji: '🐭', stage: 'buddy', accent: '#c9c3bc', desc: '双缨灵鼠 · 金甲' },
+      4: { id: 'twinmouse_4', name: '翼缨灵鼠', formTitle: '翼宠', emoji: '🐭', stage: 'elite', accent: '#c9c3bc', desc: '双缨灵鼠 · 翼宠' },
+      5: { id: 'twinmouse_5', name: '冠双缨灵鼠', formTitle: '冠宠', emoji: '🐭', stage: 'legend', accent: '#c9c3bc', desc: '双缨灵鼠 · 冠宠' },
+    },
+    waveturtle: {
+      0: { id: 'waveturtle_0', name: '波卵灵龟', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#5eb0d4', desc: '沧波灵龟 · 幼宠' },
+      1: { id: 'waveturtle_1', name: '银徽小龟', formTitle: '银徽', emoji: '🐢', stage: 'baby', accent: '#5eb0d4', desc: '沧波灵龟 · 银徽' },
+      2: { id: 'waveturtle_2', name: '管家沧灵', formTitle: '管家', emoji: '🐢', stage: 'buddy', accent: '#5eb0d4', desc: '沧波灵龟 · 管家' },
+      3: { id: 'waveturtle_3', name: '金甲玄甲', formTitle: '金甲', emoji: '🐢', stage: 'buddy', accent: '#5eb0d4', desc: '沧波灵龟 · 金甲' },
+      4: { id: 'waveturtle_4', name: '翼波灵龟', formTitle: '翼宠', emoji: '🐢', stage: 'elite', accent: '#5eb0d4', desc: '沧波灵龟 · 翼宠' },
+      5: { id: 'waveturtle_5', name: '冠沧波灵龟', formTitle: '冠宠', emoji: '🐢', stage: 'legend', accent: '#5eb0d4', desc: '沧波灵龟 · 冠宠' },
+    },
+    bloomdeer: {
+      0: { id: 'bloomdeer_0', name: '角卵灵鹿', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#c4a36a', desc: '花角灵鹿 · 幼宠' },
+      1: { id: 'bloomdeer_1', name: '银徽幼鹿', formTitle: '银徽', emoji: '🦌', stage: 'baby', accent: '#c4a36a', desc: '花角灵鹿 · 银徽' },
+      2: { id: 'bloomdeer_2', name: '管家林鹿', formTitle: '管家', emoji: '🦌', stage: 'buddy', accent: '#c4a36a', desc: '花角灵鹿 · 管家' },
+      3: { id: 'bloomdeer_3', name: '金甲花角', formTitle: '金甲', emoji: '🦌', stage: 'buddy', accent: '#c4a36a', desc: '花角灵鹿 · 金甲' },
+      4: { id: 'bloomdeer_4', name: '翼角灵鹿', formTitle: '翼宠', emoji: '🦌', stage: 'elite', accent: '#c4a36a', desc: '花角灵鹿 · 翼宠' },
+      5: { id: 'bloomdeer_5', name: '冠花角灵鹿', formTitle: '冠宠', emoji: '🦌', stage: 'legend', accent: '#c4a36a', desc: '花角灵鹿 · 冠宠' },
+    },
+    rockdrake: {
+      0: { id: 'rockdrake_0', name: '岩卵灵龙', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#c47a3a', desc: '岩焰灵龙 · 幼宠' },
+      1: { id: 'rockdrake_1', name: '银徽幼岩', formTitle: '银徽', emoji: '🐲', stage: 'baby', accent: '#c47a3a', desc: '岩焰灵龙 · 银徽' },
+      2: { id: 'rockdrake_2', name: '管家岩灵', formTitle: '管家', emoji: '🐲', stage: 'buddy', accent: '#c47a3a', desc: '岩焰灵龙 · 管家' },
+      3: { id: 'rockdrake_3', name: '金甲脊火', formTitle: '金甲', emoji: '🐲', stage: 'buddy', accent: '#c47a3a', desc: '岩焰灵龙 · 金甲' },
+      4: { id: 'rockdrake_4', name: '翼岩灵龙', formTitle: '翼宠', emoji: '🐲', stage: 'elite', accent: '#c47a3a', desc: '岩焰灵龙 · 翼宠' },
+      5: { id: 'rockdrake_5', name: '冠岩焰灵龙', formTitle: '冠宠', emoji: '🐲', stage: 'legend', accent: '#c47a3a', desc: '岩焰灵龙 · 冠宠' },
+    },
+    azurebird: {
+      0: { id: 'azurebird_0', name: '翎卵灵鸟', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#7eb6ff', desc: '碧翎灵鸟 · 幼宠' },
+      1: { id: 'azurebird_1', name: '银徽碧雏', formTitle: '银徽', emoji: '🐦', stage: 'baby', accent: '#7eb6ff', desc: '碧翎灵鸟 · 银徽' },
+      2: { id: 'azurebird_2', name: '管家翎鸟', formTitle: '管家', emoji: '🐦', stage: 'buddy', accent: '#7eb6ff', desc: '碧翎灵鸟 · 管家' },
+      3: { id: 'azurebird_3', name: '金甲展翅', formTitle: '金甲', emoji: '🐦', stage: 'buddy', accent: '#7eb6ff', desc: '碧翎灵鸟 · 金甲' },
+      4: { id: 'azurebird_4', name: '翼碧灵鸟', formTitle: '翼宠', emoji: '🐦', stage: 'elite', accent: '#7eb6ff', desc: '碧翎灵鸟 · 翼宠' },
+      5: { id: 'azurebird_5', name: '冠碧翎灵鸟', formTitle: '冠宠', emoji: '🐦', stage: 'legend', accent: '#7eb6ff', desc: '碧翎灵鸟 · 冠宠' },
+    },
+    bluebear: {
+      0: { id: 'bluebear_0', name: '蓝卵灵熊', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#7aa7e8', desc: '霁蓝灵熊 · 幼宠' },
+      1: { id: 'bluebear_1', name: '银徽小熊', formTitle: '银徽', emoji: '🐻', stage: 'baby', accent: '#7aa7e8', desc: '霁蓝灵熊 · 银徽' },
+      2: { id: 'bluebear_2', name: '管家霁灵', formTitle: '管家', emoji: '🐻', stage: 'buddy', accent: '#7aa7e8', desc: '霁蓝灵熊 · 管家' },
+      3: { id: 'bluebear_3', name: '金甲软蓝', formTitle: '金甲', emoji: '🐻', stage: 'buddy', accent: '#7aa7e8', desc: '霁蓝灵熊 · 金甲' },
+      4: { id: 'bluebear_4', name: '翼蓝灵熊', formTitle: '翼宠', emoji: '🐻', stage: 'elite', accent: '#7aa7e8', desc: '霁蓝灵熊 · 翼宠' },
+      5: { id: 'bluebear_5', name: '冠霁蓝灵熊', formTitle: '冠宠', emoji: '🐻', stage: 'legend', accent: '#7aa7e8', desc: '霁蓝灵熊 · 冠宠' },
+    },
+    mushroom: {
+      0: { id: 'mushroom_0', name: '伞卵灵菇', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#b06ad4', desc: '紫伞灵菇 · 幼宠' },
+      1: { id: 'mushroom_1', name: '银徽小伞', formTitle: '银徽', emoji: '🍄', stage: 'baby', accent: '#b06ad4', desc: '紫伞灵菇 · 银徽' },
+      2: { id: 'mushroom_2', name: '管家紫灵', formTitle: '管家', emoji: '🍄', stage: 'buddy', accent: '#b06ad4', desc: '紫伞灵菇 · 管家' },
+      3: { id: 'mushroom_3', name: '金甲菌盖', formTitle: '金甲', emoji: '🍄', stage: 'buddy', accent: '#b06ad4', desc: '紫伞灵菇 · 金甲' },
+      4: { id: 'mushroom_4', name: '翼伞灵菇', formTitle: '翼宠', emoji: '🍄', stage: 'elite', accent: '#b06ad4', desc: '紫伞灵菇 · 翼宠' },
+      5: { id: 'mushroom_5', name: '冠紫伞灵菇', formTitle: '冠宠', emoji: '🍄', stage: 'legend', accent: '#b06ad4', desc: '紫伞灵菇 · 冠宠' },
+    },
+    inkcat: {
+      0: { id: 'inkcat_0', name: '墨卵灵猫', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#3a3a3a', desc: '墨纹灵猫 · 幼宠' },
+      1: { id: 'inkcat_1', name: '银徽小墨', formTitle: '银徽', emoji: '🐱', stage: 'baby', accent: '#3a3a3a', desc: '墨纹灵猫 · 银徽' },
+      2: { id: 'inkcat_2', name: '管家夜猫', formTitle: '管家', emoji: '🐱', stage: 'buddy', accent: '#3a3a3a', desc: '墨纹灵猫 · 管家' },
+      3: { id: 'inkcat_3', name: '金甲墨纹', formTitle: '金甲', emoji: '🐱', stage: 'buddy', accent: '#3a3a3a', desc: '墨纹灵猫 · 金甲' },
+      4: { id: 'inkcat_4', name: '翼墨灵猫', formTitle: '翼宠', emoji: '🐱', stage: 'elite', accent: '#3a3a3a', desc: '墨纹灵猫 · 翼宠' },
+      5: { id: 'inkcat_5', name: '冠墨纹灵猫', formTitle: '冠宠', emoji: '🐱', stage: 'legend', accent: '#3a3a3a', desc: '墨纹灵猫 · 冠宠' },
+    },
+    honeybee: {
+      0: { id: 'honeybee_0', name: '蜜卵灵蜂', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#f0c14a', desc: '金翅蜜灵 · 幼宠' },
+      1: { id: 'honeybee_1', name: '银徽小蜂', formTitle: '银徽', emoji: '🐝', stage: 'baby', accent: '#f0c14a', desc: '金翅蜜灵 · 银徽' },
+      2: { id: 'honeybee_2', name: '管家蜜灵', formTitle: '管家', emoji: '🐝', stage: 'buddy', accent: '#f0c14a', desc: '金翅蜜灵 · 管家' },
+      3: { id: 'honeybee_3', name: '金甲金翅', formTitle: '金甲', emoji: '🐝', stage: 'buddy', accent: '#f0c14a', desc: '金翅蜜灵 · 金甲' },
+      4: { id: 'honeybee_4', name: '翼蜜灵蜂', formTitle: '翼宠', emoji: '🐝', stage: 'elite', accent: '#f0c14a', desc: '金翅蜜灵 · 翼宠' },
+      5: { id: 'honeybee_5', name: '冠金翅蜜灵', formTitle: '冠宠', emoji: '🐝', stage: 'legend', accent: '#f0c14a', desc: '金翅蜜灵 · 冠宠' },
+    },
+    tidefish: {
+      0: { id: 'tidefish_0', name: '澜卵灵鱼', formTitle: '幼宠', emoji: '🥚', stage: 'baby', accent: '#4aa3d8', desc: '澜鳞灵鱼 · 幼宠' },
+      1: { id: 'tidefish_1', name: '银徽小鳞', formTitle: '银徽', emoji: '🐟', stage: 'baby', accent: '#4aa3d8', desc: '澜鳞灵鱼 · 银徽' },
+      2: { id: 'tidefish_2', name: '管家澜鱼', formTitle: '管家', emoji: '🐟', stage: 'buddy', accent: '#4aa3d8', desc: '澜鳞灵鱼 · 管家' },
+      3: { id: 'tidefish_3', name: '金甲游鳞', formTitle: '金甲', emoji: '🐟', stage: 'buddy', accent: '#4aa3d8', desc: '澜鳞灵鱼 · 金甲' },
+      4: { id: 'tidefish_4', name: '翼澜灵鱼', formTitle: '翼宠', emoji: '🐟', stage: 'elite', accent: '#4aa3d8', desc: '澜鳞灵鱼 · 翼宠' },
+      5: { id: 'tidefish_5', name: '冠澜鳞灵鱼', formTitle: '冠宠', emoji: '🐟', stage: 'legend', accent: '#4aa3d8', desc: '澜鳞灵鱼 · 冠宠' },
     },
   };
 
   /** 兼容旧引用：展示用默认形态表（未选种前） */
-  const PET_FORMS_BY_VIP = PET_FORMS_BY_SPECIES.sarimanok;
+  const PET_FORMS_BY_VIP = PET_FORMS_BY_SPECIES.sprout;
 
   /** 六套立绘入库：VIP 档可随时切换（不付费）；最终留哪几套后定 */
   const ART_STYLES = [
@@ -413,23 +647,16 @@
     return ART_STYLES[0].label;
   }
 
-  function artSheetUrl(species, style) {
+  function artSheetUrl(species) {
     const sp = resolveSpecies(species, SPECIES_FALLBACK);
-    const st = normalizeArtStyle(style);
-    const folder = encodeURI('神兽形态UI');
-    const rel = ART_SHEET_REL[st];
-    if (rel) {
-      return '../docs/' + folder + '/' + encodeURI(rel[0]) + '/' + rel[1].replace('{sp}', sp);
-    }
-    return '../docs/' + folder + '/' + sp + '-forms-ui.png';
+    return '../docs/beast-art/roster/' + sp + '-sheet.png';
   }
 
-  /** 单档立绘（从六档总览图裁出），相对 c-end/ 与 h5/ 页面 */
+  /** 单档立绘：定稿 Q 版，横向第 1 格是灵卵。相对 c-end/ 与 h5/ 页面 */
   function formArtUrl(species, style, tier) {
     const sp = resolveSpecies(species, SPECIES_FALLBACK);
-    const st = normalizeArtStyle(style);
     const t = clampEvoTier(tier);
-    return '../docs/beast-art/' + st + '/' + sp + '-' + t + '.png';
+    return '../docs/beast-art/roster/' + sp + '-' + t + '.png';
   }
 
   /**
@@ -678,16 +905,16 @@
   }
 
   const RANK_SEED_DEFAULT = [
-    { id: 'r01', name: '阳光小橘', vip: 5, species: 'sarimanok', points: 142 },
-    { id: 'r02', name: '夜跑达人', vip: 4, species: 'bakunawa', points: 128 },
-    { id: 'r03', name: '草莓布丁', vip: 4, species: 'diwata', points: 115 },
-    { id: 'r04', name: '云朵牧场', vip: 3, species: 'kapre', points: 98 },
-    { id: 'r05', name: '金豆豆', vip: 3, species: 'sirena', points: 86 },
-    { id: 'r06', name: '薄荷汽水', vip: 2, species: 'tigmamanukan', points: 74 },
-    { id: 'r07', name: '晚风捕手', vip: 2, species: 'sarimanok', points: 61 },
-    { id: 'r08', name: '芝麻汤圆', vip: 1, species: 'diwata', points: 52 },
-    { id: 'r09', name: '小小芽', vip: 1, species: 'sirena', points: 41 },
-    { id: 'r10', name: '棉花糖', vip: 0, species: 'kapre', points: 33 },
+    { id: 'r01', name: '阳光小橘', vip: 5, species: 'azurebird', points: 142 },
+    { id: 'r02', name: '夜跑达人', vip: 4, species: 'inkcat', points: 128 },
+    { id: 'r03', name: '草莓布丁', vip: 4, species: 'sprout', points: 115 },
+    { id: 'r04', name: '云朵牧场', vip: 3, species: 'cloudsheep', points: 98 },
+    { id: 'r05', name: '金豆豆', vip: 3, species: 'honeybee', points: 86 },
+    { id: 'r06', name: '薄荷汽水', vip: 2, species: 'tidefish', points: 74 },
+    { id: 'r07', name: '晚风捕手', vip: 2, species: 'frostfox', points: 61 },
+    { id: 'r08', name: '芝麻汤圆', vip: 1, species: 'moonhare', points: 52 },
+    { id: 'r09', name: '小小芽', vip: 1, species: 'bloomdeer', points: 41 },
+    { id: 'r10', name: '棉花糖', vip: 0, species: 'mushroom', points: 33 },
   ];
 
   /** 站内信演示：有未读时在悬浮对话内容区展示（不是萌宠闲聊） */
@@ -759,10 +986,10 @@
   ];
 
   const FRIENDS_DEFAULT = [
-    { id: 'f1', name: '小鹿同学', avatar: '🦌', vip: 2, species: 'diwata', hunger: 28, mood: 42, clean: 55, health: 70 },
-    { id: 'f2', name: '阿橙', avatar: '🧡', vip: 3, species: 'kapre', hunger: 48, mood: 32, clean: 40, health: 65 },
-    { id: 'f3', name: '青禾', avatar: '🌿', vip: 1, species: 'sarimanok', hunger: 62, mood: 58, clean: 30, health: 72 },
-    { id: 'f4', name: '星河', avatar: '✨', vip: 4, species: 'bakunawa', hunger: 35, mood: 50, clean: 48, health: 68 },
+    { id: 'f1', name: '小鹿同学', avatar: '🦌', vip: 2, species: 'bloomdeer', hunger: 28, mood: 42, clean: 55, health: 70 },
+    { id: 'f2', name: '阿橙', avatar: '🧡', vip: 3, species: 'brookotter', hunger: 48, mood: 32, clean: 40, health: 65 },
+    { id: 'f3', name: '青禾', avatar: '🌿', vip: 1, species: 'sprout', hunger: 62, mood: 58, clean: 30, health: 72 },
+    { id: 'f4', name: '星河', avatar: '✨', vip: 4, species: 'rockdrake', hunger: 35, mood: 50, clean: 48, health: 68 },
   ];
 
   const PET_DEFAULT = {
@@ -1078,9 +1305,20 @@
   function normalizeUltimateClaimed(raw) {
     const o = emptyUltimateClaimed();
     if (!raw || typeof raw !== 'object') return o;
-    // legacy dog/cat keys → new mythic ids
-    if (raw.dog || raw.tikbalang) o.kapre = true;
-    if (raw.cat) o.sarimanok = true;
+    const legacyClaim = {
+      dog: 'inkcat',
+      cat: 'inkcat',
+      tikbalang: 'bloomdeer',
+      sarimanok: 'azurebird',
+      bakunawa: 'rockdrake',
+      diwata: 'sprout',
+      tigmamanukan: 'azurebird',
+      sirena: 'tidefish',
+      kapre: 'sprout',
+    };
+    Object.keys(legacyClaim).forEach(function (oldId) {
+      if (raw[oldId]) o[legacyClaim[oldId]] = true;
+    });
     PET_SPECIES_IDS.forEach(function (id) {
       if (raw[id]) o[id] = true;
     });
@@ -1629,7 +1867,7 @@
       return Object.assign(base, {
         grown: false,
         kicker: '未选神兽',
-        lead: '请先选择菲律宾神兽，抚养总结会记在已达成的形态上。',
+        lead: '请先选择本命灵宠，抚养总结会记在已达成的形态上。',
         note: '首次进窝必选神兽。',
       });
     }
@@ -2198,7 +2436,7 @@
       currentForm: clone(currentForm),
       options: options,
       hint:
-        '随时可换菲律宾神兽。新神兽直接升至你当前的「' +
+        '随时可换本命灵宠。新灵宠直接升至你当前的「' +
         formTitle +
         '」形态，抚养进度保留。不付费、不解绑。',
     };
@@ -2272,7 +2510,7 @@
 
   /**
    * 抚养进阶：本档抚养日+互动+当日对话达标后可进化；
-   * 确认后同种 evoTier +1，并可换菲律宾神兽；VIP 只作可进化上限。
+   * 确认后同种 evoTier +1，并可换本命灵宠；VIP 只作可进化上限。
    */
   function getEvolveInfo() {
     ensurePet(state);
@@ -2612,7 +2850,7 @@
         intimacyNeeded: 0,
         progressPct: 0,
         progressHint: '请先选择 VIP管家神兽',
-        tip: '首次进入宠物窝需选择一种菲律宾神兽。',
+        tip: '首次进入宠物窝需选择一只本命灵宠。',
         celebrate: false,
         needSpecies: true,
         growth: growth,
@@ -3432,125 +3670,366 @@
   }
 
   /** 展示期全中文；方案定稿后再加菲语 / 英语。撒娇促抚养，抚慰不催养、正向不凶。 */
+  /** 展示期全中文。撒娇促抚养，抚慰不催养、正向不凶。 */
   const SPECIES_VOICE = {
-    sarimanok: {
+    sprout: {
       look: {
-        幼宠: '软软的幼羽和小冠',
-        银徽: '刚亮起来的银纹',
-        管家: '领结和整齐的彩羽',
-        金甲: '金甲彩羽',
-        翼宠: '展开的虹彩长翼',
-        冠宠: '盛开的冠羽',
+        '幼宠': '嫩绿的芽卵',
+        '银徽': '刚抽出的银叶',
+        '管家': '叶伞和藤带',
+        '金甲': '金色花苞',
+        '翼宠': '张开的叶翼',
+        '冠宠': '冠上的莲台',
       },
-      nurtureLook: '{tone} 来摸摸我的{look}好不好？摸亮了才像吉祥鸟。',
-      nurtureGrow: '我想长大，一直到{next}。每天回来看我一眼就好。{tone}',
-      nurtureLove: '{tone} 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
-      lobbyComfort: '保重 · 彩羽给你一点好运',
+      nurtureLook: '呱~ 我的{look}有点蔫了…照顾一下，我才像萌芽灵蛙。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。呱~',
+      nurtureLove: '呱~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 萌芽灵蛙在你身边',
       comfort: [
-        '{tone} 你回来了！我的{look}都好好的。保重——今天给你一点好运。',
-        '谢谢你回家。现在不用急着抚养，坐一会儿就好。彩羽陪着你。',
-        '保重。我不是来讨债的，只想陪着你。彩羽在，今天会顺利。',
-        '{tone} 你在，家里就亮了。谢谢。慢慢来就好。',
+        '呱~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。萌芽灵蛙陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '呱~ 你在，窝里就亮了。慢慢来就好。',
       ],
     },
-    bakunawa: {
+    moonhare: {
       look: {
-        幼宠: '月卵上细细的鳞',
-        银徽: '银色月纹',
-        管家: '盘着月光的身子',
-        金甲: '金色月鳞',
-        翼宠: '星河之翼',
-        冠宠: '冠上的月晕',
+        '幼宠': '软软的月卵',
+        '银徽': '银色耳尖',
+        '管家': '领巾和长耳',
+        '金甲': '金色月纹',
+        '翼宠': '展开的月翼',
+        '冠宠': '冠上的月辉',
       },
-      nurtureLook: '{tone} 我的{look}有点暗了…陪我一会儿，一起看月亮好不好？',
-      nurtureGrow: '再养我一阵，就更靠近{next}了。别丢下我——月亮一个人会寂寞。{tone}',
-      nurtureLove: '{tone} 我就在你旁边盘着。不可怕，只是撒娇。摸摸鳞、喂一口、陪我玩。好想你。',
-      lobbyComfort: '保重 · 月亮还在，我也在',
+      nurtureLook: '唧~ 我的{look}有点蔫了…照顾一下，我才像月耳灵兔。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。唧~',
+      nurtureLove: '唧~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 月耳灵兔在你身边',
       comfort: [
-        '月亮还在，我也在。「{name}」替你守着光，等你回家。',
-        '{tone} 今晚海面很静。不用急着抚养——只想让你心里亮一点。保重。',
-        '看着月亮，想起那些故事。你来了，我的{look}也暖了。保重。',
-        '谢谢你。我可以是很大的龙，但在你身边很软。就坐一会儿吧。',
+        '唧~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。月耳灵兔陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '唧~ 你在，窝里就亮了。慢慢来就好。',
       ],
     },
-    diwata: {
+    inkto: {
       look: {
-        幼宠: '嫩芽和露珠',
-        银徽: '银色叶纹',
-        管家: '林间管家的藤蔓腰带',
-        金甲: '金色林光',
-        翼宠: '蝶一般的林翼',
-        冠宠: '冠上的花环',
+        '幼宠': '深色的墨卵',
+        '银徽': '银色腕足',
+        '管家': '盘起的触手',
+        '金甲': '金色潮纹',
+        '翼宠': '张开的墨翼',
+        '冠宠': '冠上的潮冠',
       },
-      nurtureLook: '{tone} 我的{look}有点蔫了…照顾一下，光就会回来。求你了。',
-      nurtureGrow: '山林精灵长得慢。再养我一阵，一直到{next}。{tone}',
-      nurtureLove: '{tone} 来林子里吧。喂我、陪我玩、给我喝一口。好想你——我会乖乖的。',
-      lobbyComfort: '保重 · 山林里有人护着你',
+      nurtureLook: '咕~ 我的{look}有点蔫了…照顾一下，我才像墨潮章灵。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。咕~',
+      nurtureLove: '咕~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 墨潮章灵在你身边',
       comfort: [
-        '山林精灵守着山，也守着回家的人。你来了——叶子在轻轻说话。保重。',
-        '现在不用硬着头皮抚养。在林子里停一下，我送你一阵风。保重。',
-        '{tone} 谢谢你。心软的人，林子里有你的位置。',
-        '今天我的{look}很安静。说说话就够了。',
+        '咕~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。墨潮章灵陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '咕~ 你在，窝里就亮了。慢慢来就好。',
       ],
     },
-    tigmamanukan: {
+    frostfox: {
       look: {
-        幼宠: '吉兆幼羽',
-        银徽: '银色吉兆纹',
-        管家: '指路的翎羽',
-        金甲: '金色兆羽',
-        翼宠: '吉兆翼影',
-        冠宠: '冠上的吉兆羽',
+        '幼宠': '冰晶霜卵',
+        '银徽': '银色绒尖',
+        '管家': '雪白的围脖',
+        '金甲': '金色冰纹',
+        '翼宠': '展开的霜翼',
+        '冠宠': '冠上的冰晶',
       },
-      nurtureLook: '{tone} 帮我把{look}理一理好不好？就算是吉兆灵鸟，也需要摸摸才能给人指路。',
-      nurtureGrow: '帮我再长大一点，一直到{next}。每天来看我一眼呀。{tone}',
-      nurtureLove: '{tone} 别人出门前会看我——我也在看你。摸摸我、喂我一口。好想你。',
-      lobbyComfort: '出行保重 · 今天方向是对的',
+      nurtureLook: '呜~ 我的{look}有点蔫了…照顾一下，我才像霜绒灵狐。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。呜~',
+      nurtureLove: '呜~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 霜绒灵狐在你身边',
       comfort: [
-        '今天方向是对的。吉兆是护佑，不是吓唬人。出行保重。',
-        '{tone} 你一进来，就是好兆头。不用急着抚养——先收下这份祝福。',
-        '谢谢你。肩上有灵鸟，这一天会顺。保重。',
-        '我的{look}还有光。累了就歇着。我就在这里。',
+        '呜~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。霜绒灵狐陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '呜~ 你在，窝里就亮了。慢慢来就好。',
       ],
     },
-    sirena: {
+    purpleram: {
       look: {
-        幼宠: '软软的幼潮',
-        银徽: '银色贝光',
-        管家: '海管家的潮纱',
-        金甲: '金色潮纹',
-        翼宠: '浪翼',
-        冠宠: '冠上的珍珠冠',
+        '幼宠': '旋纹的岚卵',
+        '银徽': '银色卷毛',
+        '管家': '弯起的小角',
+        '金甲': '金色岚纹',
+        '翼宠': '云一般的翼',
+        '冠宠': '冠上的紫岚',
       },
-      nurtureLook: '{tone} 我的{look}有点干了…给我喝一口，再梳一梳好不好？',
-      nurtureGrow: '潮水来了才会长大。再养我一阵，就靠近{next}了。求你了。{tone}',
-      nurtureLove: '{tone} 我在岸边等你。不会把你拉进水里——陪我玩、吃点心、说说话。好想你。',
-      lobbyComfort: '保重 · 我在岸边，海面很静',
+      nurtureLook: '咩~ 我的{look}有点蔫了…照顾一下，我才像紫岚灵羊。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。咩~',
+      nurtureLove: '咩~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 紫岚灵羊在你身边',
       comfort: [
-        '今天海面很静。海之仙女的歌是送你平安回家，不是把你拉走。保重。',
-        '{tone} 保重。我在岸边。现在不用抚养——听听浪就好。',
-        '谢谢你来看海。珠光我替你藏着。',
-        '我的{look}有光。你在，潮就稳。保重。',
+        '咩~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。紫岚灵羊陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '咩~ 你在，窝里就亮了。慢慢来就好。',
       ],
     },
-    kapre: {
+    flameboar: {
       look: {
-        幼宠: '小小的树纹',
-        银徽: '银色藤徽',
-        管家: '树管家的叶披风',
-        金甲: '金色树甲',
-        翼宠: '张开的树冠',
-        冠宠: '冠上的树冠',
+        '幼宠': '火纹的焰卵',
+        '银徽': '银色小牙',
+        '管家': '硬起的鬃毛',
+        '金甲': '金色獠牙',
+        '翼宠': '燎起的焰翼',
+        '冠宠': '冠上的焰冠',
       },
-      nurtureLook: '{tone} 我的{look}有点干了…给树喝一口、摸摸树干好不好？',
-      nurtureGrow: '树长得慢，但会守很久。陪我一直到{next}呀。{tone}',
-      nurtureLove: '{tone} 我坐在树下等你。喂我、说说话、撒娇一下。别丢下我。',
-      lobbyComfort: '保重 · 门前的树还在',
+      nurtureLook: '哼~ 我的{look}有点蔫了…照顾一下，我才像焰牙灵猪。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。哼~',
+      nurtureLove: '哼~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 焰牙灵猪在你身边',
       comfort: [
-        '树精守着古树，也守着家。你回来了——树荫又凉快了。保重。',
-        '现在不用做任务。在树下坐一会儿。保重。我看着呢。',
-        '{tone} 谢谢你。门前的树还在——你不是一个人。',
-        '我的{look}很安静。敬树，也敬你回家这一趟。',
+        '哼~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。焰牙灵猪陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '哼~ 你在，窝里就亮了。慢慢来就好。',
+      ],
+    },
+    cloudsheep: {
+      look: {
+        '幼宠': '软软的云卵',
+        '银徽': '银色云尖',
+        '管家': '蓬松的晴絮',
+        '金甲': '金色云纹',
+        '翼宠': '飘起的云翼',
+        '冠宠': '冠上的晴云',
+      },
+      nurtureLook: '咩~ 我的{look}有点蔫了…照顾一下，我才像云絮灵羊。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。咩~',
+      nurtureLove: '咩~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 云絮灵羊在你身边',
+      comfort: [
+        '咩~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。云絮灵羊陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '咩~ 你在，窝里就亮了。慢慢来就好。',
+      ],
+    },
+    brookotter: {
+      look: {
+        '幼宠': '水纹的溪卵',
+        '银徽': '银色湿毛',
+        '管家': '站直的小爪',
+        '金甲': '金色水纹',
+        '翼宠': '卷起的溪翼',
+        '冠宠': '冠上的浪花',
+      },
+      nurtureLook: '吱~ 我的{look}有点蔫了…照顾一下，我才像溪石灵獭。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。吱~',
+      nurtureLove: '吱~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 溪石灵獭在你身边',
+      comfort: [
+        '吱~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。溪石灵獭陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '吱~ 你在，窝里就亮了。慢慢来就好。',
+      ],
+    },
+    twinmouse: {
+      look: {
+        '幼宠': '带印的缨卵',
+        '银徽': '银色耳尖',
+        '管家': '红蓝两只缨',
+        '金甲': '金色双耳',
+        '翼宠': '扬起的缨翼',
+        '冠宠': '冠上的双缨',
+      },
+      nurtureLook: '吱~ 我的{look}有点蔫了…照顾一下，我才像双缨灵鼠。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。吱~',
+      nurtureLove: '吱~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 双缨灵鼠在你身边',
+      comfort: [
+        '吱~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。双缨灵鼠陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '吱~ 你在，窝里就亮了。慢慢来就好。',
+      ],
+    },
+    waveturtle: {
+      look: {
+        '幼宠': '贝壳一样的波卵',
+        '银徽': '银色甲缘',
+        '管家': '厚起来的背甲',
+        '金甲': '金色玄甲',
+        '翼宠': '托起的波翼',
+        '冠宠': '冠上的浪冠',
+      },
+      nurtureLook: '咕~ 我的{look}有点蔫了…照顾一下，我才像沧波灵龟。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。咕~',
+      nurtureLove: '咕~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 沧波灵龟在你身边',
+      comfort: [
+        '咕~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。沧波灵龟陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '咕~ 你在，窝里就亮了。慢慢来就好。',
+      ],
+    },
+    bloomdeer: {
+      look: {
+        '幼宠': '带芽的角卵',
+        '银徽': '银色短绒',
+        '管家': '刚长出的角',
+        '金甲': '金色花角',
+        '翼宠': '轻扬的林翼',
+        '冠宠': '冠上的花冠',
+      },
+      nurtureLook: '呦~ 我的{look}有点蔫了…照顾一下，我才像花角灵鹿。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。呦~',
+      nurtureLove: '呦~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 花角灵鹿在你身边',
+      comfort: [
+        '呦~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。花角灵鹿陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '呦~ 你在，窝里就亮了。慢慢来就好。',
+      ],
+    },
+    rockdrake: {
+      look: {
+        '幼宠': '石纹的岩卵',
+        '银徽': '银色小鳞',
+        '管家': '背上的石刺',
+        '金甲': '金色脊火',
+        '翼宠': '燎起的岩翼',
+        '冠宠': '冠上的焰冠',
+      },
+      nurtureLook: '嗷~ 我的{look}有点蔫了…照顾一下，我才像岩焰灵龙。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。嗷~',
+      nurtureLove: '嗷~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 岩焰灵龙在你身边',
+      comfort: [
+        '嗷~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。岩焰灵龙陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '嗷~ 你在，窝里就亮了。慢慢来就好。',
+      ],
+    },
+    azurebird: {
+      look: {
+        '幼宠': '浅蓝的翎卵',
+        '银徽': '银色绒羽',
+        '管家': '收好的短翅',
+        '金甲': '金色翎羽',
+        '翼宠': '展开的碧翼',
+        '冠宠': '冠上的翎冠',
+      },
+      nurtureLook: '啾~ 我的{look}有点蔫了…照顾一下，我才像碧翎灵鸟。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。啾~',
+      nurtureLove: '啾~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 碧翎灵鸟在你身边',
+      comfort: [
+        '啾~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。碧翎灵鸟陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '啾~ 你在，窝里就亮了。慢慢来就好。',
+      ],
+    },
+    bluebear: {
+      look: {
+        '幼宠': '圆圆的蓝卵',
+        '银徽': '银色绒耳',
+        '管家': '软软的肚皮',
+        '金甲': '金色蓝纹',
+        '翼宠': '蓬起的蓝翼',
+        '冠宠': '冠上的霁冠',
+      },
+      nurtureLook: '唔~ 我的{look}有点蔫了…照顾一下，我才像霁蓝灵熊。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。唔~',
+      nurtureLove: '唔~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 霁蓝灵熊在你身边',
+      comfort: [
+        '唔~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。霁蓝灵熊陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '唔~ 你在，窝里就亮了。慢慢来就好。',
+      ],
+    },
+    mushroom: {
+      look: {
+        '幼宠': '斑点的伞卵',
+        '银徽': '银色小盖',
+        '管家': '撑开的菌伞',
+        '金甲': '金色菌盖',
+        '翼宠': '扬起的伞翼',
+        '冠宠': '冠上的花伞',
+      },
+      nurtureLook: '噗~ 我的{look}有点蔫了…照顾一下，我才像紫伞灵菇。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。噗~',
+      nurtureLove: '噗~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 紫伞灵菇在你身边',
+      comfort: [
+        '噗~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。紫伞灵菇陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '噗~ 你在，窝里就亮了。慢慢来就好。',
+      ],
+    },
+    inkcat: {
+      look: {
+        '幼宠': '裂纹的墨卵',
+        '银徽': '银色耳尖',
+        '管家': '光滑的夜毛',
+        '金甲': '金色墨纹',
+        '翼宠': '收起的墨翼',
+        '冠宠': '冠上的夜冠',
+      },
+      nurtureLook: '喵~ 我的{look}有点蔫了…照顾一下，我才像墨纹灵猫。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。喵~',
+      nurtureLove: '喵~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 墨纹灵猫在你身边',
+      comfort: [
+        '喵~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。墨纹灵猫陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '喵~ 你在，窝里就亮了。慢慢来就好。',
+      ],
+    },
+    honeybee: {
+      look: {
+        '幼宠': '蜂巢一样的蜜卵',
+        '银徽': '银色小翅',
+        '管家': '黄黑的绒腹',
+        '金甲': '金色翅纹',
+        '翼宠': '振开的金翅',
+        '冠宠': '冠上的蜜冠',
+      },
+      nurtureLook: '嗡~ 我的{look}有点蔫了…照顾一下，我才像金翅蜜灵。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。嗡~',
+      nurtureLove: '嗡~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 金翅蜜灵在你身边',
+      comfort: [
+        '嗡~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。金翅蜜灵陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '嗡~ 你在，窝里就亮了。慢慢来就好。',
+      ],
+    },
+    tidefish: {
+      look: {
+        '幼宠': '潮纹的澜卵',
+        '银徽': '银色小鳍',
+        '管家': '滑亮的鳞',
+        '金甲': '金色游鳞',
+        '翼宠': '张开的澜翼',
+        '冠宠': '冠上的潮冠',
+      },
+      nurtureLook: '咕~ 我的{look}有点蔫了…照顾一下，我才像澜鳞灵鱼。',
+      nurtureGrow: '再养我一阵，就更靠近{next}了。每天回来看我一眼就好。咕~',
+      nurtureLove: '咕~ 好想你。今天特别黏人——喂我、摸摸我、跟我说说话。别丢下我。',
+      lobbyComfort: '保重 · 澜鳞灵鱼在你身边',
+      comfort: [
+        '咕~ 你回来了！我的{look}都好好的。保重。',
+        '谢谢你回家。现在不用急着抚养，坐一会儿就好。澜鳞灵鱼陪着你。',
+        '保重。我不是来催你的，只想陪着你。',
+        '咕~ 你在，窝里就亮了。慢慢来就好。',
       ],
     },
   };
@@ -3562,7 +4041,7 @@
   }
 
   function formLookBit(sp, formTitle) {
-    const voice = SPECIES_VOICE[sp] || SPECIES_VOICE.sarimanok;
+    const voice = SPECIES_VOICE[sp] || SPECIES_VOICE[SPECIES_FALLBACK];
     return (voice && voice.look && voice.look[formTitle]) || '小小的样子';
   }
 
@@ -3576,7 +4055,7 @@
     if (!hasChosenSpecies(pet)) {
       return {
         mode: 'need_species',
-        bubbles: ['先选一只菲律宾神兽，我们再一起撒娇～'],
+        bubbles: ['先选一只本命灵宠，我们再一起撒娇～'],
         enterToast: null,
         greeting: null,
         chips: ['去选神兽', '稍后再摸'],
@@ -3587,8 +4066,8 @@
     }
     const look = petAppearance(state);
     const sp = look.species;
-    const meta = PET_SPECIES[sp] || PET_SPECIES.sarimanok;
-    const voice = SPECIES_VOICE[sp] || SPECIES_VOICE.sarimanok;
+    const meta = PET_SPECIES[sp] || PET_SPECIES[SPECIES_FALLBACK];
+    const voice = SPECIES_VOICE[sp] || SPECIES_VOICE[SPECIES_FALLBACK];
     const formTitle = (look.form && look.form.formTitle) || FORM_STAGE_TITLES[look.displayTier] || '幼宠';
     const lookBit = (voice.look && voice.look[formTitle]) || '小小的样子';
     const growth = getStageGrowthInfo();
@@ -3718,8 +4197,11 @@
       const v = getPetVoiceInfo({ skipToast: true });
       return (v && v.mode === 'comfort' ? v.greeting : null) || cue + ' 保重。我就在这里。愿你今天顺利。';
     }
-    if (/狗|猫|汪|喵|dog|cat/.test(t)) {
-      return '这里只有菲律宾神话神兽，没有猫狗哦。我是「' + name + '」· ' + PET_SPECIES[sp].label + '！';
+    if (/狗|汪|dog/.test(t)) {
+      return '窝里没有小狗。十八只灵宠里有墨纹灵猫。我是「' + name + '」· ' + PET_SPECIES[sp].label + '！';
+    }
+    if (/猫|喵|cat/.test(t)) {
+      return '墨纹灵猫在名录里。我是「' + name + '」· ' + PET_SPECIES[sp].label + '！';
     }
     if (/品种|种类|换种|进化|神兽|神话/.test(t)) {
       return (
@@ -3727,7 +4209,7 @@
         unit +
         '「' +
         name +
-        '」～可以随时更换菲律宾神兽，会继承我现在的形态档。终极形态是「' +
+        '」～可以随时更换灵宠，会继承我现在的形态档。终极形态是「' +
         petUltimateForm(sp).name +
         '」，养成后有礼物（不是充值）！'
       );
@@ -3776,7 +4258,7 @@
       );
     }
     if (/卖|出售|解绑/.test(t)) {
-      return '管家宠会一直陪着你，不能出售也不能解绑哦。想换菲律宾神兽就点「更换神兽」，会继承我现在的形态档。';
+      return '管家宠会一直陪着你，不能出售也不能解绑哦。想换灵宠就点「更换神兽」，会继承我现在的形态档。';
     }
     if (/排名|积分/.test(t)) {
       return (
@@ -4212,7 +4694,7 @@
         needsSpeciesPick: !hasChosenSpecies(state.pet),
         speciesCatalog: getSpeciesCatalog(),
         speciesRule:
-          '一员一宠始终绑定；首次进窝必选菲律宾神兽；可随时更换神兽并继承当前形态档；形态靠抚养日+互动+当日对话进阶。VIP 只作成长上限。无出售/无付费换种。',
+          '一员一宠始终绑定；首次进窝必选十八只定稿灵宠之一；可随时更换并继承当前形态档；形态靠抚养日+互动+当日对话进阶。VIP 只作成长上限。无出售/无付费换种。',
         careProtect: getCareProtectInfo(),
         nurtureCadence: getNurtureCadenceInfo(),
         careDemoteToast: (function () {

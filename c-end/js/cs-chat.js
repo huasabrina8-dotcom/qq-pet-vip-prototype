@@ -5,7 +5,6 @@
   'use strict';
 
   var KEY = 'mengchong_cs_chat_v1';
-  var CHIPS = ['怎么养神兽', 'VIP怎么冲档', '权益怎么领', '转人工'];
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
@@ -24,7 +23,7 @@
     return [
       {
         role: 'agent',
-        text: '您好，我是萌宠乐园在线客服（演示）。可问神兽养成、VIP 冲档、权益领取。',
+        text: '您好，我是萌宠乐园在线客服。可问神兽养成、VIP 冲档、权益领取。',
       },
     ];
   }
@@ -38,21 +37,52 @@
   function replyTo(text) {
     var t = String(text || '');
     if (/人工|转接|投诉|工单/.test(t)) {
-      return '已记下。正式环境会转接人工客服；本窗口只演示对话，不会产生真实工单。';
+      return '已记下。稍后为你转接人工客服；当前窗口先回答养成、冲档和权益问题。';
     }
     if (/养|宠物|神兽|照料|对话|进化|萌宠/.test(t)) {
-      return '去宠物窝照料即可。饱食 / 喝水 / 清洁全免费；点「对话」和萌宠聊天也算今日深度抚养。形态靠养，升 VIP 不会立刻换装。';
+      return '去宠物窝照料即可。饱食 / 喝水 / 清洁全免费；点悬浮萌宠，在站内信页跟它聊天也算今日深度抚养。形态靠养，升 VIP 不会立刻换装。';
     }
     if (/vip|冲档|经验|xp/i.test(t)) {
-      return 'VIP 冲档在大厅完成：每日任务、领返水、充值演示都可 +XP。宠物窝不卖充值项。';
+      return 'VIP 冲档在大厅完成：每日任务、领返水、充值都可 +XP。宠物窝不卖充值项。';
     }
     if (/权益|礼包|领取|生日/.test(t)) {
-      return '权益礼包走客服领取演示。本窗口可咨询规则；正式发奖需后台审核，原型不接真钱。';
+      return '权益礼包联系客服领取。本窗口可咨询规则；正式发奖需后台审核。';
     }
     if (/充值|提现|出款|钱包/.test(t)) {
-      return '充值入口在大厅顶栏。本原型是演示站，不接真实充值或出款。';
+      return '充值入口在大厅顶栏。当前不接真实充值或出款。';
     }
-    return '已收到。演示客服可继续问养成、冲档或权益。正式环境将接入真实在线客服。';
+    return '已收到。可以继续问养成、冲档或权益。';
+  }
+
+  var msgs = loadMsgs();
+  var busy = false;
+  var listeners = [];
+
+  function emit() {
+    listeners.forEach(function (fn) {
+      try {
+        fn(msgs.slice(), busy);
+      } catch (e) {}
+    });
+    renderLog(msgs, busy);
+  }
+
+  function send(text) {
+    var t = String(text || '').trim();
+    if (!t || busy) return false;
+    msgs.push({ role: 'user', text: t });
+    saveMsgs(msgs);
+    var legacyInput = document.getElementById('csChatInput');
+    if (legacyInput) legacyInput.value = '';
+    busy = true;
+    emit();
+    setTimeout(function () {
+      msgs.push({ role: 'agent', text: replyTo(t) });
+      saveMsgs(msgs);
+      busy = false;
+      emit();
+    }, 420);
+    return true;
   }
 
   function ensureDock() {
@@ -73,12 +103,11 @@
       '<button type="button" class="cs-chat-close" id="csChatClose" aria-label="关闭">×</button>' +
       '</div>' +
       '<div class="cs-chat-log" id="csChatLog" aria-live="polite"></div>' +
-      '<div class="cs-chat-chips" id="csChatChips"></div>' +
       '<form class="cs-chat-form" id="csChatForm">' +
       '<input type="text" id="csChatInput" maxlength="120" placeholder="输入要咨询的问题…" autocomplete="off">' +
       '<button type="submit">发送</button>' +
       '</form>' +
-      '<p class="cs-chat-note">演示对话，不产生真实客服工单</p>' +
+      '<p class="cs-chat-note">可咨询养成、冲档和权益领取</p>' +
       '</div>';
     document.body.appendChild(wrap);
   }
@@ -109,14 +138,10 @@
     var closeBtn = document.getElementById('csChatClose');
     var form = document.getElementById('csChatForm');
     var input = document.getElementById('csChatInput');
-    var chips = document.getElementById('csChatChips');
     if (!fab || !panel || panel.dataset.bound === '1') return;
     panel.dataset.bound = '1';
 
-    var msgs = loadMsgs();
-    var busy = false;
-
-    function open() {
+    function openLegacy() {
       var petPanel = document.getElementById('petFloatPanel');
       var petFab = document.getElementById('petFloatFab');
       if (petPanel) petPanel.hidden = true;
@@ -126,37 +151,20 @@
       renderLog(msgs, false);
       if (input) input.focus();
     }
+    function open() {
+      if (global.TTPetFloat && TTPetFloat.toggleTab) {
+        panel.hidden = true;
+        fab.hidden = false;
+        TTPetFloat.toggleTab('cs');
+        return;
+      }
+      if (panel.hidden) openLegacy();
+      else hide();
+    }
     function hide() {
       panel.hidden = true;
       fab.hidden = false;
     }
-    function send(text) {
-      var t = String(text || '').trim();
-      if (!t || busy) return;
-      msgs.push({ role: 'user', text: t });
-      saveMsgs(msgs);
-      if (input) input.value = '';
-      busy = true;
-      renderLog(msgs, true);
-      setTimeout(function () {
-        msgs.push({ role: 'agent', text: replyTo(t) });
-        saveMsgs(msgs);
-        busy = false;
-        renderLog(msgs, false);
-      }, 420);
-    }
-
-    if (chips) {
-      chips.innerHTML = CHIPS.map(function (c) {
-        return '<button type="button" class="cs-chip" data-chip="' + escapeHtml(c) + '">' + escapeHtml(c) + '</button>';
-      }).join('');
-      chips.querySelectorAll('.cs-chip').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          send(btn.dataset.chip);
-        });
-      });
-    }
-
     fab.addEventListener('click', open);
     if (closeBtn) closeBtn.addEventListener('click', hide);
     if (form) {
@@ -185,8 +193,21 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 
-  global.TTCsChat = { open: function () {
-    var btn = document.getElementById('csChatFab');
-    if (btn) btn.click();
-  } };
+  global.TTCsChat = {
+    chips: [],
+    getMessages: function () {
+      return msgs.slice();
+    },
+    isBusy: function () {
+      return busy;
+    },
+    send: send,
+    subscribe: function (fn) {
+      if (typeof fn === 'function') listeners.push(fn);
+    },
+    open: function () {
+      var btn = document.getElementById('csChatFab');
+      if (btn) btn.click();
+    },
+  };
 })(typeof window !== 'undefined' ? window : globalThis);
